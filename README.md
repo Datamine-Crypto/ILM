@@ -1,14 +1,18 @@
-# ILM: Integer Language Model
+# 🧮 ILM: Integer Language Model
 
-**CPU only.** ILM is a language model that needs no GPU, to learn or to answer. On one desktop CPU it learns each benchmark below from its lessons in seconds, then answers its test questions.
+[![crates.io](https://img.shields.io/crates/v/datamine-ilm.svg)](https://crates.io/crates/datamine-ilm) [![CI](https://github.com/Datamine-Crypto/ILM/actions/workflows/ci.yml/badge.svg)](https://github.com/Datamine-Crypto/ILM/actions/workflows/ci.yml) [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-**Why no GPU?** A neural network, such as a transformer, learns by changing millions of decimal weights. It repeats billions of multiplications over many passes through the data, and a GPU is built for that work. ILM has no weights. It stores whole-number counts: how often each pattern in a text came with each answer. Counting is the addition of whole numbers, and a normal CPU does it fast.
+⚡ **CPU only.** ILM is a language model that needs no GPU, to learn or to answer. On one desktop CPU it learns each benchmark below from its lessons in seconds, then answers its test questions.
 
-ILM learns from lessons: a short text, a question and the exact answer (for two tasks below, also the labels that the set gives). It keeps a pattern only when its counts show that the pattern is reliable. So what it learned is a set of rules that you can read, and it gives the same answers on every run and for every number of threads.
+🤔 **Why no GPU?** A neural network, such as a transformer, learns by changing millions of decimal weights. It repeats billions of multiplications over many passes through the data, and a GPU is built for that work. ILM has no weights. It stores whole-number counts: how often each pattern in a text came with each answer. Counting is the addition of whole numbers, and a normal CPU does it fast.
 
-Model card and programs: [huggingface.co/DatamineNetwork/ILM](https://huggingface.co/DatamineNetwork/ILM)
+🧠 ILM learns from lessons: a short text, a question and the exact answer (for two tasks below, also the labels that the set gives). It keeps a pattern only when its counts show that the pattern is reliable. So what it learned is a set of rules that you can read, and it gives the same answers on every run and for every number of threads.
 
-## Results
+- 🤗 Model card and programs: [huggingface.co/DatamineNetwork/ILM](https://huggingface.co/DatamineNetwork/ILM)
+- 📦 Crate: [crates.io/crates/datamine-ilm](https://crates.io/crates/datamine-ilm)
+- 🌐 Website: [datamine.network](https://datamine.network)
+
+## 📊 Results
 
 Each benchmark is read with frozen code on its test data: the official test split, or for LoNLI, LAMA and SVAMP the part that [docs/RESULTS.md](docs/RESULTS.md) names. The runs use one desktop CPU (Intel Core i9-12900K, 24 threads, no GPU). The time is for the whole run, learning from all lessons and answering the test questions, as the best of three or more runs.
 
@@ -25,7 +29,7 @@ Each benchmark is read with frozen code on its test data: the official test spli
 
 ILM is at or near 100% on bAbI, SCAN and ProofWriter. It is in the upper range on CLUTRR, LAMA and LoNLI. On SVAMP and E2E it is in the middle, and pre-trained transformers lead. [docs/RESULTS.md](docs/RESULTS.md) gives the settings, the published numbers with their sources, and notes on each benchmark.
 
-## Quick start
+## 🚀 Quick start
 
 You need the stable Rust toolchain ([rustup.rs](https://rustup.rs)), a C compiler and `curl`. The C compiler: the C++ build tools of Visual Studio on Windows, `xcode-select --install` on macOS, `build-essential` on Ubuntu. Run the commands from the root of the clone, in bash or PowerShell (in cmd.exe, the program is `target\release\ilm.exe`). The release build takes about 4 minutes.
 
@@ -46,9 +50,9 @@ To use a program of the GitHub release in place of a build, copy it into the roo
 
 `SHA256SUMS.txt` of the release gives the SHA-256 of each program.
 
-With Rust, `cargo install datamine-ilm` builds and installs the program `ilm` from crates.io. Run it from the root of the clone in the same way.
+📦 With Rust, `cargo install datamine-ilm` builds and installs the program `ilm` from [crates.io](https://crates.io/crates/datamine-ilm). Run it from the root of the clone in the same way.
 
-## How it works
+## ⚙️ How it works
 
 ILM has fifteen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks.
 
@@ -56,11 +60,11 @@ Beside the tools, ILM has a fact reader for encyclopedia text, a question reader
 
 [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md) describes each part.
 
-## What ILM is not
+## 🚧 What ILM is not
 
 ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On the board of 25 public sets (240 kinds in 112 tasks), it learns 59 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text).
 
-## Code
+## 🦀 Code
 
 The program is a Rust workspace of five crates:
 
@@ -83,10 +87,10 @@ The code follows the rules of the crate [premise](https://crates.io/crates/premi
 
 The program uses the memory allocator [mimalloc](https://crates.io/crates/mimalloc), so the build needs a C compiler.
 
-## Data
+## 📚 Data
 
 ILM reads public sets from the Hugging Face hub and GitHub at fixed revisions. `data/sources.txt` names every raw file with its SHA-256, and `data/sets` describes how each set becomes case files. The repository holds no data of the sets. Each set keeps its own license.
 
-## License
+## 📜 License
 
 Apache License 2.0. See [LICENSE](LICENSE).

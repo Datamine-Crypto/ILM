@@ -152,17 +152,19 @@ model-index:
       name: NIST
 ---
 
-# ILM: Integer Language Model
+# 🧮 ILM: Integer Language Model
 
-**CPU only.** ILM is a language model that needs no GPU, to learn or to answer. On one desktop CPU it learns each benchmark below from its lessons in seconds, then answers its test questions.
+⚡ **CPU only.** ILM is a language model that needs no GPU, to learn or to answer. On one desktop CPU it learns each benchmark below from its lessons in seconds, then answers its test questions.
 
-**Why no GPU?** A neural network, such as a transformer, learns by changing millions of decimal weights. It repeats billions of multiplications over many passes through the data, and a GPU is built for that work. ILM has no weights. It stores whole-number counts: how often each pattern in a text came with each answer. Counting is the addition of whole numbers, and a normal CPU does it fast.
+🤔 **Why no GPU?** A neural network, such as a transformer, learns by changing millions of decimal weights. It repeats billions of multiplications over many passes through the data, and a GPU is built for that work. ILM has no weights. It stores whole-number counts: how often each pattern in a text came with each answer. Counting is the addition of whole numbers, and a normal CPU does it fast.
 
-ILM learns from lessons: a short text, a question and the exact answer (for two tasks below, also the labels that the set gives). It keeps a pattern only when its counts show that the pattern is reliable. So what it learned is a set of rules that you can read, and it gives the same answers on every run and for every number of threads.
+🧠 ILM learns from lessons: a short text, a question and the exact answer (for two tasks below, also the labels that the set gives). It keeps a pattern only when its counts show that the pattern is reliable. So what it learned is a set of rules that you can read, and it gives the same answers on every run and for every number of threads.
 
-Source code, documentation and the commands that give each number below: https://github.com/Datamine-Crypto/ILM
+- 💻 Source code, documentation and the commands that give each number below: https://github.com/Datamine-Crypto/ILM
+- 📦 Crate: https://crates.io/crates/datamine-ilm
+- 🌐 Website: https://datamine.network
 
-## Files
+## 📁 Files
 
 | File | What it is |
 |---|---|
@@ -175,7 +177,7 @@ Source code, documentation and the commands that give each number below: https:/
 
 ILM has no weights to download: it learns each task from the lessons of that task when you run it. The program reads the descriptions of the sets and the list of sources from the GitHub repository, so run it from a clone of that repository.
 
-## Results
+## 📊 Results
 
 Each benchmark is read with frozen code on its test data: the official test split, or for LoNLI, LAMA and SVAMP the part that [docs/RESULTS.md](https://github.com/Datamine-Crypto/ILM/blob/main/docs/RESULTS.md) names. The runs use one desktop CPU (Intel Core i9-12900K, 24 threads, no GPU). The time is for the whole run, learning from all lessons and answering the test questions, as the best of three or more runs.
 
@@ -192,7 +194,7 @@ Each benchmark is read with frozen code on its test data: the official test spli
 
 The settings, the published numbers with their sources, and notes on each benchmark are in [docs/RESULTS.md](https://github.com/Datamine-Crypto/ILM/blob/main/docs/RESULTS.md) of the GitHub repository.
 
-## How to use
+## 🚀 How to use
 
 The program reads the descriptions of the sets from a clone of the GitHub repository. With the program of this repository, on Linux:
 
@@ -208,14 +210,14 @@ chmod +x ./ilm
 
 On macOS, take `ilm-macos-arm64` in the same way, and also run `xattr -d com.apple.quarantine ./ilm`, because the program is not signed with an Apple developer certificate. On an Intel Mac, build the program from source. On Windows, copy `ilm-windows-x86_64.exe` into the clone as `ilm.exe` and run `.\ilm.exe fetch data/sources.txt sets=src_babi`, and so on. To build the program yourself in place of a download: `cargo build --release` (Rust 1.90 or later and a C compiler), then call `./target/release/ilm`. `fetch` gets the raw files of a set from the Hugging Face hub or GitHub at a fixed revision and checks their SHA-256. `export` writes a case file for each kind of the set. `measure` learns each kind from its lessons and reads its test cases. [docs/REPRODUCE.md](https://github.com/Datamine-Crypto/ILM/blob/main/docs/REPRODUCE.md) gives the commands for every benchmark.
 
-## How it works
+## ⚙️ How it works
 
 ILM has fifteen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks. Beside the tools, ILM has a fact reader for encyclopedia text, a question reader, a writer that turns given facts into a text, and one command (`ilm ask`) that routes each request and prints a trace of its steps.
 
-## Limits
+## 🚧 Limits
 
 ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On a board of 25 public sets (240 kinds in 112 tasks), it learns 59 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text). On SVAMP and E2E, pre-trained transformers are ahead.
 
-## License
+## 📜 License
 
 Apache License 2.0. The sets that ILM reads keep their own licenses, and this repository holds none of their data.
