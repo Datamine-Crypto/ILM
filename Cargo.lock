@@ -26,7 +26,7 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "ilm"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "ilm-commands",
  "mimalloc",
@@ -34,7 +34,7 @@ dependencies = [
 
 [[package]]
 name = "ilm-commands"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "ilm-core",
  "ilm-data",
@@ -44,14 +44,14 @@ dependencies = [
 
 [[package]]
 name = "ilm-core"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "premise",
 ]
 
 [[package]]
 name = "ilm-data"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "ilm-core",
  "premise",
@@ -59,7 +59,7 @@ dependencies = [
 
 [[package]]
 name = "ilm-eval"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "ilm-core",
  "ilm-data",
