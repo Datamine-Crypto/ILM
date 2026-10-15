@@ -1,15 +1,17 @@
 [package]
-name = "ilm"
+name = "datamine-ilm"
+description = "ILM, the Integer Language Model: a language model that learns and answers on the CPU, with no GPU and no gradients. Installs the program ilm."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
-publish = false
+repository.workspace = true
+homepage.workspace = true
 
 [[bin]]
 name = "ilm"
 path = "src/main.rs"
 
 [dependencies]
-ilm-commands = { path = "../ilm-commands" }
+ilm-commands = { package = "datamine-ilm-commands", path = "../ilm-commands", version = "1.0.0" }
 mimalloc = { version = "0.1.43", default-features = false }

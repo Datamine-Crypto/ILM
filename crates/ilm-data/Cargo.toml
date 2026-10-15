@@ -1,11 +1,16 @@
 [package]
-name = "ilm-data"
+name = "datamine-ilm-data"
+description = "The data part of ILM, the Integer Language Model: the readers of the public sets, the fetch of their files and the text store."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
-publish = false
+repository.workspace = true
+homepage.workspace = true
+
+[lib]
+name = "ilm_data"
 
 [dependencies]
 premise = "0.1.5"
-ilm-core = { path = "../ilm-core" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "1.0.0" }

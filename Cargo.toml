@@ -14,6 +14,8 @@ edition = "2024"
 license = "Apache-2.0"
 rust-version = "1.90"
 readme = "README.md"
+repository = "https://github.com/Datamine-Crypto/ILM"
+homepage = "https://datamine.network"
 
 [profile.test]
 opt-level = 3

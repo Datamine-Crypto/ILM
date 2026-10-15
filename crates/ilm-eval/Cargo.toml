@@ -1,12 +1,17 @@
 [package]
-name = "ilm-eval"
+name = "datamine-ilm-eval"
+description = "The measure of ILM, the Integer Language Model: the measure of a kind, the board of the tasks and the controls."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
-publish = false
+repository.workspace = true
+homepage.workspace = true
+
+[lib]
+name = "ilm_eval"
 
 [dependencies]
 premise = "0.1.5"
-ilm-core = { path = "../ilm-core" }
-ilm-data = { path = "../ilm-data" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "1.0.0" }
+ilm-data = { package = "datamine-ilm-data", path = "../ilm-data", version = "1.0.0" }

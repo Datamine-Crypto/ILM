@@ -46,6 +46,8 @@ To use a program of the GitHub release in place of a build, copy it into the roo
 
 `SHA256SUMS.txt` of the release gives the SHA-256 of each program.
 
+With Rust, `cargo install datamine-ilm` builds and installs the program `ilm` from crates.io. Run it from the root of the clone in the same way.
+
 ## How it works
 
 ILM has fifteen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks.

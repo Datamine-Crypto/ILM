@@ -1,13 +1,18 @@
 [package]
-name = "ilm-commands"
+name = "datamine-ilm-commands"
+description = "The commands of ILM, the Integer Language Model, that the program ilm runs."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
-publish = false
+repository.workspace = true
+homepage.workspace = true
+
+[lib]
+name = "ilm_commands"
 
 [dependencies]
 premise = "0.1.5"
-ilm-core = { path = "../ilm-core" }
-ilm-data = { path = "../ilm-data" }
-ilm-eval = { path = "../ilm-eval" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "1.0.0" }
+ilm-data = { package = "datamine-ilm-data", path = "../ilm-data", version = "1.0.0" }
+ilm-eval = { package = "datamine-ilm-eval", path = "../ilm-eval", version = "1.0.0" }

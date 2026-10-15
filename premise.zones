@@ -1,7 +1,7 @@
 library = premise
 library = mimalloc
-patterns = ilm-core
-patterns = ilm-data
-patterns = ilm-eval
-patterns = ilm-commands
-app = ilm
+patterns = datamine-ilm-core
+patterns = datamine-ilm-data
+patterns = datamine-ilm-eval
+patterns = datamine-ilm-commands
+app = datamine-ilm

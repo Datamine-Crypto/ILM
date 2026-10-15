@@ -13,6 +13,48 @@ dependencies = [
 ]
 
 [[package]]
+name = "datamine-ilm"
+version = "1.0.0"
+dependencies = [
+ "datamine-ilm-commands",
+ "mimalloc",
+]
+
+[[package]]
+name = "datamine-ilm-commands"
+version = "1.0.0"
+dependencies = [
+ "datamine-ilm-core",
+ "datamine-ilm-data",
+ "datamine-ilm-eval",
+ "premise",
+]
+
+[[package]]
+name = "datamine-ilm-core"
+version = "1.0.0"
+dependencies = [
+ "premise",
+]
+
+[[package]]
+name = "datamine-ilm-data"
+version = "1.0.0"
+dependencies = [
+ "datamine-ilm-core",
+ "premise",
+]
+
+[[package]]
+name = "datamine-ilm-eval"
+version = "1.0.0"
+dependencies = [
+ "datamine-ilm-core",
+ "datamine-ilm-data",
+ "premise",
+]
+
+[[package]]
 name = "find-msvc-tools"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -23,48 +65,6 @@ name = "hex"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
-
-[[package]]
-name = "ilm"
-version = "1.0.0"
-dependencies = [
- "ilm-commands",
- "mimalloc",
-]
-
-[[package]]
-name = "ilm-commands"
-version = "1.0.0"
-dependencies = [
- "ilm-core",
- "ilm-data",
- "ilm-eval",
- "premise",
-]
-
-[[package]]
-name = "ilm-core"
-version = "1.0.0"
-dependencies = [
- "premise",
-]
-
-[[package]]
-name = "ilm-data"
-version = "1.0.0"
-dependencies = [
- "ilm-core",
- "premise",
-]
-
-[[package]]
-name = "ilm-eval"
-version = "1.0.0"
-dependencies = [
- "ilm-core",
- "ilm-data",
- "premise",
-]
 
 [[package]]
 name = "libmimalloc-sys"
