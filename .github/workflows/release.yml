@@ -70,3 +70,31 @@ jobs:
           --repo "$GITHUB_REPOSITORY"
           --title "ILM $GITHUB_REF_NAME"
           --notes "The programs of ILM $GITHUB_REF_NAME: Linux on x86-64 (glibc 2.35 or later), Windows on x86-64 and macOS on Apple silicon, with the SHA-256 of each in SHA256SUMS.txt. README.md says how to use them."
+
+  huggingface:
+    needs: publish
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: programs
+          merge-multiple: true
+      - name: The files of the Hugging Face model repository
+        run: |
+          mkdir hub
+          cp release/huggingface/README.md LICENSE THIRD_PARTY_NOTICES.md programs/ilm-* hub/
+          cd hub && sha256sum ilm-* > SHA256SUMS.txt && ls -l
+      - name: Upload to Hugging Face
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::warning::The secret HF_TOKEN is not set, so the files do not go to Hugging Face."
+            exit 0
+          fi
+          pipx run --spec "huggingface_hub==2.0.0" hf upload DatamineNetwork/ILM hub . --commit-message "ILM $GITHUB_REF_NAME"
