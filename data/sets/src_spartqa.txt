@@ -1,0 +1,9 @@
+set	SpartQA
+by	program
+fit	600
+held	400
+kind	spartqa_yn	places of things in blocks (above, below, left, right, touching, inside): yes, no or not told
+task	spartqa_yn	spartqa_yn
+all	spartqa_yn
+file	*	train	data/raw/text/chat/hf7/tasksource__spartqa-yn/spartqa_YN_train.jsonl
+file	*	read	data/raw/text/chat/hf7/tasksource__spartqa-yn/spartqa_YN_test.jsonl

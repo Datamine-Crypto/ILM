@@ -1,0 +1,34 @@
+set	Lookup tables (Liska and others 2018)
+by	program
+fit	1000
+held	400
+kind	lookup_s1	tables used one after the other, sample 1: pairs that the lessons do not have
+kind	lookup_s2	tables used one after the other, sample 2: pairs that the lessons do not have
+kind	lookup_s1_longer	the same lessons, sample 1: three tables in a row
+kind	lookup_s2_longer	the same lessons, sample 2: three tables in a row
+task	tables used one after the other, sample 1	lookup_s1	lookup_s1_longer
+task	tables used one after the other, sample 2	lookup_s2	lookup_s2_longer
+no_names	tables used one after the other, sample 1
+no_names	tables used one after the other, sample 2
+all	lookup_s1
+all	lookup_s2
+all	lookup_s1_longer
+all	lookup_s2_longer
+file	lookup_s1	train	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__train.tsv
+file	lookup_s1	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__heldout_inputs.tsv
+file	lookup_s1	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__heldout_compositions.tsv
+file	lookup_s1	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__heldout_tables.tsv
+file	lookup_s1	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__new_compositions.tsv
+file	lookup_s1_longer	train	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__train.tsv
+file	lookup_s1_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__longer_compositions_seen.tsv
+file	lookup_s1_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__longer_compositions_incremental.tsv
+file	lookup_s1_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample1__longer_compositions_new.tsv
+file	lookup_s2	train	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__train.tsv
+file	lookup_s2	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__heldout_inputs.tsv
+file	lookup_s2	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__heldout_compositions.tsv
+file	lookup_s2	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__heldout_tables.tsv
+file	lookup_s2	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__new_compositions.tsv
+file	lookup_s2_longer	train	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__train.tsv
+file	lookup_s2_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__longer_compositions_seen.tsv
+file	lookup_s2_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__longer_compositions_incremental.tsv
+file	lookup_s2_longer	read	data/raw/text/chat/gh1/i-machine-think__machine-tasks/LookupTables__data__samples__sample2__longer_compositions_new.tsv

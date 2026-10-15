@@ -1,0 +1,13 @@
+[package]
+name = "ilm-commands"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+premise = "0.1.5"
+ilm-core = { path = "../ilm-core" }
+ilm-data = { path = "../ilm-data" }
+ilm-eval = { path = "../ilm-eval" }

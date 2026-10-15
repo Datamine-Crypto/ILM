@@ -1,0 +1,4 @@
+set	SimpleQuestions, the part that Wikidata answers
+knowledge	questions
+file	*	lessons	data/raw/text/chat/hf7/Orange__simplequestions-sparqltotext/train-00000-of-00001-6089cd27a4f5ec3f.parquet
+file	*	held	data/raw/text/chat/hf7/Orange__simplequestions-sparqltotext/validation-00000-of-00001-80b41f49290eb8bc.parquet

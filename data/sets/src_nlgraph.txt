@@ -1,0 +1,18 @@
+set	NLGraph
+by	program
+fit	600
+held	400
+kind	nlgraph_connectivity	graph told as edges: is there a path between two nodes (a search over one relation)
+kind	nlgraph_cycle	graph told as edges: is there a cycle
+kind	nlgraph_flow	graph told as edges with numbers: the largest flow between two nodes
+task	nlgraph_connectivity	nlgraph_connectivity
+task	nlgraph_cycle	nlgraph_cycle
+task	nlgraph_flow	nlgraph_flow
+no_names	nlgraph_connectivity
+no_names	nlgraph_cycle
+no_names	nlgraph_flow
+all	nlgraph_connectivity
+all	nlgraph_cycle
+all	nlgraph_flow
+file	*	train	data/raw/text/chat/hf7/tasksource__nlgraph/data__train-00000-of-00001-32f6e22687881657.parquet
+file	*	read	data/raw/text/chat/hf7/tasksource__nlgraph/data__test-00000-of-00001-9be21117f93ba450.parquet

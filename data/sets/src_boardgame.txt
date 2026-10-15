@@ -1,0 +1,14 @@
+set	BoardgameQA
+by	program
+fit	600
+held	400
+kind	bgqa_d1	told rules with a rule that wins over another rule, proof of depth 1: proved, disproved or unknown
+kind	bgqa_d2	told rules with a rule that wins over another rule, proof of depth 2: proved, disproved or unknown
+kind	bgqa_d3	told rules with a rule that wins over another rule, proof of depth 3: proved, disproved or unknown
+task	told rules that speak against each other (main part)	bgqa_d1	bgqa_d2	bgqa_d3
+pair	told rules that speak against each other (main part)	bgqa_d1	bgqa_d3
+all	bgqa_d1
+all	bgqa_d2
+all	bgqa_d3
+file	*	train	data/raw/text/chat/hf7/tasksource__Boardgame-QA/data__train-00000-of-00001-d7aa2b268ef1ea08.parquet
+file	*	read	data/raw/text/chat/hf7/tasksource__Boardgame-QA/data__test-00000-of-00001-be86a421cd54a34b.parquet

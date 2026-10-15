@@ -1,0 +1,57 @@
+set	LoNLI
+by	program
+fit	1000
+held	1000
+kind	lonli_boolean	one or two told sentences and a statement to judge: the group "boolean" of the set
+kind	lonli_causal	one or two told sentences and a statement to judge: the group "causal" of the set
+kind	lonli_comparative	one or two told sentences and a statement to judge: the group "comparative" of the set
+kind	lonli_conditional	one or two told sentences and a statement to judge: the group "conditional" of the set
+kind	lonli_coreference	one or two told sentences and a statement to judge: the group "coreference" of the set
+kind	lonli_implicature	one or two told sentences and a statement to judge: the group "implicature" of the set
+kind	lonli_lexical	one or two told sentences and a statement to judge: the group "lexical" of the set
+kind	lonli_negation	one or two told sentences and a statement to judge: the group "negation" of the set
+kind	lonli_numerical	one or two told sentences and a statement to judge: the group "numerical" of the set
+kind	lonli_presupposition	one or two told sentences and a statement to judge: the group "presupposition" of the set
+kind	lonli_quantifier	one or two told sentences and a statement to judge: the group "quantifier" of the set
+kind	lonli_relational	one or two told sentences and a statement to judge: the group "relational" of the set
+kind	lonli_spatial	one or two told sentences and a statement to judge: the group "spatial" of the set
+kind	lonli_syntactic	one or two told sentences and a statement to judge: the group "syntactic" of the set
+kind	lonli_taxonomic	one or two told sentences and a statement to judge: the group "taxonomic" of the set
+kind	lonli_temporal	one or two told sentences and a statement to judge: the group "temporal" of the set
+kind	lonli_world	one or two told sentences and a statement to judge: the group "world" of the set
+task	lonli_boolean	lonli_boolean
+task	lonli_causal	lonli_causal
+task	lonli_comparative	lonli_comparative
+task	lonli_conditional	lonli_conditional
+task	lonli_coreference	lonli_coreference
+task	lonli_implicature	lonli_implicature
+task	lonli_lexical	lonli_lexical
+task	lonli_negation	lonli_negation
+task	lonli_numerical	lonli_numerical
+task	lonli_presupposition	lonli_presupposition
+task	lonli_quantifier	lonli_quantifier
+task	lonli_relational	lonli_relational
+task	lonli_spatial	lonli_spatial
+task	lonli_syntactic	lonli_syntactic
+task	lonli_taxonomic	lonli_taxonomic
+task	lonli_temporal	lonli_temporal
+task	lonli_world	lonli_world
+not_counted	lonli_temporal	its control of changed cases is followed in 590 of 634 trials where the told text decides (93.1%; the line is 95%)
+all	lonli_boolean
+all	lonli_causal
+all	lonli_comparative
+all	lonli_conditional
+all	lonli_coreference
+all	lonli_implicature
+all	lonli_lexical
+all	lonli_negation
+all	lonli_numerical
+all	lonli_presupposition
+all	lonli_quantifier
+all	lonli_relational
+all	lonli_spatial
+all	lonli_syntactic
+all	lonli_taxonomic
+all	lonli_temporal
+all	lonli_world
+file	*	all	data/raw/text/chat/hf7/tasksource__lonli/lonli.parquet

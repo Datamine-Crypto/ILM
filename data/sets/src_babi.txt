@@ -1,0 +1,123 @@
+set	bAbI
+by	program
+fit	600
+held	400
+kind	babi01	one fact
+kind	babi02	two facts
+kind	babi03	three facts
+kind	babi04	relations with two arguments
+kind	babi05	relations with three arguments
+kind	babi06	yes or no
+kind	babi07	counting
+kind	babi08	lists
+kind	babi09	negation
+kind	babi10	indefinite knowledge
+kind	babi11	coreference
+kind	babi12	conjunction
+kind	babi13	compound coreference
+kind	babi14	time
+kind	babi15	deduction
+kind	babi16	induction
+kind	babi17	positions
+kind	babi18	sizes
+kind	babi19	path finding
+kind	babi20	motivations
+task	babi01	babi01
+task	babi02	babi02
+task	babi03	babi03
+task	babi04	babi04
+task	babi05	babi05
+task	babi06	babi06
+task	babi07	babi07
+task	babi08	babi08
+task	babi09	babi09
+task	babi10	babi10
+task	babi11	babi11
+task	babi12	babi12
+task	babi13	babi13
+task	babi14	babi14
+task	babi15	babi15
+task	babi16	babi16
+task	babi17	babi17
+task	babi18	babi18
+task	babi19	babi19
+task	babi20	babi20
+not_counted	babi18	the things have one order of sizes in every story; with a supporting sentence taken out, so that the story no longer gives the answer, a sure rule of the learner keeps the old answer in 304 of 651 trials (46.7%)
+not_counted	babi03	a part of the rules does not read all that the question names: with a supporting sentence taken out, a sure rule keeps the old answer in 80 of 1,261 trials (6.3%; the line is 5%)
+all	babi01
+all	babi02
+all	babi03
+all	babi04
+all	babi05
+all	babi06
+all	babi07
+all	babi08
+all	babi09
+all	babi10
+all	babi11
+all	babi12
+all	babi13
+all	babi14
+all	babi15
+all	babi16
+all	babi17
+all	babi18
+all	babi19
+all	babi20
+file	*	train	data/raw/text/chat/hf6/Muennighoff__babi/babi_train.jsonl
+file	*	train	data/raw/text/chat/hf6/Muennighoff__babi/babi_valid.jsonl
+new	antoine	emma
+new	bill	liam
+new	daniel	olivia
+new	fred	noah
+new	jason	ava
+new	jeff	lucas
+new	john	mia
+new	julie	ethan
+new	mary	zoe
+new	sandra	leo
+new	sumit	nora
+new	yann	omar
+new	bernhard	tara
+new	brian	hugo
+new	greg	iris
+new	julius	karl
+new	lily	lena
+new	emily	milo
+new	gertrude	nina
+new	jessica	otto
+new	winona	pia
+new	bathroom	library
+new	bedroom	garage
+new	cinema	attic
+new	garden	cellar
+new	hallway	balcony
+new	kitchen	studio
+new	office	pantry
+new	park	porch
+new	school	lobby
+new	apple	ball
+new	football	book
+new	milk	lamp
+new	pajamas	cup
+new	mouse	yak
+new	mice	yaks
+new	cat	owl
+new	cats	owls
+new	wolf	emu
+new	wolves	emus
+new	sheep	deer
+new	swan	crane
+new	lion	otter
+new	frog	newt
+new	rhino	bison
+new	triangle	hexagon
+new	square	oval
+new	rectangle	cone
+new	sphere	cube
+new	box	crate
+new	chocolate	marble
+new	chocolates	marbles
+new	suitcase	trunk
+new	chest	barrel
+new	container	basket

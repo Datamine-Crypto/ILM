@@ -1,0 +1,66 @@
+set	ProofWriter
+by	program
+fit	600
+held	400
+kind	pw_open_d0	deduction with told rules, open form, proof of 0 rule uses
+kind	pw_open_d1	deduction with told rules, open form, proof of 1 rule uses
+kind	pw_open_d2	deduction with told rules, open form, proof of 2 rule uses
+kind	pw_open_d3	deduction with told rules, open form, proof of 3 rule uses
+kind	pw_open_d4	deduction with told rules, open form, proof of 4 rule uses
+kind	pw_open_d5	deduction with told rules, open form, proof of 5 rule uses
+kind	pw_closed_d0	deduction with told rules, closed form, proof of 0 rule uses
+kind	pw_closed_d1	deduction with told rules, closed form, proof of 1 rule uses
+kind	pw_closed_d2	deduction with told rules, closed form, proof of 2 rule uses
+kind	pw_closed_d3	deduction with told rules, closed form, proof of 3 rule uses
+kind	pw_closed_d4	deduction with told rules, closed form, proof of 4 rule uses
+kind	pw_closed_d5	deduction with told rules, closed form, proof of 5 rule uses
+task	deduction with told rules, open form	pw_open_d0	pw_open_d1	pw_open_d2	pw_open_d3	pw_open_d4	pw_open_d5
+task	deduction with told rules, closed form	pw_closed_d0	pw_closed_d1	pw_closed_d2	pw_closed_d3	pw_closed_d4	pw_closed_d5	pw_closed_d5_even
+pair	deduction with told rules, closed form	pw_closed_d01_lessons	pw_closed_d45_even_read
+bar_only	pw_closed_d5
+all	pw_open_d0
+all	pw_open_d1
+all	pw_open_d2
+all	pw_open_d3
+all	pw_open_d4
+all	pw_open_d5
+all	pw_closed_d0
+all	pw_closed_d1
+all	pw_closed_d2
+all	pw_closed_d3
+all	pw_closed_d4
+all	pw_closed_d5
+all	pw_closed_d5_even
+all	pw_closed_d01_lessons
+all	pw_closed_d45_even_read
+with	open	depth-5
+file	open	train	data/raw/text/chat/hf7/tasksource__proofwriter/data__train-00001-of-00002-901eaba2151bde61.parquet
+file	open	test	data/raw/text/chat/hf7/tasksource__proofwriter/data__test-00000-of-00001-3e27b013c60e12d8.parquet
+file	closed	train	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/CWA-depth-5__train.parquet
+file	closed	dev	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/CWA-depth-5__dev.parquet
+file	closed	test	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/CWA-depth-5__test.parquet
+file	*	forms	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/CWA-depth-5__train.parquet
+file	*	forms	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/OWA-depth-5__train.parquet
+file	*	joined	data/raw/text/chat/hf7/hitachi-nlp__proofwriter_processed_OWA/NatLang__train-00000-of-00001.parquet
+new	anne	zqanne
+new	bob	zqbob
+new	charlie	zqcharlie
+new	dave	zqdave
+new	erin	zqerin
+new	fiona	zqfiona
+new	gary	zqgary
+new	harry	zqharry
+new	alan	zqalan
+new	eric	zqeric
+new	fred	zqfred
+new	bald	zqbald
+new	eagle	zqeagle
+new	bear	zqbear
+new	cat	zqcat
+new	cow	zqcow
+new	dog	zqdog
+new	lion	zqlion
+new	mouse	zqmouse
+new	rabbit	zqrabbit
+new	squirrel	zqsquirrel
+new	tiger	zqtiger

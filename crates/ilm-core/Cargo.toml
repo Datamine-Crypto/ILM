@@ -1,0 +1,10 @@
+[package]
+name = "ilm-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+premise = "0.1.5"

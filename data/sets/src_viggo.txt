@@ -1,0 +1,7 @@
+set	ViGGO
+rows	fields
+facts	inside
+columns	mr	ref
+cut	44.32
+file	train	rows	data/raw/text/chat/hf7/GEM__viggo/train.csv
+file	validation	rows	data/raw/text/chat/hf7/GEM__viggo/validation.csv

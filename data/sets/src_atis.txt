@@ -1,0 +1,15 @@
+set	ATIS
+by	people
+fit	1000
+held	3000
+kind	atis_slots	spoken requests for flights: the words that fill a slot, or none (even)
+kind	atis_intent	spoken requests for flights: the intent of the request
+task	the slots of a spoken request for flights	atis_slots
+task	the intent of a spoken request for flights	atis_intent
+not_counted	the intent of a spoken request for flights	no control of changed cases exists for the intent of a request (no exact reading of an intent)
+all	atis_slots
+all	atis_intent
+requests	atis_slots	atis_intent
+fit_stories	1
+file	*	train	data/raw/text/chat/hf7/tuetschek__atis/atis_train.csv
+file	*	test	data/raw/text/chat/hf7/tuetschek__atis/atis_test.csv

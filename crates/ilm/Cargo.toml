@@ -1,0 +1,15 @@
+[package]
+name = "ilm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[[bin]]
+name = "ilm"
+path = "src/main.rs"
+
+[dependencies]
+ilm-commands = { path = "../ilm-commands" }
+mimalloc = { version = "0.1.43", default-features = false }

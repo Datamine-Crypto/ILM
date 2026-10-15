@@ -1,0 +1,16 @@
+set	SNIPS
+by	people
+fit	1000
+held	3000
+kind	snips_slots	written commands to an assistant: the words that fill a slot, or none (even)
+kind	snips_intent	written commands to an assistant: the intent of the request
+task	the slots of a written command	snips_slots
+task	the intent of a written command	snips_intent
+not_counted	the intent of a written command	plain counting of words gives the same share, and no control of changed cases exists for the intent of a request
+not_counted	the slots of a written command	its control of changed cases is followed in 81.6% of the trials where the truth turns (bar 90%): the two numbers of a rating are read by their words and not by their places
+all	snips_slots
+all	snips_intent
+requests	snips_slots	snips_intent
+fit_stories	1
+file	*	train	data/raw/text/chat/hf7/bkonkle__snips-joint-intent/train.csv
+file	*	test	data/raw/text/chat/hf7/bkonkle__snips-joint-intent/test.csv

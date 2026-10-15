@@ -1,0 +1,22 @@
+set	SCAN
+by	program
+fit	1000
+held	400
+kind	scan_simple	meaning built from parts: commands to actions, train and test drawn at random
+kind	scan_length	the same, lessons with short action sequences, read long ones
+kind	scan_addprim_jump	the same, one word (jump) seen alone in the lessons, read in every command
+kind	scan_addprim_turn_left	the same for the two words turn left
+task	commands to actions, meaning built from parts	scan_simple	scan_length	scan_addprim_jump	scan_addprim_turn_left
+no_names	commands to actions, meaning built from parts
+all	scan_simple
+all	scan_length
+all	scan_addprim_jump
+all	scan_addprim_turn_left
+file	scan_simple	train	data/raw/text/chat/hf7/marcov__scan_simple_promptsource/data__train-00000-of-00001.parquet
+file	scan_simple	test	data/raw/text/chat/hf7/marcov__scan_simple_promptsource/data__test-00000-of-00001.parquet
+file	scan_length	train	data/raw/text/chat/hf7/marcov__scan_length_promptsource/data__train-00000-of-00001.parquet
+file	scan_length	test	data/raw/text/chat/hf7/marcov__scan_length_promptsource/data__test-00000-of-00001.parquet
+file	scan_addprim_jump	train	data/raw/text/chat/hf7/marcov__scan_addprim_jump_promptsource/data__train-00000-of-00001.parquet
+file	scan_addprim_jump	test	data/raw/text/chat/hf7/marcov__scan_addprim_jump_promptsource/data__test-00000-of-00001.parquet
+file	scan_addprim_turn_left	train	data/raw/text/chat/hf7/marcov__scan_addprim_turn_left_promptsource/data__train-00000-of-00001.parquet
+file	scan_addprim_turn_left	test	data/raw/text/chat/hf7/marcov__scan_addprim_turn_left_promptsource/data__test-00000-of-00001.parquet

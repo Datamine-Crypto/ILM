@@ -1,0 +1,72 @@
+set	ProsQA
+by	program
+fit	600
+held	400
+kind	prosqa_2hop	search through "every A is a B": the class of two that the name reaches in 2 rule uses
+kind	prosqa_3hop	search through "every A is a B": the class of two that the name reaches in 3 rule uses
+kind	prosqa_4hop	search through "every A is a B": the class of two that the name reaches in 4 rule uses
+kind	prosqa_5hop	search through "every A is a B": the class of two that the name reaches in 5 rule uses
+task	search through every A is a B	prosqa_2hop	prosqa_3hop	prosqa_4hop
+pair	search through every A is a B	prosqa_2hop	prosqa_4hop
+all	prosqa_2hop
+all	prosqa_3hop
+all	prosqa_4hop
+all	prosqa_5hop
+file	*	train	data/raw/text/chat/hf7/fengyang0317__prosqa/data__train-00000-of-00001.parquet
+file	*	read	data/raw/text/chat/hf7/fengyang0317__prosqa/data__validation-00000-of-00001.parquet
+file	*	read	data/raw/text/chat/hf7/fengyang0317__prosqa/data__test-00000-of-00001.parquet
+new	alex	zqalex
+new	bob	zqbob
+new	carol	zqcarol
+new	davis	zqdavis
+new	eva	zqeva
+new	fae	zqfae
+new	gabriel	zqgabriel
+new	jack	zqjack
+new	max	zqmax
+new	oliver	zqoliver
+new	polly	zqpolly
+new	rex	zqrex
+new	sally	zqsally
+new	sam	zqsam
+new	stella	zqstella
+new	tom	zqtom
+new	wren	zqwren
+new	bompus	zqbompus
+new	boompus	zqboompus
+new	brimpus	zqbrimpus
+new	chorpus	zqchorpus
+new	dumpus	zqdumpus
+new	felpus	zqfelpus
+new	fompus	zqfompus
+new	gerpus	zqgerpus
+new	gorpus	zqgorpus
+new	grimpus	zqgrimpus
+new	gwompus	zqgwompus
+new	hilpus	zqhilpus
+new	impus	zqimpus
+new	jelpus	zqjelpus
+new	jompus	zqjompus
+new	kerpus	zqkerpus
+new	lempus	zqlempus
+new	lorpus	zqlorpus
+new	numpus	zqnumpus
+new	quimpus	zqquimpus
+new	rempus	zqrempus
+new	rompus	zqrompus
+new	rorpus	zqrorpus
+new	scrompus	zqscrompus
+new	shumpus	zqshumpus
+new	sterpus	zqsterpus
+new	storpus	zqstorpus
+new	terpus	zqterpus
+new	timpus	zqtimpus
+new	tumpus	zqtumpus
+new	vumpus	zqvumpus
+new	worpus	zqworpus
+new	wumpus	zqwumpus
+new	yerpus	zqyerpus
+new	yimpus	zqyimpus
+new	yumpus	zqyumpus
+new	zhorpus	zqzhorpus
+new	zumpus	zqzumpus

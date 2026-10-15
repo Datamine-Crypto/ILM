@@ -1,0 +1,52 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust
+        run: rustup toolchain install stable --profile minimal && rustup default stable
+      - name: Build
+        run: cargo build --release --locked
+      - name: Test
+        run: cargo test --release --locked
+      - name: The bAbI counts of the quick start
+        shell: bash
+        run: |
+          ilm=target/release/ilm
+          if [ -f "$ilm.exe" ]; then ilm="$ilm.exe"; fi
+          "$ilm" fetch data/sources.txt sets=src_babi
+          "$ilm" export src_babi data/sets/final/src_babi.txt cases/final/src_babi
+          right=$("$ilm" measure cases/final/src_babi | grep "right answers of the read part" | grep -oE "[0-9]+ of [0-9]+" | awk '{ r += $1; n += $3 } END { print r " of " n }')
+          echo "bAbI: $right"
+          test "$right" = "19356 of 19399"
+
+  premise:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust
+        run: rustup toolchain install stable --profile minimal && rustup default stable
+      - name: Install the Premise checker
+        run: cargo install --locked --git https://github.com/Datamine-Crypto/premise --rev d833f95a5d5900e98923ca2192c6fa6eae92a49c premise_checker
+      - name: Check the rules of the code
+        run: checker .
+      - name: Check that the census is up to date
+        run: git diff --exit-code premise.census

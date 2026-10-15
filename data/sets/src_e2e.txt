@@ -1,0 +1,6 @@
+set	E2E
+rows	parquet
+facts	list
+columns	meaning_representation	human_reference
+file	train	rows	data/raw/text/chat/hf7/tuetschek__e2e_nlg/default__train__0000.parquet
+file	validation	rows	data/raw/text/chat/hf7/tuetschek__e2e_nlg/default__validation__0000.parquet

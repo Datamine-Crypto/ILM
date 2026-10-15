@@ -1,0 +1,42 @@
+set	ParaRules
+by	people
+fit	600
+held	400
+kind	pw_people_d0_even	the same, proof of 0 rule uses, as many statements with a proof as with none
+kind	pw_people_d1_even	the same, proof of 1 rule uses, as many statements with a proof as with none
+kind	pw_people_d2_even	the same, proof of 2 rule uses, as many statements with a proof as with none
+kind	pw_people_d34_even	the same, proof of 3 or 4 rule uses, as many statements with a proof as with none
+kind	pw_people_d0	deduction with told rules that people put in other words, open form, proof of 0 rule uses
+kind	pw_people_d1	deduction with told rules that people put in other words, open form, proof of 1 rule uses
+kind	pw_people_d2	deduction with told rules that people put in other words, open form, proof of 2 rule uses
+kind	pw_people_d3	deduction with told rules that people put in other words, open form, proof of 3 rule uses
+kind	pw_people_d4	deduction with told rules that people put in other words, open form, proof of 4 rule uses
+task	deduction with told rules in the words of people	pw_people_d0_even	pw_people_d1_even	pw_people_d2_even	pw_people_d34_even	pw_people_d3	pw_people_d4
+pair	deduction with told rules in the words of people	pw_people_d0_lessons	pw_people_d34_even_read
+bar_only	pw_people_d3
+bar_only	pw_people_d4
+all	pw_people_d0_even
+all	pw_people_d1_even
+all	pw_people_d2_even
+all	pw_people_d34_even
+all	pw_people_d0
+all	pw_people_d1
+all	pw_people_d2
+all	pw_people_d3
+all	pw_people_d4
+all	pw_people_d0_lessons
+all	pw_people_d34_even_read
+with	people	NatLang
+file	people	train	data/raw/text/chat/hf7/tasksource__proofwriter/data__train-00000-of-00002-6176cf3d78f48858.parquet
+file	people	test	data/raw/text/chat/hf7/tasksource__proofwriter/data__test-00000-of-00001-3e27b013c60e12d8.parquet
+file	*	forms	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/CWA-depth-5__train.parquet
+file	*	forms	data/raw/text/chat/hf7/rlhf-and-friends__proofwriter-source/OWA-depth-5__train.parquet
+file	*	joined	data/raw/text/chat/hf7/hitachi-nlp__proofwriter_processed_OWA/NatLang__train-00000-of-00001.parquet
+new	alan	zqalan
+new	bob	zqbob
+new	charlie	zqcharlie
+new	dave	zqdave
+new	eric	zqeric
+new	fred	zqfred
+new	gary	zqgary
+new	harry	zqharry

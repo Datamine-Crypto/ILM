@@ -1,0 +1,27 @@
+set	word problems by people, the standard setting of SVAMP
+by	people
+fit	3061
+held	1000
+kind	svamp_standard_dev	learn from the four parts of MAWPS and ASDiv-A, read the 700 problems of the train file of SVAMP
+kind	svamp_standard	learn from the four parts of MAWPS and ASDiv-A, read the 300 problems of the test file of SVAMP
+task	SVAMP, standard setting, development	svamp_standard_dev
+task	SVAMP, standard setting	svamp_standard
+all	svamp_standard_dev
+all	svamp_standard
+mix	svamp_standard_dev	addsub	singleop	singleeq	multiarith	asdiv_a
+mix	svamp_standard	addsub	singleop	singleeq	multiarith	asdiv_a
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/train/0000.parquet
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/validation/0000.parquet
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/test/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/train/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/validation/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/test/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/train/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/validation/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/test/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/train/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/validation/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/test/0000.parquet
+file	asdiv_a	rows	data/raw/text/chat/hf7/MU-NLPC__Calc-asdiv_a/data/test-00000-of-00001-d118ad90f5719063.parquet
+file	svamp_standard_dev	read	data/raw/text/chat/hf7/ChilleD__SVAMP/data/train-00000-of-00001.parquet
+file	svamp_standard	read	data/raw/text/chat/hf7/ChilleD__SVAMP/data/test-00000-of-00001.parquet

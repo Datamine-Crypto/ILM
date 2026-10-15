@@ -1,0 +1,20 @@
+set	ToMi (statement form of tasksource/tomi-nli)
+by	program
+fit	600
+held	400
+kind	tomi_real	belief, a statement to judge: where the thing is after the last move
+kind	tomi_begin	belief, a statement to judge: where the thing was before the move
+kind	tomi_look	belief, a statement to judge: first belief: where a person will look for the thing
+kind	tomi_think	belief, a statement to judge: second belief: where one person thinks that another person searches
+task	where the thing is after the last move	tomi_real
+task	where the thing was before the move	tomi_begin
+task	first belief: where a person will look for the thing	tomi_look
+not_counted	where the thing is after the last move	a regularity of the copy: the rule that passes is "the statement names the first place: false", and it reads no move (the entry point follows 0 of 1,119 changed lesson stories where the true label turns)
+not_counted	where the thing was before the move	a regularity of the copy: the true statement is the one that does not name the place of the move (the entry point follows 19 of 300 changed lesson stories where the first place is another one)
+all	tomi_real
+all	tomi_begin
+all	tomi_look
+all	tomi_think
+file	*	train	data/raw/text/chat/hf7/tasksource__tomi-nli/train.tsv
+file	*	read	data/raw/text/chat/hf7/tasksource__tomi-nli/val.tsv
+file	*	read	data/raw/text/chat/hf7/tasksource__tomi-nli/test.tsv

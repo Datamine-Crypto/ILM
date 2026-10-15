@@ -1,0 +1,4 @@
+set	LAMA, T-REx part
+knowledge	facts
+file	*	rows	data/raw/text/chat/hf7/facebook__lama/trex__train__0000.parquet
+file	*	rows	data/raw/text/chat/hf7/facebook__lama/trex__train__0001.parquet

@@ -1,0 +1,19 @@
+set	MindGames
+by	program
+fit	600
+held	400
+kind	mind_forehead	knowledge after public announcements, setup "forehead": can a person know a fact (or what another person knows)
+kind	mind_forehead_mirror	knowledge after public announcements, setup "forehead_mirror": can a person know a fact (or what another person knows)
+kind	mind_explicit	knowledge after public announcements, setup "explicit": can a person know a fact (or what another person knows)
+kind	mind_internal	knowledge after public announcements, setup "internal": can a person know a fact (or what another person knows)
+task	mind_forehead	mind_forehead
+task	mind_forehead_mirror	mind_forehead_mirror
+task	mind_explicit	mind_explicit
+task	mind_internal	mind_internal
+all	mind_forehead
+all	mind_forehead_mirror
+all	mind_explicit
+all	mind_internal
+file	*	train	data/raw/text/chat/hf7/sileod__mindgames/data__train.parquet
+file	*	read	data/raw/text/chat/hf7/sileod__mindgames/data__validation.parquet
+file	*	read	data/raw/text/chat/hf7/sileod__mindgames/data__test.parquet

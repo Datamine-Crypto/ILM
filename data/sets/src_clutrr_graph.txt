@@ -1,0 +1,30 @@
+set	CLUTRR, graph form
+by	program
+fit	1000
+held	200
+kind	clutrrg_k2	kinship from told facts: lessons of 2, 3 and 4 steps, read 2 steps
+kind	clutrrg_k3	kinship from told facts: lessons of 2, 3 and 4 steps, read 3 steps
+kind	clutrrg_k4	kinship from told facts: lessons of 2, 3 and 4 steps, read 4 steps
+kind	clutrrg_k5	kinship from told facts: lessons of 2, 3 and 4 steps, read 5 steps
+kind	clutrrg_k6	kinship from told facts: lessons of 2, 3 and 4 steps, read 6 steps
+kind	clutrrg_k7	kinship from told facts: lessons of 2, 3 and 4 steps, read 7 steps
+kind	clutrrg_k8	kinship from told facts: lessons of 2, 3 and 4 steps, read 8 steps
+kind	clutrrg_k9	kinship from told facts: lessons of 2, 3 and 4 steps, read 9 steps
+kind	clutrrg_k10	kinship from told facts: lessons of 2, 3 and 4 steps, read 10 steps
+task	kinship from told facts	clutrrg_k2	clutrrg_k3	clutrrg_k4	clutrrg_k5	clutrrg_k6	clutrrg_k7	clutrrg_k8	clutrrg_k9	clutrrg_k10
+pair	kinship from told facts	clutrrg_lessons	clutrrg_read_k10
+all	clutrrg_k2
+all	clutrrg_k3
+all	clutrrg_k4
+all	clutrrg_k5
+all	clutrrg_k6
+all	clutrrg_k7
+all	clutrrg_k8
+all	clutrrg_k9
+all	clutrrg_k10
+all	clutrrg_lessons
+all	clutrrg_read_k10
+file	*	train	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__train__0000.parquet
+file	*	valid	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__validation__0000.parquet
+file	*	test	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__test__0000.parquet
+file	*	test	data/raw/text/chat/hf7/CLUTRR__v1/gen_train23_test2to10__test__0000.parquet

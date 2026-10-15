@@ -1,0 +1,10 @@
+# the raw files of the sets, which ilm fetch writes
+data/raw/
+# case files, tables and outputs of runs
+cases/
+runs/
+# the build output of the Rust workspace
+target/
+# a program of the release, copied into the root of a clone
+/ilm
+/ilm.exe

@@ -1,0 +1,14 @@
+set	FLD
+by	program
+fit	600
+held	400
+kind	fld_d1	deduction in formal logic with random words, proof tree of depth 1: proved, disproved or unknown
+kind	fld_d2	deduction in formal logic with random words, proof tree of depth 2: proved, disproved or unknown
+kind	fld_d3	deduction in formal logic with random words, proof tree of depth 3: proved, disproved or unknown
+task	deduction in formal logic	fld_d1	fld_d2	fld_d3
+pair	deduction in formal logic	fld_d1	fld_d3
+all	fld_d1
+all	fld_d2
+all	fld_d3
+file	*	train	data/raw/text/chat/hf7/hitachi-nlp__FLD.v2/data__train-00000-of-00001-81d338afabf39c32.parquet
+file	*	read	data/raw/text/chat/hf7/hitachi-nlp__FLD.v2/data__test-00000-of-00001-9c326759ac5a4535.parquet

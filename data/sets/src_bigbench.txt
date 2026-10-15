@@ -1,0 +1,408 @@
+set	BIG-bench
+by	program
+fit	600
+held	400
+kind	track_3	who holds what after swaps between pairs, 3 objects
+kind	track_5	who holds what after swaps between pairs, 5 objects
+kind	track_7	who holds what after swaps between pairs, 7 objects
+kind	deduction_3	an order of 3 objects from told pairs and places (no question in the text)
+kind	deduction_5	an order of 5 objects from told pairs and places (no question in the text)
+kind	deduction_7	an order of 7 objects from told pairs and places (no question in the text)
+kind	deduction_3+c	an order of 3 objects from told pairs and places, the choices in the question
+kind	deduction_5+c	an order of 5 objects from told pairs and places, the choices in the question
+kind	deduction_7+c	an order of 7 objects from told pairs and places, the choices in the question
+kind	object_counting	how many things of a class are in a told list (with amounts)
+kind	navigate	do the told steps and turns lead back to the start
+kind	temporal_sequences	the one free span of time between told spans
+kind	colored_objects	colour, place in a row and count of told objects
+kind	penguins_in_a_table	questions about a small table (largest, count, lookup)
+kind	date_understanding	a date from a told date and a shift in days, months or years
+kind	word_sorting	sort a list of words by the alphabet
+kind	dyck_languages	close the open brackets of a sequence in the right order
+kind	boolean_expressions	the value of an expression of true, false, not, and, or with brackets
+kind	web_of_lies	does the last person tell the truth: a chain of 5 sentences of the form A says B lies
+kind	multistep_arithmetic	the value of an expression of small numbers with + - * and brackets
+kind	logic_grid_puzzle	which house: a grid puzzle with clues about 2 to 5 houses
+kind	formal_fallacies	is an argument of every, no, not valid
+kind	logical_fallacy_detection	is a short argument valid (syllogisms and named fallacies)
+kind	epistemic_reasoning	does a sentence of the form A knows that B believes that X entail a second one
+kind	hyperbaton	which of two orders of adjectives is the right one
+kind	matrixshapes	the shape of a matrix after told operations
+kind	cs_lcs	LCS length for two strings
+kind	cs_parentheses	is a sequence of brackets matched
+kind	geometric_shapes	the name of the shape that a path of points draws
+kind	intersect_2	how many points do 2 shapes with told coordinates share
+kind	intersect_6	how many points do 6 shapes with told coordinates share
+kind	chinese_remainder	the number that leaves three told remainders
+kind	unit_novel	convert an amount with a rate that the text tells (made-up units)
+kind	unit_same_system	convert an amount between prefixes of one unit
+kind	unit_add	add or take away two amounts of one unit
+kind	emq_steps	a chain of arithmetic steps told in words, choices in the text
+kind	emq_formula	a nested formula of arithmetic steps, choices in the text
+kind	color_hcl	the colour name of three told amounts (HCL)
+kind	color_hex	the colour name of a told hex code
+kind	color_hsl	the colour name of three told amounts (HSL)
+kind	color_rgb	the colour name of three told amounts (RGB)
+kind	uicl_dates	write a date in another fixed order of its three numbers
+kind	uicl_dates_back	the same change of order, the other way
+kind	uicl_numbers	the same change of order with three numbers that are no date
+kind	uicl_identity	copy a list of letters
+kind	uicl_reverse	write a list of letters backwards
+kind	uicl_addition	add two numbers that are written with a minus sign
+kind	list_functions_10	find the rule of a list function from 10 examples in the text and use it
+kind	intersect_3	how many points do 3 shapes with told coordinates share
+kind	intersect_4	how many points do 4 shapes with told coordinates share
+kind	intersect_5	how many points do 5 shapes with told coordinates share
+kind	unit_chained	convert an amount between two products of units
+kind	unit_systems	convert an amount between units of two systems
+kind	unit_add_convert	add or take away two amounts of two units, the result in a third unit
+kind	unit_common	convert an amount between two units of daily use
+kind	unit_si	convert an amount between prefixes of one unit (second block of this sort)
+kind	emq_problem	a word problem that people wrote, choices in the text
+kind	emq_problem_steps	the same word problem with its steps told in words
+kind	emq_problem_formula	the same word problem with its formula
+kind	uicl_numbers_back	the change of order of three numbers that are no date, the other way
+kind	uicl_reverse_back	a list of letters backwards, the other way
+kind	list_functions_0	find the rule of a list function from 0 examples in the text and use it
+kind	list_functions_1	find the rule of a list function from 1 examples in the text and use it
+kind	list_functions_2	find the rule of a list function from 2 examples in the text and use it
+kind	list_functions_3	find the rule of a list function from 3 examples in the text and use it
+kind	list_functions_4	find the rule of a list function from 4 examples in the text and use it
+kind	list_functions_5	find the rule of a list function from 5 examples in the text and use it
+kind	list_functions_6	find the rule of a list function from 6 examples in the text and use it
+kind	list_functions_7	find the rule of a list function from 7 examples in the text and use it
+kind	list_functions_8	find the rule of a list function from 8 examples in the text and use it
+kind	list_functions_9	find the rule of a list function from 9 examples in the text and use it
+kind	arith_1_add	a number plus a number, 1 digits, choices in the text
+kind	arith_1_div	a number divided by a number, 1 digits, choices in the text
+kind	arith_1_mul	a number times a number, 1 digits, choices in the text
+kind	arith_1_sub	a number minus a number, 1 digits, choices in the text
+kind	arith_2_add	a number plus a number, 2 digits, choices in the text
+kind	arith_2_div	a number divided by a number, 2 digits, choices in the text
+kind	arith_2_mul	a number times a number, 2 digits, choices in the text
+kind	arith_2_sub	a number minus a number, 2 digits, choices in the text
+kind	arith_3_add	a number plus a number, 3 digits, choices in the text
+kind	arith_3_div	a number divided by a number, 3 digits, choices in the text
+kind	arith_3_mul	a number times a number, 3 digits, choices in the text
+kind	arith_3_sub	a number minus a number, 3 digits, choices in the text
+kind	arith_4_add	a number plus a number, 4 digits, choices in the text
+kind	arith_4_div	a number divided by a number, 4 digits, choices in the text
+kind	arith_4_mul	a number times a number, 4 digits, choices in the text
+kind	arith_4_sub	a number minus a number, 4 digits, choices in the text
+kind	arith_5_add	a number plus a number, 5 digits, choices in the text
+kind	arith_5_div	a number divided by a number, 5 digits, choices in the text
+kind	arith_5_mul	a number times a number, 5 digits, choices in the text
+kind	arith_5_sub	a number minus a number, 5 digits, choices in the text
+kind	modarith_add	find the operation from 5 examples in the text and use it: a sum of two numbers
+kind	modarith_add_plus1	find the operation from 5 examples in the text and use it: a sum of two numbers and 1 more
+kind	modarith_sub	find the operation from 5 examples in the text and use it: a difference of two numbers
+kind	modarith_sub_plus1	find the operation from 5 examples in the text and use it: a difference of two numbers and 1 more
+kind	modarith_mul	find the operation from 5 examples in the text and use it: a product of two numbers
+kind	modarith_mul_plus1	find the operation from 5 examples in the text and use it: a product of two numbers and 1 more
+task	tracking_shuffled_objects	track_3	track_5	track_7
+task	logical_deduction	deduction_3+c	deduction_5+c	deduction_7+c
+task	object_counting	object_counting
+task	navigate	navigate
+task	temporal_sequences	temporal_sequences
+task	reasoning_about_colored_objects	colored_objects
+task	penguins_in_a_table	penguins_in_a_table
+task	date_understanding	date_understanding
+task	word_sorting	word_sorting
+task	dyck_languages	dyck_languages
+task	boolean_expressions	boolean_expressions
+task	web_of_lies	web_of_lies
+task	multistep_arithmetic	multistep_arithmetic
+task	logic_grid_puzzle	logic_grid_puzzle
+task	formal_fallacies_syllogisms_negation	formal_fallacies
+task	logical_fallacy_detection	logical_fallacy_detection
+task	epistemic_reasoning	epistemic_reasoning
+task	hyperbaton	hyperbaton
+task	matrixshapes	matrixshapes
+task	cs_algorithms	cs_lcs	cs_parentheses
+task	geometric_shapes	geometric_shapes
+task	intersect_geometry	intersect_2	intersect_3	intersect_4	intersect_5	intersect_6
+task	chinese_remainder_theorem	chinese_remainder
+task	unit_conversion	unit_chained	unit_systems	unit_novel	unit_same_system	unit_add_convert	unit_add	unit_common	unit_si
+task	elementary_math_qa	emq_steps	emq_formula	emq_problem	emq_problem_steps	emq_problem_formula
+task	color	color_hcl	color_hex	color_hsl	color_rgb
+task	unnatural_in_context_learning	uicl_dates	uicl_numbers	uicl_numbers_back	uicl_dates_back	uicl_identity	uicl_reverse	uicl_reverse_back	uicl_addition
+task	list_functions	list_functions_0	list_functions_1	list_functions_2	list_functions_3	list_functions_4	list_functions_5	list_functions_6	list_functions_7	list_functions_8	list_functions_9	list_functions_10
+task	arithmetic	arith_2_add	arith_2_sub	arith_2_mul	arith_3_add	arith_3_sub	arith_3_mul	arith_3_div	arith_4_add	arith_4_sub	arith_4_mul	arith_4_div	arith_5_add	arith_5_sub	arith_5_mul	arith_5_div
+task	modified_arithmetic	modarith_add	modarith_add_plus1	modarith_sub	modarith_sub_plus1	modarith_mul	modarith_mul_plus1
+pair	tracking_shuffled_objects	track_3	track_7
+pair	logical_deduction	deduction_3+c	deduction_7+c
+pair	intersect_geometry	intersect_2	intersect_6
+pair	arithmetic	arith_2_mul	arith_5_mul
+no_names	arithmetic
+no_names	modified_arithmetic
+no_names	multistep_arithmetic
+no_names	boolean_expressions
+no_names	dyck_languages
+no_names	cs_algorithms
+no_names	matrixshapes
+no_names	intersect_geometry
+no_names	geometric_shapes
+no_names	color
+no_names	unnatural_in_context_learning
+no_names	list_functions
+no_names	word_sorting
+not_counted	geometric_shapes	the parts tool passes it with a class that counts the line commands of the path and the marks of the question: two of the ten answers have the same number of line commands, and it tells them apart by the number of choices that the question lists
+all	track_3
+all	track_5
+all	track_7
+all	deduction_3
+all	deduction_5
+all	deduction_7
+all	deduction_3+c
+all	deduction_5+c
+all	deduction_7+c
+all	object_counting
+all	navigate
+all	temporal_sequences
+all	colored_objects
+all	penguins_in_a_table
+all	date_understanding
+all	word_sorting
+all	dyck_languages
+all	boolean_expressions
+all	web_of_lies
+all	multistep_arithmetic
+all	logic_grid_puzzle
+all	formal_fallacies
+all	logical_fallacy_detection
+all	epistemic_reasoning
+all	hyperbaton
+all	matrixshapes
+all	cs_lcs
+all	cs_parentheses
+all	geometric_shapes
+all	intersect_2
+all	intersect_6
+all	chinese_remainder
+all	unit_novel
+all	unit_same_system
+all	unit_add
+all	emq_steps
+all	emq_formula
+all	color_hcl
+all	color_hex
+all	color_hsl
+all	color_rgb
+all	uicl_dates
+all	uicl_dates_back
+all	uicl_numbers
+all	uicl_identity
+all	uicl_reverse
+all	uicl_addition
+all	list_functions_10
+all	intersect_3
+all	intersect_4
+all	intersect_5
+all	unit_chained
+all	unit_systems
+all	unit_add_convert
+all	unit_common
+all	unit_si
+all	emq_problem
+all	emq_problem_steps
+all	emq_problem_formula
+all	uicl_numbers_back
+all	uicl_reverse_back
+all	list_functions_0
+all	list_functions_1
+all	list_functions_2
+all	list_functions_3
+all	list_functions_4
+all	list_functions_5
+all	list_functions_6
+all	list_functions_7
+all	list_functions_8
+all	list_functions_9
+all	arith_1_add
+all	arith_1_div
+all	arith_1_mul
+all	arith_1_sub
+all	arith_2_add
+all	arith_2_div
+all	arith_2_mul
+all	arith_2_sub
+all	arith_3_add
+all	arith_3_div
+all	arith_3_mul
+all	arith_3_sub
+all	arith_4_add
+all	arith_4_div
+all	arith_4_mul
+all	arith_4_sub
+all	arith_5_add
+all	arith_5_div
+all	arith_5_mul
+all	arith_5_sub
+all	modarith_add
+all	modarith_add_plus1
+all	modarith_sub
+all	modarith_sub_plus1
+all	modarith_mul
+all	modarith_mul_plus1
+with	track_3	tracking_shuffled_objects	2	both
+named	track_3	alice baskervilles benchwarmer black blue bob brown catch center cheerleader claire dave dick eve fellowship frankenstein fred fullback gatsby gertrude goalkeeper great green helga hound izzi jamie karl left lola lolita melissa midfielder moby odyssey ophelia orange patrick pearl pink purple red right ring rodrigo sam striker ulysses white winger yellow
+with	track_5	tracking_shuffled_objects	0	both
+named	track_5	alice baskervilles benchwarmer black blue bob brown catch center cheerleader claire dave dick eve fellowship frankenstein fred fullback gatsby gertrude goalkeeper great green helga hound izzi jamie karl left lola lolita melissa midfielder moby odyssey ophelia orange patrick pearl pink purple red right ring rodrigo sam striker ulysses white winger yellow
+with	track_7	tracking_shuffled_objects	1	both
+named	track_7	alice baskervilles benchwarmer black blue bob brown catch center cheerleader claire dave dick eve fellowship frankenstein fred fullback gatsby gertrude goalkeeper great green helga hound izzi jamie karl left lola lolita melissa midfielder moby odyssey ophelia orange patrick pearl pink purple red right ring rodrigo sam striker ulysses white winger yellow
+with	deduction_3	logical_deduction	2	both
+with	deduction_5	logical_deduction	0	both
+with	deduction_7	logical_deduction	1	both
+with	deduction_3+c	logical_deduction	2	both
+with	deduction_5+c	logical_deduction	0	both
+with	deduction_7+c	logical_deduction	1	both
+with	object_counting	object_counting	0	both
+with	navigate	navigate	0	both
+with	temporal_sequences	temporal_sequences	0	both
+named	temporal_sequences	airport amusement andrew anthony art ashley bakery basketball beach betty bike bookstore cafe class classroom clothes clothing coffee computer construction cookies court dance david deli eiffel electronic electronics elizabeth emily field football garden gas gym hall hannah james jason jennifer jessica john kimberly leaning leslie liberty library linda lisa lunch mall mark market mary michael movie movies museum nancy office orchestra park phone photos physics pisa pool restaurant richard rooftop samantha sarah school sean shop show site soccer station statue steven store studio susan swimming tennis theater thomas tiffany tower train water william yoga
+with	colored_objects	reasoning_about_colored_objects	0	both
+with	penguins_in_a_table	penguins_in_a_table	0	both
+with	date_understanding	date_understanding	0	both
+with	word_sorting	word_sorting	0	both
+with	dyck_languages	dyck_languages	0	both
+with	boolean_expressions	boolean_expressions	0	bbh
+with	web_of_lies	web_of_lies	0	bbh
+named	web_of_lies	alejandro alexis amberly andree antwan audrie bernita christie conception crista dallas delbert delfina elanor fidel fletcher gwenn helene inga jamey jaymie jerry jim ka kandi kristian leda lorine maybelle michael michaela millicent millie osvaldo phoebe rashida raymond ryan sal shalonda shaunda shenna sherrie sima tamika teressa vernell vina willian yoland
+with	multistep_arithmetic	multistep_arithmetic_two	0	bbh
+with	logic_grid_puzzle	logic_grid_puzzle	0	both
+with	formal_fallacies	formal_fallacies_syllogisms_negation	0	both
+with	logical_fallacy_detection	logical_fallacy_detection	0	both
+with	epistemic_reasoning	epistemic_reasoning	0	both
+with	hyperbaton	hyperbaton	0	both
+named	hyperbaton	baby car cat chair computer dog knife match monkey motorcycle ship shoe sock surfboard sweater
+with	matrixshapes	matrixshapes	0	both
+with	cs_lcs	cs_algorithms	0	both
+with	cs_parentheses	cs_algorithms	1	both
+with	geometric_shapes	geometric_shapes	0	both
+with	intersect_2	intersect_geometry	0	validation
+with	intersect_6	intersect_geometry	4	validation
+with	chinese_remainder	chinese_remainder_theorem	0	both
+with	unit_novel	unit_conversion	2	both
+named	unit_novel	blarb blarbs blerb blerbs rega regas riga rigas swert swerts swort sworts yot yots yut yuts
+with	unit_same_system	unit_conversion	3	both
+with	unit_add	unit_conversion	5	both
+named	unit_add	are ares atm atms cal calorie calories centimeters centimetres ci cm cubic cup cups curie curies day days feet foot ft g gallons gram grams ha hectares hour hours hr inches j joule joules kg kilogram kilograms kilometers kilometre kilometres km kph l liters litres m meters metres metric mg mile miles milligram milligrams milliliters millilitres min minute minutes ml month months mph pint pints qt quart quarts rd rutherford rutherfords s second seconds square tablespoon tablespoons tbsp teaspoons torr torrs tsp weeks yard yards yd year years yr
+with	emq_steps	elementary_math_qa	0	both
+with	emq_formula	elementary_math_qa	1	both
+with	color_hcl	color	0	both
+with	color_hex	color	1	both
+with	color_hsl	color	2	both
+with	color_rgb	color	3	both
+with	uicl_dates	unnatural_in_context_learning	0	validation
+with	uicl_dates_back	unnatural_in_context_learning	3	validation
+with	uicl_numbers	unnatural_in_context_learning	1	validation
+with	uicl_identity	unnatural_in_context_learning	4	validation
+with	uicl_reverse	unnatural_in_context_learning	5	validation
+with	uicl_addition	unnatural_in_context_learning	7	validation
+with	list_functions_10	list_functions	10	both
+with	intersect_3	intersect_geometry	1	validation
+with	intersect_4	intersect_geometry	2	validation
+with	intersect_5	intersect_geometry	3	validation
+with	unit_chained	unit_conversion	0	both
+with	unit_systems	unit_conversion	1	both
+with	unit_add_convert	unit_conversion	4	both
+with	unit_common	unit_conversion	6	both
+with	unit_si	unit_conversion	7	both
+with	emq_problem	elementary_math_qa	2	both
+with	emq_problem_steps	elementary_math_qa	3	both
+with	emq_problem_formula	elementary_math_qa	4	both
+with	uicl_numbers_back	unnatural_in_context_learning	2	validation
+with	uicl_reverse_back	unnatural_in_context_learning	6	validation
+with	list_functions_0	list_functions	0	both
+with	list_functions_1	list_functions	1	both
+with	list_functions_2	list_functions	2	both
+with	list_functions_3	list_functions	3	both
+with	list_functions_4	list_functions	4	both
+with	list_functions_5	list_functions	5	both
+with	list_functions_6	list_functions	6	both
+with	list_functions_7	list_functions	7	both
+with	list_functions_8	list_functions	8	both
+with	list_functions_9	list_functions	9	both
+with	arith_1_add	arithmetic	0	both
+with	arith_1_div	arithmetic	1	both
+with	arith_1_mul	arithmetic	2	both
+with	arith_1_sub	arithmetic	3	both
+with	arith_2_add	arithmetic	4	both
+with	arith_2_div	arithmetic	5	both
+with	arith_2_mul	arithmetic	6	both
+with	arith_2_sub	arithmetic	7	both
+with	arith_3_add	arithmetic	8	both
+with	arith_3_div	arithmetic	9	both
+with	arith_3_mul	arithmetic	10	both
+with	arith_3_sub	arithmetic	11	both
+with	arith_4_add	arithmetic	12	both
+with	arith_4_div	arithmetic	13	both
+with	arith_4_mul	arithmetic	14	both
+with	arith_4_sub	arithmetic	15	both
+with	arith_5_add	arithmetic	16	both
+with	arith_5_div	arithmetic	17	both
+with	arith_5_mul	arithmetic	18	both
+with	arith_5_sub	arithmetic	19	both
+with	modarith_add	modified_arithmetic	0	both
+with	modarith_add_plus1	modified_arithmetic	1	both
+with	modarith_sub	modified_arithmetic	2	both
+with	modarith_sub_plus1	modified_arithmetic	3	both
+with	modarith_mul	modified_arithmetic	4	both
+with	modarith_mul_plus1	modified_arithmetic	5	both
+file	tracking_shuffled_objects	train	data/raw/text/chat/hf7/tasksource__bigbench/tracking_shuffled_objects/train-00000-of-00001.parquet
+file	tracking_shuffled_objects	validation	data/raw/text/chat/hf7/tasksource__bigbench/tracking_shuffled_objects/validation-00000-of-00001.parquet
+file	logical_deduction	train	data/raw/text/chat/hf7/tasksource__bigbench/logical_deduction/train-00000-of-00001.parquet
+file	logical_deduction	validation	data/raw/text/chat/hf7/tasksource__bigbench/logical_deduction/validation-00000-of-00001.parquet
+file	object_counting	train	data/raw/text/chat/hf7/tasksource__bigbench/object_counting/train-00000-of-00001.parquet
+file	object_counting	validation	data/raw/text/chat/hf7/tasksource__bigbench/object_counting/validation-00000-of-00001.parquet
+file	navigate	train	data/raw/text/chat/hf7/tasksource__bigbench/navigate/train-00000-of-00001.parquet
+file	navigate	validation	data/raw/text/chat/hf7/tasksource__bigbench/navigate/validation-00000-of-00001.parquet
+file	temporal_sequences	train	data/raw/text/chat/hf7/tasksource__bigbench/temporal_sequences/train-00000-of-00001.parquet
+file	temporal_sequences	validation	data/raw/text/chat/hf7/tasksource__bigbench/temporal_sequences/validation-00000-of-00001.parquet
+file	reasoning_about_colored_objects	train	data/raw/text/chat/hf7/tasksource__bigbench/reasoning_about_colored_objects/train-00000-of-00001.parquet
+file	reasoning_about_colored_objects	validation	data/raw/text/chat/hf7/tasksource__bigbench/reasoning_about_colored_objects/validation-00000-of-00001.parquet
+file	penguins_in_a_table	train	data/raw/text/chat/hf7/tasksource__bigbench/penguins_in_a_table/train-00000-of-00001.parquet
+file	penguins_in_a_table	validation	data/raw/text/chat/hf7/tasksource__bigbench/penguins_in_a_table/validation-00000-of-00001.parquet
+file	date_understanding	train	data/raw/text/chat/hf7/tasksource__bigbench/date_understanding/train-00000-of-00001.parquet
+file	date_understanding	validation	data/raw/text/chat/hf7/tasksource__bigbench/date_understanding/validation-00000-of-00001.parquet
+file	word_sorting	train	data/raw/text/chat/hf7/tasksource__bigbench/word_sorting/train-00000-of-00001.parquet
+file	word_sorting	validation	data/raw/text/chat/hf7/tasksource__bigbench/word_sorting/validation-00000-of-00001.parquet
+file	dyck_languages	train	data/raw/text/chat/hf7/tasksource__bigbench/dyck_languages/train-00000-of-00001.parquet
+file	dyck_languages	validation	data/raw/text/chat/hf7/tasksource__bigbench/dyck_languages/validation-00000-of-00001.parquet
+file	boolean_expressions	bbh	data/raw/text/chat/hf7/lukaemon__bbh/boolean_expressions/test-00000-of-00001.parquet
+file	web_of_lies	bbh	data/raw/text/chat/hf7/lukaemon__bbh/web_of_lies/test-00000-of-00001.parquet
+file	multistep_arithmetic_two	bbh	data/raw/text/chat/hf7/lukaemon__bbh/multistep_arithmetic_two/test-00000-of-00001.parquet
+file	logic_grid_puzzle	train	data/raw/text/chat/hf7/tasksource__bigbench/logic_grid_puzzle/train-00000-of-00001.parquet
+file	logic_grid_puzzle	validation	data/raw/text/chat/hf7/tasksource__bigbench/logic_grid_puzzle/validation-00000-of-00001.parquet
+file	formal_fallacies_syllogisms_negation	train	data/raw/text/chat/hf7/tasksource__bigbench/formal_fallacies_syllogisms_negation/train-00000-of-00001.parquet
+file	formal_fallacies_syllogisms_negation	validation	data/raw/text/chat/hf7/tasksource__bigbench/formal_fallacies_syllogisms_negation/validation-00000-of-00001.parquet
+file	logical_fallacy_detection	train	data/raw/text/chat/hf7/tasksource__bigbench/logical_fallacy_detection/train-00000-of-00001.parquet
+file	logical_fallacy_detection	validation	data/raw/text/chat/hf7/tasksource__bigbench/logical_fallacy_detection/validation-00000-of-00001.parquet
+file	epistemic_reasoning	train	data/raw/text/chat/hf7/tasksource__bigbench/epistemic_reasoning/train-00000-of-00001.parquet
+file	epistemic_reasoning	validation	data/raw/text/chat/hf7/tasksource__bigbench/epistemic_reasoning/validation-00000-of-00001.parquet
+file	hyperbaton	train	data/raw/text/chat/hf7/tasksource__bigbench/hyperbaton/train-00000-of-00001.parquet
+file	hyperbaton	validation	data/raw/text/chat/hf7/tasksource__bigbench/hyperbaton/validation-00000-of-00001.parquet
+file	matrixshapes	train	data/raw/text/chat/hf7/tasksource__bigbench/matrixshapes/train-00000-of-00001.parquet
+file	matrixshapes	validation	data/raw/text/chat/hf7/tasksource__bigbench/matrixshapes/validation-00000-of-00001.parquet
+file	cs_algorithms	train	data/raw/text/chat/hf7/tasksource__bigbench/cs_algorithms/train-00000-of-00001.parquet
+file	cs_algorithms	validation	data/raw/text/chat/hf7/tasksource__bigbench/cs_algorithms/validation-00000-of-00001.parquet
+file	geometric_shapes	train	data/raw/text/chat/hf7/tasksource__bigbench/geometric_shapes/train-00000-of-00001.parquet
+file	geometric_shapes	validation	data/raw/text/chat/hf7/tasksource__bigbench/geometric_shapes/validation-00000-of-00001.parquet
+file	intersect_geometry	train	data/raw/text/chat/hf7/tasksource__bigbench/intersect_geometry/train-00000-of-00001.parquet
+file	intersect_geometry	validation	data/raw/text/chat/hf7/tasksource__bigbench/intersect_geometry/validation-00000-of-00001.parquet
+file	chinese_remainder_theorem	train	data/raw/text/chat/hf7/tasksource__bigbench/chinese_remainder_theorem/train-00000-of-00001.parquet
+file	chinese_remainder_theorem	validation	data/raw/text/chat/hf7/tasksource__bigbench/chinese_remainder_theorem/validation-00000-of-00001.parquet
+file	unit_conversion	train	data/raw/text/chat/hf7/tasksource__bigbench/unit_conversion/train-00000-of-00001.parquet
+file	unit_conversion	validation	data/raw/text/chat/hf7/tasksource__bigbench/unit_conversion/validation-00000-of-00001.parquet
+file	elementary_math_qa	train	data/raw/text/chat/hf7/tasksource__bigbench/elementary_math_qa/train-00000-of-00001.parquet
+file	elementary_math_qa	validation	data/raw/text/chat/hf7/tasksource__bigbench/elementary_math_qa/validation-00000-of-00001.parquet
+file	color	train	data/raw/text/chat/hf7/tasksource__bigbench/color/train-00000-of-00001.parquet
+file	color	validation	data/raw/text/chat/hf7/tasksource__bigbench/color/validation-00000-of-00001.parquet
+file	unnatural_in_context_learning	train	data/raw/text/chat/hf7/tasksource__bigbench/unnatural_in_context_learning/train-00000-of-00001.parquet
+file	unnatural_in_context_learning	validation	data/raw/text/chat/hf7/tasksource__bigbench/unnatural_in_context_learning/validation-00000-of-00001.parquet
+file	list_functions	train	data/raw/text/chat/hf7/tasksource__bigbench/list_functions/train-00000-of-00001.parquet
+file	list_functions	validation	data/raw/text/chat/hf7/tasksource__bigbench/list_functions/validation-00000-of-00001.parquet
+file	arithmetic	train	data/raw/text/chat/hf7/tasksource__bigbench/arithmetic/train-00000-of-00001.parquet
+file	arithmetic	validation	data/raw/text/chat/hf7/tasksource__bigbench/arithmetic/validation-00000-of-00001.parquet
+file	modified_arithmetic	train	data/raw/text/chat/hf7/tasksource__bigbench/modified_arithmetic/train-00000-of-00001.parquet
+file	modified_arithmetic	validation	data/raw/text/chat/hf7/tasksource__bigbench/modified_arithmetic/validation-00000-of-00001.parquet

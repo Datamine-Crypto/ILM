@@ -1,0 +1,29 @@
+set	CLUTRR
+by	people
+fit	1000
+held	400
+kind	clutrr_k2	kinship: lessons of 2, 3 and 4 steps, read 2 told relations joined into one
+kind	clutrr_k3	kinship: lessons of 2, 3 and 4 steps, read 3 told relations joined into one
+kind	clutrr_k4	kinship: lessons of 2, 3 and 4 steps, read 4 told relations joined into one
+kind	clutrr_k5	kinship: lessons of 2, 3 and 4 steps, read 5 told relations joined into one
+kind	clutrr_k6	kinship: lessons of 2, 3 and 4 steps, read 6 told relations joined into one
+kind	clutrr_k7	kinship: lessons of 2, 3 and 4 steps, read 7 told relations joined into one
+kind	clutrr_k8	kinship: lessons of 2, 3 and 4 steps, read 8 told relations joined into one
+kind	clutrr_k9	kinship: lessons of 2, 3 and 4 steps, read 9 told relations joined into one
+kind	clutrr_k10	kinship: lessons of 2, 3 and 4 steps, read 10 told relations joined into one
+kind	clutrr_longer	kinship: learn from 2, 3 and 4 steps, read 5 to 10 steps
+task	kinship	clutrr_k2	clutrr_k3	clutrr_k4	clutrr_k5	clutrr_k6	clutrr_k7	clutrr_k8	clutrr_k9	clutrr_k10
+all	clutrr_k2
+all	clutrr_k3
+all	clutrr_k4
+all	clutrr_k5
+all	clutrr_k6
+all	clutrr_k7
+all	clutrr_k8
+all	clutrr_k9
+all	clutrr_k10
+all	clutrr_longer
+file	*	train	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__train__0000.parquet
+file	*	valid	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__validation__0000.parquet
+file	*	test	data/raw/text/chat/hf7/CLUTRR__v1/gen_train234_test2to10__test__0000.parquet
+file	*	test	data/raw/text/chat/hf7/CLUTRR__v1/gen_train23_test2to10__test__0000.parquet

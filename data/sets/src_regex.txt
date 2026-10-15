@@ -1,0 +1,16 @@
+set	NL-RX (Locascio and others 2016)
+by	program
+fit	1000
+held	400
+kind	regex_synth	a description that a grammar made into the regular expression that it means
+kind	regex_turk	the same expressions, the descriptions in the words of people
+task	a description into a regular expression	regex_synth
+task	a description by people into a regular expression	regex_turk
+no_names	a description into a regular expression
+no_names	a description by people into a regular expression
+all	regex_synth
+all	regex_turk
+file	regex_synth	src	data/raw/text/chat/gh1/nicholaslocascio__deep-regex/NL-RX-Synth__src.txt
+file	regex_synth	targ	data/raw/text/chat/gh1/nicholaslocascio__deep-regex/NL-RX-Synth__targ.txt
+file	regex_turk	src	data/raw/text/chat/gh1/nicholaslocascio__deep-regex/NL-RX-Turk__src.txt
+file	regex_turk	targ	data/raw/text/chat/gh1/nicholaslocascio__deep-regex/NL-RX-Turk__targ.txt

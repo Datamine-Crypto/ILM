@@ -1,0 +1,15 @@
+set	PrOntoQA
+by	program
+fit	600
+held	400
+kind	pronto_1hop	chain of "every A is a B": one rule use, true or false
+kind	pronto_5hop	chain of "every A is a B": five rule uses, true or false
+task	chains of every A is a B	pronto_1hop	pronto_5hop
+pair	chains of every A is a B	pronto_1hop	pronto_5hop
+not_counted	chains of every A is a B	the rules that pass it use no chain: the asked property stands in one told rule, and its sign (with or without "not") gives the answer
+all	pronto_1hop
+all	pronto_5hop
+file	pronto_1hop	prompts	data/raw/text/chat/hf7/longface__prontoqa-train/1-hop-prontoqa-prompt-train.jsonl
+file	pronto_5hop	train	data/raw/text/chat/hf7/fengyang0317__prontoqa/data__train-00000-of-00001.parquet
+file	pronto_5hop	read	data/raw/text/chat/hf7/fengyang0317__prontoqa/data__validation-00000-of-00001.parquet
+file	pronto_5hop	read	data/raw/text/chat/hf7/fengyang0317__prontoqa/data__test-00000-of-00001.parquet

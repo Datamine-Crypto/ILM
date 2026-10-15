@@ -1,0 +1,81 @@
+set	CoNLL-SIGMORPHON 2018, task 1, medium setting
+by	people
+fit	1000
+held	400
+kind	infl_adyghe	the form of a word of adyghe from its dictionary form and its features, letter by letter
+kind	infl_basque	the form of a word of basque from its dictionary form and its features, letter by letter
+kind	infl_dutch	the form of a word of dutch from its dictionary form and its features, letter by letter
+kind	infl_galician	the form of a word of galician from its dictionary form and its features, letter by letter
+kind	infl_hungarian	the form of a word of hungarian from its dictionary form and its features, letter by letter
+kind	infl_latin	the form of a word of latin from its dictionary form and its features, letter by letter
+kind	infl_navajo	the form of a word of navajo from its dictionary form and its features, letter by letter
+kind	infl_old_french	the form of a word of old-french from its dictionary form and its features, letter by letter
+kind	infl_romanian	the form of a word of romanian from its dictionary form and its features, letter by letter
+kind	infl_sorani	the form of a word of sorani from its dictionary form and its features, letter by letter
+kind	infl_venetian	the form of a word of venetian from its dictionary form and its features, letter by letter
+task	infl_adyghe	infl_adyghe
+task	infl_basque	infl_basque
+task	infl_dutch	infl_dutch
+task	infl_galician	infl_galician
+task	infl_hungarian	infl_hungarian
+task	infl_latin	infl_latin
+task	infl_navajo	infl_navajo
+task	infl_old_french	infl_old_french
+task	infl_romanian	infl_romanian
+task	infl_sorani	infl_sorani
+task	infl_venetian	infl_venetian
+no_names	infl_adyghe
+no_names	infl_basque
+no_names	infl_dutch
+no_names	infl_galician
+no_names	infl_hungarian
+no_names	infl_latin
+no_names	infl_navajo
+no_names	infl_old_french
+no_names	infl_romanian
+no_names	infl_sorani
+no_names	infl_venetian
+all	infl_adyghe
+all	infl_basque
+all	infl_dutch
+all	infl_galician
+all	infl_hungarian
+all	infl_latin
+all	infl_navajo
+all	infl_old_french
+all	infl_romanian
+all	infl_sorani
+all	infl_venetian
+file	infl_adyghe	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__adyghe-train-medium
+file	infl_adyghe	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__adyghe-dev
+file	infl_adyghe	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__adyghe-train-high
+file	infl_basque	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__basque-train-medium
+file	infl_basque	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__basque-dev
+file	infl_basque	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__basque-train-high
+file	infl_dutch	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__surprise__dutch-train-medium
+file	infl_dutch	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__surprise__dutch-dev
+file	infl_dutch	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__surprise__dutch-train-high
+file	infl_galician	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__galician-train-medium
+file	infl_galician	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__galician-dev
+file	infl_galician	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__galician-train-high
+file	infl_hungarian	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__hungarian-train-medium
+file	infl_hungarian	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__hungarian-dev
+file	infl_hungarian	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__hungarian-train-high
+file	infl_latin	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__latin-train-medium
+file	infl_latin	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__latin-dev
+file	infl_latin	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__latin-train-high
+file	infl_navajo	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__navajo-train-medium
+file	infl_navajo	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__navajo-dev
+file	infl_navajo	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__navajo-train-high
+file	infl_old_french	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__old-french-train-medium
+file	infl_old_french	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__old-french-dev
+file	infl_old_french	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__old-french-train-high
+file	infl_romanian	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__romanian-train-medium
+file	infl_romanian	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__romanian-dev
+file	infl_romanian	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__romanian-train-high
+file	infl_sorani	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__sorani-train-medium
+file	infl_sorani	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__sorani-dev
+file	infl_sorani	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__sorani-train-high
+file	infl_venetian	train	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__venetian-train-medium
+file	infl_venetian	read	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__venetian-dev
+file	infl_venetian	high	data/raw/text/chat/gh1/sigmorphon__conll2018/task1__all__venetian-train-high

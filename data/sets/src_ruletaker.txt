@@ -1,0 +1,37 @@
+set	RuleTaker
+by	program
+fit	600
+held	400
+kind	rt_d0	deduction with told rules, closed form, theories with proofs of 0 rule uses at most (questions of depth 0 to 0)
+kind	rt_d1	deduction with told rules, closed form, theories with proofs of 1 rule uses at most (questions of depth 0 to 1)
+kind	rt_d2	deduction with told rules, closed form, theories with proofs of 2 rule uses at most (questions of depth 0 to 2)
+kind	rt_d3	deduction with told rules, closed form, theories with proofs of 3 rule uses at most (questions of depth 0 to 3)
+kind	rt_d5	deduction with told rules, closed form, theories with proofs of 5 rule uses at most (questions of depth 0 to 5)
+task	deduction with told rules, closed form	rt_d0	rt_d1	rt_d2	rt_d3	rt_d5
+pair	deduction with told rules, closed form	rt_d0	rt_d5
+all	rt_d0
+all	rt_d1
+all	rt_d2
+all	rt_d3
+all	rt_d5
+file	*	train	data/raw/text/chat/hf7/tasksource__ruletaker/data__train-00000-of-00001-52adaa842dd7ed92.parquet
+file	*	read	data/raw/text/chat/hf7/tasksource__ruletaker/data__test-00000-of-00001-402c217dbcd02599.parquet
+new	anne	zqanne
+new	bob	zqbob
+new	charlie	zqcharlie
+new	dave	zqdave
+new	erin	zqerin
+new	fiona	zqfiona
+new	gary	zqgary
+new	harry	zqharry
+new	bald	zqbald
+new	eagle	zqeagle
+new	bear	zqbear
+new	cat	zqcat
+new	cow	zqcow
+new	dog	zqdog
+new	lion	zqlion
+new	mouse	zqmouse
+new	rabbit	zqrabbit
+new	squirrel	zqsquirrel
+new	tiger	zqtiger

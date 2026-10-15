@@ -1,0 +1,7 @@
+library = premise
+library = mimalloc
+patterns = ilm-core
+patterns = ilm-data
+patterns = ilm-eval
+patterns = ilm-commands
+app = ilm

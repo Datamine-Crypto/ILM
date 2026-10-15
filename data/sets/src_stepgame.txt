@@ -1,0 +1,28 @@
+set	StepGame
+by	program
+fit	600
+held	400
+kind	step_k1	steps in space: the relation of two agents over 1 told step
+kind	step_k2	steps in space: the relation of two agents over 2 told steps
+kind	step_k3	steps in space: the relation of two agents over 3 told steps
+kind	step_k4	steps in space: the relation of two agents over 4 told steps
+kind	step_k5	steps in space: the relation of two agents over 5 told steps
+kind	step_k6	steps in space: the relation of two agents over 6 told steps
+kind	step_k7	steps in space: the relation of two agents over 7 told steps
+kind	step_k8	steps in space: the relation of two agents over 8 told steps
+kind	step_k9	steps in space: the relation of two agents over 9 told steps
+kind	step_k10	steps in space: the relation of two agents over 10 told steps
+task	steps in space	step_k1	step_k2	step_k3	step_k4	step_k5	step_k6	step_k7	step_k8	step_k9	step_k10
+pair	steps in space	step_k1	step_k10
+all	step_k1
+all	step_k2
+all	step_k3
+all	step_k4
+all	step_k5
+all	step_k6
+all	step_k7
+all	step_k8
+all	step_k9
+all	step_k10
+file	*	train	data/raw/text/chat/hf7/tasksource__stepgame/data__train-00000-of-00001-6415089a0202876b.parquet
+file	*	read	data/raw/text/chat/hf7/tasksource__stepgame/data__test-00000-of-00001-f74e855522c52391.parquet

@@ -1,0 +1,41 @@
+set	Syntactic transformations (Mueller and others 2022)
+by	program
+fit	1000
+held	400
+kind	quest_en_test	a sentence into a question, English: read sentences from the distribution of the lessons
+kind	quest_en_gen	a sentence into a question, English: read sentences of a build that no lesson has
+kind	quest_de_test	a sentence into a question, German: read sentences from the distribution of the lessons
+kind	quest_de_gen	a sentence into a question, German: read sentences of a build that no lesson has
+kind	passiv_en_test	a sentence into the passive, English: read sentences from the distribution of the lessons
+kind	passiv_en_gen	a sentence into the passive, English: read sentences of a build that no lesson has
+kind	passiv_de_test	a sentence into the passive, German: read sentences from the distribution of the lessons
+kind	passiv_de_gen	a sentence into the passive, German: read sentences of a build that no lesson has
+task	a sentence into a question	quest_en_test	quest_de_test
+task	a sentence into the passive	passiv_en_test	passiv_de_test
+task	a sentence into a question, a new build	quest_en_gen	quest_de_gen
+task	a sentence into the passive, a new build	passiv_en_gen	passiv_de_gen
+no_names	a sentence into a question
+no_names	a sentence into the passive
+no_names	a sentence into a question, a new build
+no_names	a sentence into the passive, a new build
+not_counted	a sentence into a question	the tool moves the first helping verb of a sentence, which is the helping verb of the main clause in every lesson; when the subject has a clause of its own it gives the right question in 0 of 146 changed lessons and for 0.0% of the generalization files
+all	quest_en_test
+all	quest_en_gen
+all	quest_de_test
+all	quest_de_gen
+all	passiv_en_test
+all	passiv_en_gen
+all	passiv_de_test
+all	passiv_de_gen
+file	quest_en	train	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-en__syntactic_transformations-train.parquet
+file	quest_en	test	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-en__syntactic_transformations-test.parquet
+file	quest_en	generalization	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-en__syntactic_transformations-generalization.parquet
+file	quest_de	train	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-de__syntactic_transformations-train.parquet
+file	quest_de	test	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-de__syntactic_transformations-test.parquet
+file	quest_de	generalization	data/raw/text/chat/hf7/amueller__syntactic_transformations/question-de__syntactic_transformations-generalization.parquet
+file	passiv_en	train	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-en-nps__syntactic_transformations-train.parquet
+file	passiv_en	test	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-en-nps__syntactic_transformations-test.parquet
+file	passiv_en	generalization	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-en-nps__syntactic_transformations-generalization.parquet
+file	passiv_de	train	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-de-nps__train__0000.parquet
+file	passiv_de	test	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-de-nps__test__0000.parquet
+file	passiv_de	generalization	data/raw/text/chat/hf7/amueller__syntactic_transformations/passiv-de-nps__generalization__0000.parquet

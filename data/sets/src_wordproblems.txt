@@ -1,0 +1,41 @@
+set	word problems by people (MAWPS, ASDiv, SVAMP)
+by	people
+fit	600
+held	400
+kind	addsub	MAWPS part AddSub: a sum or a difference of amounts of one thing, some told numbers are not used
+kind	singleop	MAWPS part SingleOp: one calculation of the four with two told numbers
+kind	singleeq	MAWPS part SingleEq: one equation with one unknown, one to three calculations
+kind	multiarith	MAWPS part MultiArith: two calculations in a row
+kind	asdiv_a	ASDiv-A: the problems of ASDiv with the four basic calculations, one or two steps
+kind	asdiv	ASDiv, all problems: also ratios, common divisors, two unknowns, geometry, patterns
+kind	svamp	SVAMP: one calculation (a few with two); the question or the story is changed so that the words alone do not give the calculation
+task	MAWPS AddSub	addsub
+task	MAWPS SingleOp	singleop
+task	MAWPS SingleEq	singleeq
+task	MAWPS MultiArith	multiarith
+task	ASDiv-A	asdiv_a
+task	ASDiv	asdiv
+task	SVAMP	svamp
+all	addsub
+all	singleop
+all	singleeq
+all	multiarith
+all	asdiv_a
+all	asdiv
+all	svamp
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/train/0000.parquet
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/validation/0000.parquet
+file	addsub	rows	data/raw/text/chat/hf7/allenai__lila/addsub/test/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/train/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/validation/0000.parquet
+file	singleop	rows	data/raw/text/chat/hf7/allenai__lila/singleop/test/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/train/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/validation/0000.parquet
+file	multiarith	rows	data/raw/text/chat/hf7/allenai__lila/multiarith/test/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/train/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/validation/0000.parquet
+file	singleeq	rows	data/raw/text/chat/hf7/allenai__lila/singleq/test/0000.parquet
+file	asdiv_a	rows	data/raw/text/chat/hf7/MU-NLPC__Calc-asdiv_a/data/test-00000-of-00001-d118ad90f5719063.parquet
+file	asdiv	rows	data/raw/text/chat/hf7/EleutherAI__asdiv/asdiv/validation-00000-of-00001.parquet
+file	svamp	rows	data/raw/text/chat/hf7/ChilleD__SVAMP/data/train-00000-of-00001.parquet
+file	svamp	rows	data/raw/text/chat/hf7/ChilleD__SVAMP/data/test-00000-of-00001.parquet

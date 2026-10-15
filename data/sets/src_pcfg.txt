@@ -1,0 +1,24 @@
+set	PCFG SET
+by	program
+fit	1000
+held	400
+kind	pcfg_plain	functions on rows in prefix notation, train and test from one distribution
+kind	pcfg_longer	the same, read texts that are longer than every lesson
+kind	pcfg_new	the same, read pairs of functions that no lesson holds
+task	functions on rows, meaning built from parts	pcfg_plain	pcfg_longer	pcfg_new
+no_names	functions on rows, meaning built from parts
+all	pcfg_plain
+all	pcfg_longer
+all	pcfg_new
+file	pcfg_plain	train.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__pcfgset__train.src
+file	pcfg_plain	train.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__pcfgset__train.tgt
+file	pcfg_plain	test.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__pcfgset__test.src
+file	pcfg_plain	test.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__pcfgset__test.tgt
+file	pcfg_longer	train.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__productivity__train.src
+file	pcfg_longer	train.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__productivity__train.tgt
+file	pcfg_longer	test.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__productivity__test.src
+file	pcfg_longer	test.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__productivity__test.tgt
+file	pcfg_new	train.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__systematicity__train.src
+file	pcfg_new	train.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__systematicity__train.tgt
+file	pcfg_new	test.src	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__systematicity__test.src
+file	pcfg_new	test.tgt	data/raw/text/chat/gh1/i-machine-think__am-i-compositional/data__pcfgset__systematicity__test.tgt

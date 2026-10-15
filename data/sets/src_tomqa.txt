@@ -1,0 +1,154 @@
+set	ToM-QA
+by	program
+fit	600
+held	300
+kind	tomqa_easy_real	belief, one short story: where the thing is after the last move
+kind	tomqa_easy_begin	belief, one short story: where the thing was before the move
+kind	tomqa_easy_look	belief, one short story: first belief: where a person will look for the thing
+kind	tomqa_easy_think	belief, one short story: second belief: where one person thinks that another person searches
+kind	tomqa_noise_real	belief, one short story with sentences that do not matter: where the thing is after the last move
+kind	tomqa_noise_begin	belief, one short story with sentences that do not matter: where the thing was before the move
+kind	tomqa_noise_look	belief, one short story with sentences that do not matter: first belief: where a person will look for the thing
+kind	tomqa_noise_think	belief, one short story with sentences that do not matter: second belief: where one person thinks that another person searches
+kind	tomqa_hard_real	belief, four stories in a row: where the thing is after the last move
+kind	tomqa_hard_begin	belief, four stories in a row: where the thing was before the move
+kind	tomqa_hard_look	belief, four stories in a row: first belief: where a person will look for the thing
+kind	tomqa_hard_think	belief, four stories in a row: second belief: where one person thinks that another person searches
+task	where the thing is after the last move	tomqa_easy_real	tomqa_noise_real	tomqa_hard_real
+task	where the thing was before the move	tomqa_easy_begin	tomqa_noise_begin	tomqa_hard_begin
+task	first belief: where a person will look for the thing	tomqa_easy_look	tomqa_noise_look	tomqa_hard_look
+task	second belief: where one person thinks that another person searches	tomqa_easy_think	tomqa_noise_think	tomqa_hard_think
+pair	where the thing is after the last move	tomqa_easy_real	tomqa_hard_real
+pair	where the thing was before the move	tomqa_easy_begin	tomqa_hard_begin
+pair	first belief: where a person will look for the thing	tomqa_easy_look	tomqa_hard_look
+pair	second belief: where one person thinks that another person searches	tomqa_easy_think	tomqa_hard_think
+not_counted	second belief: where one person thinks that another person searches	in its easy part the tool that is taken keeps its answer for 218 of 218 stories that were changed so that the true answer flips: no person is tracked (the set allows it: the order of words gives every answer)
+all	tomqa_easy_real
+all	tomqa_easy_begin
+all	tomqa_easy_look
+all	tomqa_easy_think
+all	tomqa_noise_real
+all	tomqa_noise_begin
+all	tomqa_noise_look
+all	tomqa_noise_think
+all	tomqa_hard_real
+all	tomqa_hard_begin
+all	tomqa_hard_look
+all	tomqa_hard_think
+file	easy	train	data/raw/text/chat/hf7/Lots-of-LoRAs__task151_tomqa_find_location_easy_clean/data__train-00000-of-00001.parquet
+file	easy	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task151_tomqa_find_location_easy_clean/data__valid-00000-of-00001.parquet
+file	easy	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task151_tomqa_find_location_easy_clean/data__test-00000-of-00001.parquet
+file	noise	train	data/raw/text/chat/hf7/Lots-of-LoRAs__task152_tomqa_find_location_easy_noise/data__train-00000-of-00001.parquet
+file	noise	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task152_tomqa_find_location_easy_noise/data__valid-00000-of-00001.parquet
+file	noise	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task152_tomqa_find_location_easy_noise/data__test-00000-of-00001.parquet
+file	hard	train	data/raw/text/chat/hf7/Lots-of-LoRAs__task153_tomqa_find_location_hard_clean/data__train-00000-of-00001.parquet
+file	hard	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task153_tomqa_find_location_hard_clean/data__valid-00000-of-00001.parquet
+file	hard	read	data/raw/text/chat/hf7/Lots-of-LoRAs__task153_tomqa_find_location_hard_clean/data__test-00000-of-00001.parquet
+new	abigail	zelda
+new	aiden	quentin
+new	alexander	ingrid
+new	amelia	tobias
+new	aria	ursula
+new	avery	viktor
+new	benjamin	wanda
+new	charlotte	xavier
+new	elizabeth	yvonne
+new	ella	bruno
+new	emily	cecile
+new	ethan	dmitri
+new	evelyn	estelle
+new	hannah	fabian
+new	isabella	greta
+new	jack	horace
+new	jackson	imogen
+new	jacob	jasper
+new	james	kirsten
+new	jayden	leopold
+new	liam	marta
+new	logan	nikolai
+new	lucas	odette
+new	mason	percival
+new	mia	rosalind
+new	oliver	stefan
+new	olivia	thora
+new	owen	ulrich
+new	sophia	vivian
+new	william	wilfred
+new	tv	foyer
+new	room	nook
+new	attic	loft
+new	back	barn
+new	yard	shed
+new	basement	vault
+new	bathroom	chapel
+new	bedroom	gallery
+new	cellar	balcony
+new	closet	terrace
+new	crawlspace	veranda
+new	den	nursery
+new	dining	library
+new	front	armory
+new	garage	stable
+new	garden	cabin
+new	hall	depot
+new	hallway	arcade
+new	kitchen	alcove
+new	laundry	atrium
+new	living	bunker
+new	lounge	cloister
+new	master	conservatory
+new	office	corridor
+new	pantry	dormitory
+new	patio	greenhouse
+new	playroom	hangar
+new	porch	kiln
+new	staircase	larder
+new	study	mezzanine
+new	sunroom	parlor
+new	workshop	scullery
+new	apple	hammer
+new	asparagus	lantern
+new	banana	compass
+new	beans	ribbon
+new	broccoli	kettle
+new	cabbage	saddle
+new	carrot	whistle
+new	celery	anchor
+new	corn	candle
+new	cucumber	helmet
+new	eggplant	pillow
+new	grapefruit	ladder
+new	grapes	marble
+new	lettuce	needle
+new	lime	button
+new	onion	feather
+new	orange	goblet
+new	peach	hatchet
+new	pear	inkwell
+new	persimmon	jigsaw
+new	pineapple	kite
+new	potato	locket
+new	pumpkin	mitten
+new	spinach	napkin
+new	strawberry	oboe
+new	tangerine	paddle
+new	tomato	quill
+new	turnip	rattle
+new	watermelon	spindle
+new	pepper	thimble
+new	blue	violet
+new	green	amber
+new	red	ivory
+new	bathtub	barrel
+new	box	satchel
+new	container	hamper
+new	crate	coffer
+new	cupboard	locker
+new	envelope	pouch
+new	suitcase	trunk
+new	treasure	casket
+new	chest	urn
+new	basket	jar
+new	bottle	tin
+new	bucket	sack
+new	drawer	bin
