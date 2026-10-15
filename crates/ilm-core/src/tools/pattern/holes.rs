@@ -41,11 +41,13 @@ impl TextEnds {
 }
 
 pub fn holed_groups(keys: &[Vec<u32>], words: &[Vec<u32>]) -> Vec<Vec<u32>> {
+    let places: usize = keys.iter().map(Vec::len).sum();
     let mut at: CheapMap<u64, u32> = CheapMap::default();
-    let mut next: Vec<u32> = Vec::new();
-    let mut seen: Vec<(u32, u32)> = Vec::new();
-    let mut first: Vec<u32> = Vec::new();
-    let mut more: Vec<Vec<u32>> = Vec::new();
+    at.reserve(places);
+    let mut next: Vec<u32> = Vec::with_capacity(places);
+    let mut seen: Vec<(u32, u32)> = Vec::with_capacity(places);
+    let mut first: Vec<u32> = Vec::with_capacity(places);
+    let mut more: Vec<Vec<u32>> = Vec::with_capacity(places);
     for (number, key) in keys.iter().enumerate() {
         let ends = TextEnds::over(key);
         for place in 0..key.len() {
@@ -82,7 +84,7 @@ pub fn holed_groups(keys: &[Vec<u32>], words: &[Vec<u32>]) -> Vec<Vec<u32>> {
     }
     out
 }
-because!(holed_groups, SliceKeys, "the words that fill one place of texts that are the same in every other place: for each text and place, the key is the text of keys with that place open and the word is the word of words at that place; the groups with two different words or more, each word once, in the order in which the groups were first seen");
+because!(holed_groups, SliceKeys, "the words that fill one place of texts that are the same in every other place: for each text and place, the key is the text of keys with that place open and the word is the word of words at that place; the groups with two different words or more, each word once, in the order in which the groups were first seen. The tables get room for every place at the start, because a place makes at most one group");
 
 pub fn run_contexts(texts: &[Vec<u32>], most: usize, rest: usize) -> Vec<Vec<(u32, u32, u32)>> {
     let mut at: CheapMap<u64, u32> = CheapMap::default();

@@ -2,6 +2,24 @@ use ilm_core::base::lanes::{on_lanes, on_lanes_then, shards};
 use ilm_core::base::sums::compensated;
 use ilm_core::base::symbols::Symbols;
 use ilm_core::base::words::{answer_words, words};
+use ilm_core::cases::read_kind;
+
+#[test]
+fn case_file_lines_end_with_or_without_a_return() {
+    let path = std::env::temp_dir().join(format!("ilm_case_lines_{}.txt", std::process::id()));
+    std::fs::write(&path, "#\tname=x\tread_from=1\r\nS\tMary went home.\r\nL\tlabel line\nQ\tWhere is Mary?\r\nA\thome\r\n\r\nS\tJohn left.\nQ\tWhere is John?\nA\tout").expect("write");
+    let kind = read_kind(&path).expect("read");
+    std::fs::remove_file(&path).ok();
+    assert_eq!(kind.head, vec![("name".to_string(), "x".to_string()), ("read_from".to_string(), "1".to_string())]);
+    assert_eq!(kind.cases.len(), 2);
+    assert_eq!(kind.cases[0].sentences, vec!["Mary went home.".to_string()]);
+    assert_eq!(kind.cases[0].question, "Where is Mary?");
+    assert_eq!(kind.cases[0].answer, "home");
+    assert_eq!(kind.labels[0], vec!["L\tlabel line".to_string()]);
+    assert_eq!(kind.cases[1].sentences, vec!["John left.".to_string()]);
+    assert_eq!(kind.cases[1].answer, "out");
+    assert!(kind.labels[1].is_empty());
+}
 
 #[test]
 fn words_of_a_text() {

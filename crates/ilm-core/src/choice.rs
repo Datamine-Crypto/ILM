@@ -2,6 +2,7 @@ use crate::cases::Case;
 use crate::base::lanes::{on_lanes, shards};
 use crate::tools::call::{Learner, Lessons, Said, StoryAsk, Tool, read_story};
 use crate::split::told_texts;
+use crate::tools::pattern::shared_words::WordsScope;
 use crate::base::words::answer_words;
 use patterns::{because, source};
 use std::cmp::Ordering;
@@ -163,6 +164,7 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
     let first_labels = picked_labels(lessons.labels, &first);
     let last_cases = picked(lessons.cases, &last);
     let inner = lessons.part(&first_cases, &first_labels);
+    let shared = WordsScope::over(&first_cases);
     let mut tries: Vec<Tried> = if every {
         let each = (lanes / tools.len().max(1)).max(1);
         let mut all: Vec<Tried> = on_lanes(tools.len(), lanes, &|tool| tried(&tools[tool], lessons, inner, &last_cases, each));
@@ -180,6 +182,7 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
         }
         found
     };
+    drop(shared);
     let mut best: Option<usize> = None;
     for (tool, one) in tries.iter().enumerate() {
         if best.is_none_or(|top| one.share > tries[top].share + CLEARLY) {
@@ -224,4 +227,4 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
     let said: Vec<String> = stopped.iter().map(|(tool, why)| format!("{}: {why}", tools[*tool].name)).collect();
     Err(format!("{NO_TOOL}: {}", said.join("; ")))
 }
-because!(take, HeldChoice, "the choice among the tools for one kind: the tools on the first part of the lessons, each with its share on the rest; the highest share is taken, of equals the earlier tool; that tool learns again from all lessons, and when it says there that it does not read the kind, the next tool in the order of the shares is taken. The tools are tried in their order, and a tool after one that read every case of the rest right is not tried, because a later tool is taken only with a higher share, nor is a tool that reads in its own way for the learner of another tool that does not lead; when the tool taken stops on all lessons, the tools not tried are tried then. With every, all tools are tried side by side, for a run that shows the share of each tool");
+because!(take, HeldChoice, "the choice among the tools for one kind: the tools on the first part of the lessons, each with its share on the rest; the highest share is taken, of equals the earlier tool; that tool learns again from all lessons, and when it says there that it does not read the kind, the next tool in the order of the shares is taken. The tools are tried in their order, and a tool after one that read every case of the rest right is not tried, because a later tool is taken only with a higher share, nor is a tool that reads in its own way for the learner of another tool that does not lead; when the tool taken stops on all lessons, the tools not tried are tried then. With every, all tools are tried side by side, for a run that shows the share of each tool. While the tools are tried, a scope keeps the words of the first part of the lessons, so that the tools that read them learn them once");

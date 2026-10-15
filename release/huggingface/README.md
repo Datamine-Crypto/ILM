@@ -212,11 +212,11 @@ On macOS, take `ilm-macos-arm64` in the same way, and also run `xattr -d com.app
 
 ## ⚙️ How it works
 
-ILM has fifteen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks. Beside the tools, ILM has a fact reader for encyclopedia text, a question reader, a writer that turns given facts into a text, and one command (`ilm ask`) that routes each request and prints a trace of its steps.
+ILM has seventeen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph, grid, space and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks. Beside the tools, ILM has a fact reader for encyclopedia text, a question reader, a writer that turns given facts into a text, and one command (`ilm ask`) that routes each request and prints a trace of its steps.
 
 ## 🚧 Limits
 
-ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On a board of 25 public sets (240 kinds in 112 tasks), it learns 59 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text). On SVAMP and E2E, pre-trained transformers are ahead.
+ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On a board of 25 public sets (240 kinds in 112 tasks), it learns 61 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text). On SVAMP and E2E, pre-trained transformers are ahead.
 
 ## 📜 License
 

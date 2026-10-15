@@ -6,6 +6,7 @@ use crate::tools::pattern::hash::{CheapMap, CheapSet};
 use crate::tools::pattern::kinds::{JOINT, PatternWords};
 use crate::base::first_sight::FirstSightTable;
 use crate::tools::pattern::names::{WordTexts};
+use crate::tools::pattern::shared_words::fresh_words;
 use crate::tools::state::kinds::{KindTables, LEAST_GLUED, STATE_RUN, learn_kinds};
 use crate::tools::state::split::{Cut, StatePiece, cut, join_ranges, split, token_of};
 use patterns::{because, source};
@@ -204,7 +205,13 @@ impl StateReader {
     }
 
     pub fn learn(cases: &[Case], symbols: &mut Symbols) -> StateReader {
-        let first = PatternWords::learn(cases, symbols);
+        let first = if symbols.is_empty() {
+            let (fresh, words) = fresh_words(cases);
+            *symbols = fresh;
+            words
+        } else {
+            PatternWords::learn(cases, symbols)
+        };
         let mut before_last: FirstSightTable<u32, u32> = FirstSightTable::new();
         let mut with_parts = 0u32;
         for case in cases {

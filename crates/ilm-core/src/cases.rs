@@ -39,6 +39,15 @@ because!(FIELD, CaseFile, "the mark between the mark of a line and its text, and
 const NAMED: char = '=';
 because!(NAMED, CaseFile, "the mark between a name and its value in the first line");
 
+const READ_ROOM: usize = 65536;
+because!(READ_ROOM, CaseFile, "the bytes that one read of a case file takes from the disk: a case file holds many megabytes, and a larger read needs fewer calls to the system");
+
+const CASE_LINE_END: char = '\n';
+because!(CASE_LINE_END, CaseFile, "the sign that ends a line of a case file");
+
+const CASE_RETURN_END: char = '\r';
+because!(CASE_RETURN_END, CaseFile, "the sign that a file written on Windows has before the end of a line; it is cut off with the end of the line, as the reader of lines of the standard library cuts it");
+
 fn head_values(text: &str) -> Vec<(String, String)> {
     text.split(FIELD)
         .filter_map(|part| part.split_once(NAMED))
@@ -52,8 +61,14 @@ pub fn read_kind(path: &Path) -> std::io::Result<Kind> {
     let mut sentences: Vec<String> = Vec::new();
     let mut question = String::new();
     let mut labels: Vec<String> = Vec::new();
-    for line in BufReader::new(std::fs::File::open(path)?).lines() {
-        let line = line?;
+    let mut reader = BufReader::with_capacity(READ_ROOM, std::fs::File::open(path)?);
+    let mut held = String::new();
+    loop {
+        held.clear();
+        if reader.read_line(&mut held)? == 0 {
+            break;
+        }
+        let line = held.strip_suffix(CASE_LINE_END).map_or(held.as_str(), |cut| cut.strip_suffix(CASE_RETURN_END).unwrap_or(cut));
         let mut marks = line.chars();
         let Some(mark) = marks.next() else { continue };
         let text = marks.as_str().strip_prefix(FIELD).unwrap_or(marks.as_str());
@@ -67,12 +82,12 @@ pub fn read_kind(path: &Path) -> std::io::Result<Kind> {
             kind.cases.push(Case { sentences: std::mem::take(&mut sentences), question: std::mem::take(&mut question), answer: text.to_string() });
             kind.labels.push(std::mem::take(&mut labels));
         } else {
-            labels.push(line);
+            labels.push(line.to_string());
         }
     }
     Ok(kind)
 }
-because!(read_kind, CaseFile, "the cases of one case file in their order; a line with another mark is kept whole as a label of the case that its answer line closes");
+because!(read_kind, CaseFile, "the cases of one case file in their order; a line with another mark is kept whole as a label of the case that its answer line closes. The lines are read into one buffer that is kept from line to line, and an end of line is cut off as the reader of lines of the standard library cuts it");
 
 pub fn head_value<'a>(kind: &'a Kind, name: &str) -> Option<&'a str> {
     kind.head.iter().find(|(key, _)| key == name).map(|(_, value)| value.as_str())

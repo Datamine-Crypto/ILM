@@ -17,6 +17,7 @@ pub mod list;
 pub mod model;
 pub mod names;
 pub mod new_words;
+pub mod shared_words;
 pub mod show;
 pub mod splits;
 pub mod story;

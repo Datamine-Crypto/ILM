@@ -2,6 +2,7 @@ use crate::controls::file::{ChangedCase, write_changes};
 use crate::controls::arith::arithmetic_changes;
 use crate::controls::chain::chain_changes;
 use crate::controls::deduction::deduction_changes;
+use crate::controls::flows::flow_changes;
 use crate::controls::held::{held_changes, held_from_all};
 use crate::controls::list::list_changes;
 use crate::controls::loops::loop_changes;
@@ -10,6 +11,7 @@ use crate::controls::made::made_changes;
 use crate::controls::more::more_changes;
 use crate::controls::numbers::number_changes;
 use crate::controls::parts::parts_changes;
+use crate::controls::pieces::piece_changes;
 use crate::controls::requests::request_changes;
 use crate::controls::ruletaker::ruletaker_changes;
 use crate::controls::support::support_changes;
@@ -92,13 +94,19 @@ because!(CONTROL_THINGS, ChangeCommand, "the name of the control of changed stor
 const CONTROL_LOOPS: &str = "loops_control";
 because!(CONTROL_LOOPS, ChangeCommand, "the name of the control of changed graphs of a question about a loop, where an edge is taken out or added");
 
+const CONTROL_FLOWS: &str = "flows_control";
+because!(CONTROL_FLOWS, ChangeCommand, "the name of the control of changed graphs of a question about the largest flow, where an edge is taken out");
+
+const CONTROL_PIECES: &str = "pieces_control";
+because!(CONTROL_PIECES, ChangeCommand, "the name of the control of changed stories of things in places, where two pieces of each told list change places");
+
 const OPTION_FORMS: &str = "forms=";
 because!(OPTION_FORMS, ChangeCommand, "the option that names the description of the set whose train files give the pairs of sentences and formal forms");
 
 const OPTION_ABOUT: &str = "about=";
 because!(OPTION_ABOUT, ChangeCommand, "the option that names the description of the set of a kind, whose raw files a control reads beside the case file");
 
-const CONTROL_NAMES: &[&str] = &[CONTROL_REQUESTS, CONTROL_MADE, CONTROL_SWAPS, CONTROL_ARITH, CONTROL_WALK, CONTROL_LIST, CONTROL_MORE, CONTROL_PARTS, CONTROL_NUMBERS, CONTROL_LONLI, CONTROL_TOMI, CONTROL_SUPPORT, CONTROL_CHAIN, CONTROL_DEDUCTION, CONTROL_HELD, CONTROL_RULETAKER, CONTROL_THINGS, CONTROL_LOOPS];
+const CONTROL_NAMES: &[&str] = &[CONTROL_REQUESTS, CONTROL_MADE, CONTROL_SWAPS, CONTROL_ARITH, CONTROL_WALK, CONTROL_LIST, CONTROL_MORE, CONTROL_PARTS, CONTROL_NUMBERS, CONTROL_LONLI, CONTROL_TOMI, CONTROL_SUPPORT, CONTROL_CHAIN, CONTROL_DEDUCTION, CONTROL_HELD, CONTROL_RULETAKER, CONTROL_THINGS, CONTROL_LOOPS, CONTROL_FLOWS, CONTROL_PIECES];
 because!(CONTROL_NAMES, ChangeCommand, "the controls that the part knows, for the line that says how it is used");
 
 const CONTROL_BETWEEN: &str = "|";
@@ -199,6 +207,8 @@ pub fn changes_command(args: &[String]) -> ExitCode {
         CONTROL_SUPPORT => support_changes(&lessons, whole, &kind, option(OPTION_SUPPORT).map(Path::new)),
         CONTROL_THINGS => Ok(thing_changes(&lessons, whole)),
         CONTROL_LOOPS => Ok(loop_changes(&lessons, whole)),
+        CONTROL_FLOWS => Ok(flow_changes(&lessons, whole)),
+        CONTROL_PIECES => Ok(piece_changes(&lessons, whole)),
         _ => return change_usage(),
     };
     let changes = match made {

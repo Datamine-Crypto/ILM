@@ -37,6 +37,11 @@ pub fn words(text: &str) -> Vec<String> {
 }
 because!(words, WordCut, "the words of a text in their order; the measure, the lessons and every answer are compared in these words");
 
+pub fn sign_runs(text: &str, keep: fn(char) -> bool) -> Vec<&str> {
+    text.split(|sign: char| !keep(sign)).filter(|run| !run.is_empty()).collect()
+}
+because!(sign_runs, WordCut, "the runs of a text whose signs all pass a test, with their capital letters kept, as names are written: the names of a story, or the runs of letters of the plain alphabet");
+
 fn direction(letter: &str) -> Option<&'static str> {
     let mut letters = letter.chars();
     let first = letters.next()?;

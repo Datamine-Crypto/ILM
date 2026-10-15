@@ -12,6 +12,7 @@ use crate::tools::link::read::{LINK_ENDS, LINK_LABEL, LinkRead, LinkWords, link_
 use crate::tools::link::trials::LinkTrials;
 use crate::tools::pattern::classes::ABSENT;
 use crate::tools::pattern::kinds::PatternWords;
+use crate::tools::pattern::shared_words::fresh_words;
 use crate::tools::pattern::names::{Fresh, WordTexts};
 use crate::tools::pattern::story::{Desk, Query};
 use patterns::{because, source};
@@ -155,8 +156,7 @@ impl LinkModel {
     }
 
     fn from_lessons(cases: &[Case], lanes: usize) -> Learned {
-        let mut symbols = Symbols::new();
-        let words = PatternWords::learn(cases, &mut symbols);
+        let (mut symbols, words) = fresh_words(cases);
         let mut items = Symbols::new();
         let mut often: FirstSightCount<u32> = FirstSightCount::new();
         let answers: Vec<u32> = cases.iter().map(|case| items.number(&format!("{LINK_ANSWER}{}", answer_words(&case.answer).join(LINK_BETWEEN_WORDS)))).collect();

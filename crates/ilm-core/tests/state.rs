@@ -1,6 +1,8 @@
 use ilm_core::cases::Case;
 use ilm_core::tools::call::Learner;
+use ilm_core::tools::pattern::classes::KIND_MARK;
 use ilm_core::tools::state::model::StateModel;
+use ilm_core::tools::state::split::repeat_starts;
 use std::time::Instant;
 
 const MOVERS: [&str; 6] = ["Mary", "John", "Sandra", "Daniel", "Fred", "Julie"];
@@ -85,4 +87,51 @@ fn speed_of_the_state_tool() {
     let answer = started.elapsed().as_secs_f64();
     println!("state tool: {} lessons learned in {learn:.3} s ({:.0} lessons a second), {} cases answered on one thread in {answer:.3} s ({:.0} cases a second), {right} right", lessons.len(), lessons.len() as f64 / learn, read.len(), read.len() as f64 / answer);
     assert_eq!(right, read.len());
+}
+
+fn repeat_starts_by_lists(shape: &[u32]) -> Vec<usize> {
+    let count = shape.len();
+    let mut best: Option<((usize, usize, isize), Vec<usize>)> = None;
+    for size in 2..=count / 2 {
+        let mut seen: Vec<(&[u32], Vec<usize>, bool)> = Vec::new();
+        for at in 0..=count - size {
+            let gram = &shape[at..at + size];
+            match seen.iter_mut().find(|(held, _, _)| *held == gram) {
+                None => {
+                    let periodic = (1..=size / 2).any(|period| size % period == 0 && gram.chunks(period).all(|piece| piece == &gram[..period]));
+                    let plain = gram.iter().any(|entry| entry & KIND_MARK != 0) && !periodic;
+                    seen.push((gram, if plain { vec![at] } else { Vec::new() }, plain));
+                }
+                Some((_, starts, plain)) => {
+                    if *plain && at >= starts[starts.len() - 1] + size {
+                        starts.push(at);
+                    }
+                }
+            }
+        }
+        for (_, starts, _) in seen {
+            if starts.len() >= 2 {
+                let key = (starts.len(), size, -(starts[0] as isize));
+                if best.as_ref().is_none_or(|(top, _)| key > *top) {
+                    best = Some((key, starts));
+                }
+            }
+        }
+    }
+    best.map(|(_, starts)| starts).unwrap_or_default()
+}
+
+#[test]
+fn starts_of_repeats_are_the_starts_of_the_counted_lists() {
+    let mut seed: u64 = 3;
+    for size in 0..400 {
+        let words = 1 + size % 5;
+        let shape: Vec<u32> = (0..size % 41)
+            .map(|_| {
+                let word = (step(&mut seed) % words) as u32;
+                if step(&mut seed) % 3 == 0 { KIND_MARK | word } else { word }
+            })
+            .collect();
+        assert_eq!(repeat_starts(&shape), repeat_starts_by_lists(&shape), "{shape:?}");
+    }
 }

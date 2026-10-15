@@ -13,5 +13,5 @@ name = "ilm"
 path = "src/main.rs"
 
 [dependencies]
-ilm-commands = { package = "datamine-ilm-commands", path = "../ilm-commands", version = "1.0.0" }
+ilm-commands = { package = "datamine-ilm-commands", path = "../ilm-commands", version = "1.1.0" }
 mimalloc = { version = "0.1.43", default-features = false }

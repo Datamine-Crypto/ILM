@@ -27,6 +27,25 @@ because!(LessonStories, TableFit, "the lessons of the reader by story: each diff
 pub type Rows = FirstSightTable<TableRow, FirstSightTable<Vec<u32>, u32>>;
 because!(Rows, TableFit, "the table of answers of the lessons: for each row, the answers of the lessons of the row with their counts, in the order of first sight");
 
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+struct ReadingState {
+    turns: (bool, bool, bool, bool),
+    refer: Vec<(u32, u32)>,
+    start: Vec<u32>,
+    must: Vec<u32>,
+    pos: Vec<Shape>,
+    neg: Vec<Shape>,
+    bad: Vec<Shape>,
+}
+because!(ReadingState, TableFit, "every choice of the reader that the choices of the learning turn: the last statement, the facts too, the carry, whether parts are read, the words that refer to a kind, the kinds that start or must stand, the statement forms read as they stand and as an absence, and the forms that are not read; the other tables of the reader stay as they are while the choices are made");
+
+#[derive(Default)]
+pub struct StoryMemo {
+    states: CheapMap<ReadingState, u32>,
+    rows: CheapMap<(u32, usize), Vec<(TableRow, usize)>>,
+}
+because!(StoryMemo, TableFit, "the rows of the stories that a learning has read: each state of the choices as a number, and for a state and a story the rows of its questions, so that a story is read once under one state");
+
 fn total<K: Clone + Eq + std::hash::Hash>(counts: &FirstSightTable<K, u32>) -> u32 {
     counts.rows().iter().map(|(_, count)| *count).sum()
 }
@@ -56,17 +75,39 @@ impl ToldRules {
         lessons.asks[story].iter().enumerate().filter_map(|(place, (q, _))| self.row(words, &view, q, &have).map(|row| (row, place))).collect()
     }
 
-    pub fn fit<N: WordTexts + Sync>(&self, words: &PatternWords, names: &N, lessons: &LessonStories, use_parts: bool, only: Option<&HashSet<usize>>) -> (f64, Rows) {
+    fn reading_state(&self, use_parts: bool) -> ReadingState {
+        let mut refer: Vec<(u32, u32)> = self.refer.iter().map(|(word, class)| (*word, *class)).collect();
+        refer.sort_unstable();
+        let mut start: Vec<u32> = self.start.iter().copied().collect();
+        start.sort_unstable();
+        let mut must: Vec<u32> = self.must.iter().copied().collect();
+        must.sort_unstable();
+        let mut pos: Vec<Shape> = self.pos.iter().cloned().collect();
+        pos.sort_unstable();
+        let mut neg: Vec<Shape> = self.neg.keys().cloned().collect();
+        neg.sort_unstable();
+        let mut bad: Vec<Shape> = self.bad.iter().cloned().collect();
+        bad.sort_unstable();
+        ReadingState { turns: (self.last, self.facts_too, self.carry, use_parts), refer, start, must, pos, neg, bad }
+    }
+
+    pub fn fit<N: WordTexts + Sync>(&self, words: &PatternWords, names: &N, lessons: &LessonStories, use_parts: bool, only: Option<&HashSet<usize>>, memo: &mut StoryMemo) -> (f64, Rows) {
         let stories: Vec<usize> = (0..lessons.asks.len()).filter(|story| only.is_none_or(|chosen| chosen.contains(story))).collect();
-        let found: Vec<Vec<(TableRow, usize)>> = if lessons.lanes > 1 && stories.len() >= PARALLEL_STORIES {
-            on_lanes(stories.len(), lessons.lanes, &|place| self.story_rows(words, names, lessons, use_parts, stories[place]))
+        let fresh = memo.states.len() as u32;
+        let state = *memo.states.entry(self.reading_state(use_parts)).or_insert(fresh);
+        let missing: Vec<usize> = stories.iter().copied().filter(|story| !memo.rows.contains_key(&(state, *story))).collect();
+        let found: Vec<Vec<(TableRow, usize)>> = if lessons.lanes > 1 && missing.len() >= PARALLEL_STORIES {
+            on_lanes(missing.len(), lessons.lanes, &|place| self.story_rows(words, names, lessons, use_parts, missing[place]))
         } else {
-            stories.iter().map(|story| self.story_rows(words, names, lessons, use_parts, *story)).collect()
+            missing.iter().map(|story| self.story_rows(words, names, lessons, use_parts, *story)).collect()
         };
+        for (story, story_rows) in missing.iter().zip(found) {
+            memo.rows.insert((state, *story), story_rows);
+        }
         let mut rows: Rows = FirstSightTable::new();
-        for (story, story_rows) in stories.iter().zip(found) {
-            for (row, place) in story_rows {
-                rows.entry(row, FirstSightTable::new()).add(lessons.asks[*story][place].1.clone(), 1);
+        for story in &stories {
+            for (row, place) in memo.rows.get(&(state, *story)).map(Vec::as_slice).unwrap_or_default() {
+                rows.entry(*row, FirstSightTable::new()).add(lessons.asks[*story][*place].1.clone(), 1);
             }
         }
         (guessed(&rows), rows)
@@ -328,10 +369,11 @@ impl ToldRules {
             switches.push(Switch::Must(*class));
         }
         let some: HashSet<usize> = (0..lessons.stories.len().min(TRIED_STORIES)).collect();
+        let mut memo = StoryMemo::default();
         let mut found = false;
         for facts_too in [true, false] {
             told.facts_too = facts_too;
-            let (_, rows) = told.fit(words, symbols, &lessons, true, Some(&some));
+            let (_, rows) = told.fit(words, symbols, &lessons, true, Some(&some), &mut memo);
             if rows.get(&(false, true, false)).is_some_and(|counts| sure_share_of(counts, QUICK_SHARE, TOLD_LEAST)) {
                 found = true;
             }
@@ -339,7 +381,7 @@ impl ToldRules {
         if !found {
             return told;
         }
-        let mut best = told.fit(words, symbols, &lessons, true, Some(&some)).0;
+        let mut best = told.fit(words, symbols, &lessons, true, Some(&some), &mut memo).0;
         for turn in 0..CHOICE_TURNS {
             let mut changed = false;
             for switch in &switches {
@@ -358,9 +400,9 @@ impl ToldRules {
                             taken = false;
                             break;
                         }
-                        let before: Vec<f64> = halves.iter().map(|half| told.fit(words, symbols, &lessons, true, Some(half)).0).collect();
+                        let before: Vec<f64> = halves.iter().map(|half| told.fit(words, symbols, &lessons, true, Some(half), &mut memo).0).collect();
                         told.flip(symbols, switch);
-                        let after: Vec<f64> = halves.iter().map(|half| told.fit(words, symbols, &lessons, true, Some(half)).0).collect();
+                        let after: Vec<f64> = halves.iter().map(|half| told.fit(words, symbols, &lessons, true, Some(half), &mut memo).0).collect();
                         told.flip(symbols, switch);
                         let rises = compensated(after.iter().copied()) > compensated(before.iter().copied()) + gain;
                         if !(rises && before.iter().zip(&after).all(|(a, b)| *b > *a - TINY)) {
@@ -373,13 +415,13 @@ impl ToldRules {
                     }
                     if taken {
                         told.flip(symbols, switch);
-                        best = told.fit(words, symbols, &lessons, true, Some(&some)).0;
+                        best = told.fit(words, symbols, &lessons, true, Some(&some), &mut memo).0;
                         changed = true;
                     }
                     continue;
                 }
                 told.flip(symbols, switch);
-                let now = told.fit(words, symbols, &lessons, true, Some(&some)).0;
+                let now = told.fit(words, symbols, &lessons, true, Some(&some), &mut memo).0;
                 if now > best + FIT_GAIN {
                     best = now;
                     changed = true;
@@ -392,7 +434,7 @@ impl ToldRules {
             }
         }
         told.flip(symbols, &Switch::Last);
-        let other = told.fit(words, symbols, &lessons, true, None).0;
+        let other = told.fit(words, symbols, &lessons, true, None, &mut memo).0;
         told.flip(symbols, &Switch::Last);
         for _ in 0..CHOICE_TURNS {
             let mut seen: CheapMap<Shape, FirstSightTable<Vec<u32>, u32>> = CheapMap::default();
@@ -417,7 +459,7 @@ impl ToldRules {
             }
             told.setup(symbols);
         }
-        let plain = told.fit(words, symbols, &lessons, false, None).0;
+        let plain = told.fit(words, symbols, &lessons, false, None, &mut memo).0;
         let mut holders: CheapMap<Shape, HashSet<usize>> = CheapMap::default();
         let mut seen_forms: FirstSightTable<Shape, u32> = FirstSightTable::new();
         for (story, sents) in lessons.stories.iter().enumerate() {
@@ -435,9 +477,9 @@ impl ToldRules {
                 if told.bad.contains(form) || stories.len() < LEAST_STORIES {
                     continue;
                 }
-                let before = told.fit(words, symbols, &lessons, true, Some(stories)).0;
+                let before = told.fit(words, symbols, &lessons, true, Some(stories), &mut memo).0;
                 told.bad.insert(form.clone());
-                let gain = told.fit(words, symbols, &lessons, true, Some(stories)).0 - before;
+                let gain = told.fit(words, symbols, &lessons, true, Some(stories), &mut memo).0 - before;
                 told.bad.remove(form);
                 if gain > TINY {
                     gains.push((gain, form.clone()));
@@ -456,10 +498,10 @@ impl ToldRules {
                 None => break,
             }
         }
-        let (mut best, mut rows) = told.fit(words, symbols, &lessons, true, None);
+        let (mut best, mut rows) = told.fit(words, symbols, &lessons, true, None, &mut memo);
         told.rules_on = best > plain + TINY || (best > plain - TINY && best > other + TINY);
         if !told.rules_on {
-            (best, rows) = told.fit(words, symbols, &lessons, false, None);
+            (best, rows) = told.fit(words, symbols, &lessons, false, None, &mut memo);
         }
         let _ = best;
         for (row, counts) in rows.rows() {

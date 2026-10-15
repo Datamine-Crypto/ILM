@@ -1,8 +1,10 @@
 use ilm_data::controls::babi::babi_exact;
 use ilm_data::controls::chain::chain_changes;
 use ilm_data::controls::deduction::deduction_changes;
+use ilm_data::controls::flows::flow_changes;
 use ilm_data::controls::held::held_changes;
 use ilm_data::controls::loops::loop_changes;
+use ilm_data::controls::pieces::piece_changes;
 use ilm_data::controls::things::thing_changes;
 use ilm_core::cases::Case;
 
@@ -89,4 +91,24 @@ fn graphs_that_gain_or_lose_a_loop() {
     assert_eq!(changes[0].sentences, ["Edges:", "(1,2)", "(2,0)", "(2,3)"]);
     assert_eq!(changes[2].sentences, ["Edges:", "(0,1)", "(1,2)", "(3,4)", "(0,2)"]);
     assert_eq!(changes[3].sentences, ["Edges:", "(0,1)", "(1,2)", "(3,4)", "(0,3)"]);
+}
+
+#[test]
+fn graphs_whose_flow_changes_or_stays() {
+    let lesson = case(&["Edges:", "from 0 to 1 room 5,", "from 1 to 2 room 3,", "from 0 to 2 room 4,", "from 2 to 1 room 9."], "Flow from 0 to 2?", "The flow from 0 to 2 is 7.");
+    let changes = flow_changes(&[lesson], true);
+    let found: Vec<(&str, &str)> = changes.iter().map(|change| (change.sort.as_str(), change.truth.as_str())).collect();
+    assert_eq!(found, [("an edge taken out and the flow changes", "the flow from 0 to 2 is 4"), ("an edge taken out and the flow stays", "the flow from 0 to 2 is 7")]);
+    assert_eq!(changes[1].sentences, ["Edges:", "from 0 to 1 room 5,", "from 1 to 2 room 3,", "from 0 to 2 room 4,"]);
+}
+
+#[test]
+fn lists_whose_ends_change_places() {
+    let lesson = case(&["Three stalls stand in a row.", "Fruit: one sells figs, one sells limes, and one sells dates.", "Awnings: one is grey and one is pink", "The stall that sells figs is left of the grey one."], "Which stall sells figs? pick 1 pick 2 pick 3", "2");
+    let changes = piece_changes(&[lesson.clone(), lesson.clone(), lesson], true);
+    assert_eq!(changes.len(), 3);
+    assert_eq!(changes[0].sentences, ["Three stalls stand in a row.", "Fruit: one sells dates, one sells limes, and one sells figs.", "Awnings: one is grey and one is pink", "The stall that sells figs is left of the grey one."]);
+    assert_eq!(changes[0].truth, "2");
+    let unlisted = case(&["The stall that sells figs is left of the grey one."], "Which stall sells figs? pick 1 pick 2 pick 3", "2");
+    assert!(piece_changes(&[unlisted.clone(), unlisted], true).is_empty());
 }

@@ -54,34 +54,52 @@ because!(STATE_PAIR_SIZE, RepeatedParts, "a run that repeats has at least this m
 
 pub fn repeat_starts(shape: &[u32]) -> Vec<usize> {
     let count = shape.len();
-    let mut best: Option<((usize, usize, isize), Vec<usize>)> = None;
+    let mut best: Option<((usize, usize, isize), usize, usize)> = None;
+    let mut seen: Vec<RunStarts> = Vec::new();
     for size in STATE_PAIR_SIZE..=count / STATE_PAIR_SIZE {
-        let mut seen: Vec<(&[u32], Vec<usize>, bool)> = Vec::new();
+        seen.clear();
         for at in 0..=count - size {
             let gram = &shape[at..at + size];
-            match seen.iter_mut().find(|(held, _, _)| *held == gram) {
+            match seen.iter_mut().find(|held| &shape[held.first..held.first + size] == gram) {
                 None => {
                     let plain = gram.iter().any(|entry| entry & KIND_MARK != 0) && !periodic(gram);
-                    seen.push((gram, if plain { vec![at] } else { Vec::new() }, plain));
+                    seen.push(RunStarts { first: at, last: at, starts: usize::from(plain), plain });
                 }
-                Some((_, starts, plain)) => {
-                    if *plain && at >= starts[starts.len() - 1] + size {
-                        starts.push(at);
+                Some(held) => {
+                    if held.plain && at >= held.last + size {
+                        held.starts += 1;
+                        held.last = at;
                     }
                 }
             }
         }
-        for (_, starts, _) in seen {
-            if starts.len() >= STATE_PAIR_SIZE {
-                let key = (starts.len(), size, -(starts[0] as isize));
-                if best.as_ref().is_none_or(|(top, _)| key > *top) {
-                    best = Some((key, starts));
+        for held in &seen {
+            if held.starts >= STATE_PAIR_SIZE {
+                let key = (held.starts, size, -(held.first as isize));
+                if best.as_ref().is_none_or(|(top, _, _)| key > *top) {
+                    best = Some((key, size, held.first));
                 }
             }
         }
     }
-    best.map(|(_, starts)| starts).unwrap_or_default()
+    let Some((_, size, first)) = best else { return Vec::new() };
+    let gram = &shape[first..first + size];
+    let mut starts: Vec<usize> = vec![first];
+    for at in first + 1..=count - size {
+        if at >= starts[starts.len() - 1] + size && &shape[at..at + size] == gram {
+            starts.push(at);
+        }
+    }
+    starts
 }
+
+struct RunStarts {
+    first: usize,
+    last: usize,
+    starts: usize,
+    plain: bool,
+}
+because!(RunStarts, RepeatedParts, "one run of tokens of a form while its starts are counted: where it stands first, its last start that was counted, how many starts were counted, and whether it is a run that can start a part; the list of the starts is made only for the run that is taken");
 because!(repeat_starts, RepeatedParts, "the starts of the run of tokens, one of them of a kind and no repeat of a shorter run, that stands most often in a form without overlap; of these the longest, then the first; nothing when no run repeats");
 
 pub fn token_of<N: WordTexts>(names: &mut N, norm: &[u32]) -> u32 {

@@ -13,6 +13,6 @@ name = "ilm_commands"
 
 [dependencies]
 premise = "0.1.5"
-ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "1.0.0" }
-ilm-data = { package = "datamine-ilm-data", path = "../ilm-data", version = "1.0.0" }
-ilm-eval = { package = "datamine-ilm-eval", path = "../ilm-eval", version = "1.0.0" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "1.1.0" }
+ilm-data = { package = "datamine-ilm-data", path = "../ilm-data", version = "1.1.0" }
+ilm-eval = { package = "datamine-ilm-eval", path = "../ilm-eval", version = "1.1.0" }

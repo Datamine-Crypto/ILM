@@ -37,7 +37,7 @@ pub(super) struct Puzzle {
 }
 because!(Puzzle, ChoiceStatements, "a case read for the tool: the number of its things, its told statements, and each choice as a statement (none when it names no thing or more than the tool reads) with its words");
 
-pub(super) fn segments(asked: &[String], mark: &str) -> Vec<Vec<String>> {
+pub(crate) fn segments(asked: &[String], mark: &str) -> Vec<Vec<String>> {
     let starts: Vec<usize> = (0..asked.len()).filter(|place| asked[*place] == mark).collect();
     let mut found: Vec<Vec<String>> = Vec::new();
     for (number, from) in starts.iter().enumerate() {
@@ -48,7 +48,7 @@ pub(super) fn segments(asked: &[String], mark: &str) -> Vec<Vec<String>> {
 }
 because!(segments, ChoiceStatements, "the choices of a question: the words after each place of the word that starts a choice, up to the next such place or the end");
 
-pub(super) fn choice_mark(cases: &[Case]) -> Option<String> {
+pub(crate) fn choice_mark(cases: &[Case]) -> Option<String> {
     let need = SURE_SHARE * cases.len() as f64;
     let mut hits: FirstSightTable<String, u32> = FirstSightTable::new();
     for case in cases {

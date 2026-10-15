@@ -5,6 +5,8 @@ use ilm_core::tools::pattern::hash::{CheapHasher, CheapMap, mix};
 use ilm_core::tools::pattern::kinds::PatternWords;
 use ilm_core::tools::pattern::indexed::IndexedStory;
 use ilm_core::tools::pattern::learn::PatternLearner;
+use ilm_core::tools::pattern::shared_words::{WordsScope, fresh_words};
+use ilm_core::tools::pattern::show::words_lines;
 use ilm_core::tools::pattern::table::ChildTable;
 use std::hash::Hasher;
 use std::time::Instant;
@@ -214,4 +216,26 @@ fn cheap_hash_of_bytes_is_the_hash_of_their_words() {
     let mut table: CheapMap<Vec<u32>, usize> = CheapMap::default();
     table.insert(row.clone(), 1);
     assert_eq!(table.get(row.as_slice()), Some(&1));
+}
+
+#[test]
+fn words_of_a_scope_are_the_words_of_a_fresh_learn() {
+    let lessons = room_cases(200, 9);
+    let others = room_cases(150, 4);
+    let mut symbols = Symbols::new();
+    let alone = PatternWords::learn(&lessons, &mut symbols);
+    let mut other_symbols = Symbols::new();
+    let other_alone = PatternWords::learn(&others, &mut other_symbols);
+    let scope = WordsScope::over(&lessons);
+    let kept: Vec<(Symbols, PatternWords)> = (0..3).map(|_| fresh_words(&lessons)).collect();
+    let (seen, other_words) = fresh_words(&others);
+    drop(scope);
+    for (names, words) in &kept {
+        assert_eq!(names.names(), symbols.names());
+        assert_eq!(words_lines(words, names), words_lines(&alone, &symbols));
+    }
+    assert_eq!(seen.names(), other_symbols.names());
+    assert_eq!(words_lines(&other_words, &seen), words_lines(&other_alone, &other_symbols));
+    let (after, after_words) = fresh_words(&lessons);
+    assert_eq!(words_lines(&after_words, &after), words_lines(&alone, &symbols));
 }

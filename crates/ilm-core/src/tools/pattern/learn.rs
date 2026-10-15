@@ -8,6 +8,7 @@ use crate::tools::pattern::codes::Point;
 use crate::tools::pattern::counting::Counting;
 use crate::tools::pattern::kinds::PatternWords;
 use crate::tools::pattern::model::{FIRST_LATER, PatternAnswers, PatternModel, SURE_READINGS, SURE_SHARE, Setting};
+use crate::tools::pattern::shared_words::fresh_words;
 use crate::base::first_sight::FirstSightTable;
 use crate::tools::pattern::splits::learn_splits;
 use crate::tools::pattern::story::Desk;
@@ -153,8 +154,7 @@ because!(tested_plain, PatternAnswers, "plain counting of all lessons, when plai
 
 impl PatternLearner {
     pub fn learn(cases: &[Case], lanes: usize) -> PatternLearner {
-        let mut symbols = Symbols::new();
-        let words = PatternWords::learn(cases, &mut symbols);
+        let (mut symbols, words) = fresh_words(cases);
         let set = Setting { depth: FULL_DEPTH, per_form: false, split: true, lanes, star: symbols.number("*"), hash: symbols.number("#") };
         let plain = tested_plain(cases);
         let reader = Some(ToldRules::learn(&words, &mut symbols, cases, SURE_READINGS, SURE_SHARE, lanes)).filter(|reader| reader.on);

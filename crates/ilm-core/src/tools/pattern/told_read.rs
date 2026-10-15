@@ -339,6 +339,7 @@ impl ToldRules {
         let neg: Vec<&Statement> = needs.iter().filter(|part| part.absent).collect();
         let mut stack: Vec<(usize, Binding)> = vec![(0, Vec::new())];
         let mut walked: Vec<Binding> = Vec::new();
+        let mut fresh: Binding = Vec::new();
         while let Some((at, binding)) = stack.pop() {
             if at == pos.len() {
                 walked.push(binding);
@@ -346,25 +347,28 @@ impl ToldRules {
             }
             let part = pos[at];
             let Some(group) = by.get(&part.base) else { continue };
-            let mut next: Vec<(usize, Binding)> = Vec::new();
+            let start = stack.len();
             'facts: for (fact, _) in group.rows() {
-                let mut more = binding.clone();
+                fresh.clear();
                 for (value, word) in part.values.iter().zip(fact) {
                     if is_word(*value) {
                         if value != word {
                             continue 'facts;
                         }
                     } else {
-                        match bound(&more, *value) {
+                        match bound(&binding, *value).or_else(|| bound(&fresh, *value)) {
                             Some(held) if held != *word => continue 'facts,
                             Some(_) => {}
-                            None => more.push((*value, *word)),
+                            None => fresh.push((*value, *word)),
                         }
                     }
                 }
-                next.push((at + 1, more));
+                let mut more: Binding = Vec::with_capacity(binding.len() + fresh.len());
+                more.extend_from_slice(&binding);
+                more.extend_from_slice(&fresh);
+                stack.push((at + 1, more));
             }
-            stack.extend(next.into_iter().rev());
+            stack[start..].reverse();
         }
         for binding in walked {
             self.close(names, &neg, 0, binding, absent, things, out);

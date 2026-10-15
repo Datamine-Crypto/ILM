@@ -1,3 +1,4 @@
+use ilm_core::base::words::sign_runs;
 use ilm_core::cases::Case;
 use crate::sets::export::{Described, KindCases};
 use crate::sets::parquet::records::Value;
@@ -28,18 +29,13 @@ fn lonli_rows(described: &Described, kind: &str) -> Result<Vec<[Value; LONLI_COL
 }
 because!(lonli_rows, LonliSet, "every row of the set with its premise, its statement, its label and its form");
 
-fn alphabet_runs(text: &str) -> Vec<&str> {
-    text.split(|sign: char| !sign.is_ascii_alphabetic()).filter(|piece| !piece.is_empty()).collect()
-}
-because!(alphabet_runs, LonliSet, "the runs of letters of the plain alphabet in a text");
-
 fn lonli_new_words(rows: &[[Value; LONLI_COLUMNS]]) -> Result<Vec<(String, String)>, String> {
     let mut inside: BTreeSet<String> = BTreeSet::new();
     let mut lower: BTreeSet<String> = BTreeSet::new();
     for [premise, hypothesis, _, _] in rows {
         for text in [premise, hypothesis] {
             for sentence in told_sentences(&text_value(text, ALL_ROLE)?) {
-                let words = alphabet_runs(&sentence);
+                let words = sign_runs(&sentence, |sign| sign.is_ascii_alphabetic());
                 for word in words.iter().skip(1) {
                     let mut signs = word.chars();
                     let first = signs.next().unwrap_or_default();

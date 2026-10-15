@@ -54,7 +54,7 @@ To use a program of the GitHub release in place of a build, copy it into the roo
 
 ## ⚙️ How it works
 
-ILM has fifteen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks.
+ILM has seventeen tools, each named for its way of reading: patterns, state, amount, order, link, rule, parts, together, list, requests, frames, table, arrange, graph, grid, space and ranks. For each kind of task, every tool learns from two thirds of the lessons and reads the last third. The tool with the most right answers learns again from all lessons. No person chooses a tool, and no setting changes between tasks.
 
 Beside the tools, ILM has a fact reader for encyclopedia text, a question reader, a writer that turns given facts into a text, and one command (`ilm ask`) that routes each request and prints a trace of its steps.
 
@@ -62,7 +62,7 @@ Beside the tools, ILM has a fact reader for encyclopedia text, a question reader
 
 ## 🚧 What ILM is not
 
-ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On the board of 25 public sets (240 kinds in 112 tasks), it learns 59 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text).
+ILM is not a general chat model. It learns one kind of task at a time from lessons of that kind, and each lesson needs the exact answer. On the board of 25 public sets (240 kinds in 112 tasks), it learns 61 tasks: every kind of the task at 95% right or more on held cases (90% where people wrote the text).
 
 ## 🦀 Code
 
@@ -70,7 +70,7 @@ The program is a Rust workspace of five crates:
 
 | Crate | What it holds |
 |---|---|
-| `crates/ilm-core` | words and numbers, the fifteen tools, the choice among them, the readers of facts and questions, the writer |
+| `crates/ilm-core` | words and numbers, the seventeen tools, the choice among them, the readers of facts and questions, the writer |
 | `crates/ilm-data` | the readers of the public sets, the fetch of their files, the text store, the writers of changed cases |
 | `crates/ilm-eval` | the measure of a kind, the board, the controls |
 | `crates/ilm-commands` | the commands and the one command |

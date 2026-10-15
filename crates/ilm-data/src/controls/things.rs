@@ -23,13 +23,13 @@ because!(THING_SHARE, ThingChanges, "the share of the lessons whose answer must 
 const THING_GAP: &str = " ";
 because!(THING_GAP, ThingChanges, "the mark between the words of a new truth");
 
-fn segments(asked: &[String], mark: &str) -> Vec<Vec<String>> {
+pub(crate) fn choice_segments(asked: &[String], mark: &str) -> Vec<Vec<String>> {
     let starts: Vec<usize> = (0..asked.len()).filter(|place| asked[*place] == mark).collect();
     starts.iter().enumerate().map(|(number, from)| asked[from + 1..starts.get(number + 1).copied().unwrap_or(asked.len())].to_vec()).collect()
 }
-because!(segments, ThingChanges, "the choices of a question: the words after each place of the word that starts a choice, up to the next such place or the end");
+because!(choice_segments, ThingChanges, "the choices of a question: the words after each place of the word that starts a choice, up to the next such place or the end");
 
-fn mark_of(lessons: &[Case]) -> Option<String> {
+pub(crate) fn choices_mark(lessons: &[Case]) -> Option<String> {
     let mut hits: Vec<(String, usize)> = Vec::new();
     for case in lessons {
         let asked = words(&case.question);
@@ -40,7 +40,7 @@ fn mark_of(lessons: &[Case]) -> Option<String> {
                 continue;
             }
             done.push(word);
-            if segments(&asked, word).contains(&answer) {
+            if choice_segments(&asked, word).contains(&answer) {
                 match hits.iter_mut().find(|(held, _)| held == word) {
                     Some((_, count)) => *count += 1,
                     None => hits.push((word.clone(), 1)),
@@ -56,7 +56,7 @@ fn mark_of(lessons: &[Case]) -> Option<String> {
     }
     best.filter(|(_, count)| (*count as f64) >= THING_SHARE * lessons.len() as f64).map(|(mark, _)| mark.clone())
 }
-because!(mark_of, ThingChanges, "the word that starts the choices: of the words that stand two times or more in a question, the one with which the answer is a choice in the most lessons, the first of equals; only when that holds for nearly all lessons");
+because!(choices_mark, ThingChanges, "the word that starts the choices: of the words that stand two times or more in a question, the one with which the answer is a choice in the most lessons, the first of equals; only when that holds for nearly all lessons");
 
 fn things_of(choices: &[Vec<String>]) -> Option<Vec<Vec<String>>> {
     let first = choices.first()?;
@@ -103,12 +103,12 @@ fn exchanged(text: &str, one: &[String], other: &[String]) -> String {
 because!(exchanged, ThingChanges, "a text with the two things changed for each other wherever their words stand, a capital letter kept at the start of a changed name");
 
 pub fn thing_changes(lessons: &[Case], whole: bool) -> Vec<ChangedCase> {
-    let Some(mark) = mark_of(lessons) else { return Vec::new() };
+    let Some(mark) = choices_mark(lessons) else { return Vec::new() };
     let last: Vec<usize> = if whole { (0..lessons.len()).collect() } else { inner_parts(lessons).1 };
     let mut out: Vec<ChangedCase> = Vec::new();
     for place in last {
         let case = &lessons[place];
-        let choices = segments(&words(&case.question), &mark);
+        let choices = choice_segments(&words(&case.question), &mark);
         let Some(things) = things_of(&choices) else { continue };
         let Some(answer) = choices.iter().position(|choice| *choice == answer_words(&case.answer)) else { continue };
         for other in (0..things.len()).filter(|other| *other != answer) {

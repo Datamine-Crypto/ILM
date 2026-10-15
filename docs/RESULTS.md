@@ -78,7 +78,7 @@ ILM: open form 20,020 of 20,020, closed form 20,043 of 20,043 (100.0 at every de
 
 ## LoNLI
 
-Data: tasksource/lonli on the hub: 363 templates of sentence pairs in 17 groups of logic (boolean, comparative, negation and others), each pair with its label of inference (two or three answers, as the group gives). Lessons: 1,000 pairs of each group, with answers only. Read: up to 1,000 pairs of the sealed part of each group, read once with the frozen code of the release. The read parts of the board served during development; the sealed part did not.
+Data: tasksource/lonli on the hub: 363 templates of sentence pairs in 17 groups of logic (boolean, comparative, negation and others), each pair with its label of inference (two or three answers, as the group gives). Lessons: 1,000 pairs of each group, with answers only. Read: up to 1,000 pairs of the sealed part of each group, read with frozen code. The read parts of the board served during development; the sealed part did not.
 
 ILM: 14,222 of 14,986 right (94.9%) over the 15 groups with unseen cases. Ten of the 16 groups pass the learned bar.
 
@@ -187,11 +187,11 @@ Data: tuetschek/e2e_nlg on the hub. Lessons: all 42,061 train rows (a list of fa
 
 ## The board
 
-The board measures all kinds of 25 public sets on their read parts, with the same program: 240 kinds in 112 tasks. A set gives only its files, its sizes, who wrote its text and its marks. ILM learns 150 kinds and 59 tasks in 17 sets, by the bar of [HOW_IT_WORKS.md](HOW_IT_WORKS.md). 40 of the 59 tasks are learned from 200 lessons. The whole board takes 19 s.
+The board measures all kinds of 25 public sets on their read parts, with the same program: 240 kinds in 112 tasks. A set gives only its files, its sizes, who wrote its text and its marks. ILM learns 155 kinds and 61 tasks in 17 sets, by the bar of [HOW_IT_WORKS.md](HOW_IT_WORKS.md). 42 of the 61 tasks are learned from 200 lessons. The whole board takes 19 s.
 
 ## Notes on the numbers
 
 - During development, ILM used the training and validation data of each set. The board also reads a fixed part of the test split of some sets (the last cases of each kind). Of that part, only the share of right answers was looked at, never a wrong case.
-- The sealed part of LoNLI was read once. The LAMA probe was read four times, the CLUTRR test split three times and the E2E test set two times. Between two reads, the reader, the writer, the joins of the link tool and the table of word classes changed on development data only. The tables give the last read.
+- Reads of test data that gave or changed a number: the test splits of bAbI, SCAN, ProofWriter and SVAMP and the sealed part of LoNLI once, the E2E test set two times, the CLUTRR test split three times and the LAMA probe four times. Between two such reads, the reader, the writer, the joins of the link tool and the table of word classes changed on development data only. The program of each release reads all test data again, for the times and as a check, and gets the same counts. The tables give the last read.
 - On one computer, every count is the same in every run and for every number of threads. Another operating system can give a logarithm that differs in its last bit, and in a rare close decision this could move a count; the CI checks the bAbI counts on Linux, Windows and macOS.
 - The board does not count bAbI tasks 3 and 18 as learned: in the control of changed cases, a sure rule keeps the old answer when a supporting sentence is taken out.

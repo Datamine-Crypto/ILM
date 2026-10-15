@@ -153,4 +153,4 @@ done
 ilm board cases/board classes=cases/classes/classes_1000.txt
 ```
 
-Expected: `240 kinds in 112 tasks; 150 kinds learned; 59 tasks learned in 17 sets`.
+Expected: `240 kinds in 112 tasks; 155 kinds learned; 61 tasks learned in 17 sets`.
