@@ -1,0 +1,11 @@
+Note: The wording of MindGames with muddy foreheads: a person sees the foreheads of the others but not the person's own, unless there is a mirror in the room.
+Builds on mindgames.
+Write everyone is visible to others as every person sees the facts of the others.
+Write there is a mirror in the room as every person sees the person's own fact.
+Write A not everyone's forehead is muddy as A not every person holds.
+Write A someone's forehead is muddy as A some person holds.
+Write A everyone's forehead is muddy as A every person holds.
+Write A nobody's forehead is muddy as A no person holds.
+Write A E's forehead is not muddy as A E does not hold.
+Write A E's forehead is muddy as A E holds.
+To answer "A": entailment if the question asks B and it follows that B. not_entailment otherwise.

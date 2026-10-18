@@ -1,0 +1,28 @@
+Note: Words that point back. "He" points to the man and "she" to the woman of the people just named; "it" points to the thing; "him" or "her" in "went with him" points to the person that the sentence before went with. In a story, "he" points to the person named last who can be a man: a man of the list names, or a person whose name the list does not know; "she" the same for a woman; "they" points to the two people who went somewhere together last. The words point back in sentences of going, taking, dropping, giving and being in a place.
+Note: Whether a name is a man's or a woman's comes from the list names; when one of two names is known, the other person is the other one.
+Builds on names.
+He is a word that points back.
+She is a word that points back.
+They is a word that points back.
+If V B the C and V is a male name then V can be he.
+If V B the C and V is a female name then V can be she.
+If V And X went to the C then the group named last is V And X.
+If he went to the W and before that time V can be he then V went to the W.
+If she went to the W and before that time V can be she then V went to the W.
+If they went to the W and before that time the group named last is V And X then V went to the W.
+If they went to the W and before that time the group named last is V And X then X went to the W.
+If He is C And she is D then he is C.
+If He is C And she is D then she is D.
+If She is C And he is D then she is C.
+If She is C And he is D then he is D.
+If A And B are friends and he is C and A is a male name then A is C.
+If A And B are friends and he is C and B is a female name then A is C.
+If A And B are friends and she is C and B is a female name then B is C.
+If A And B are friends and she is C and A is a male name then B is C.
+If A has a B and it is C then B is C.
+If A has an B and it is C then B is C.
+If A has a B and he is C then A is C.
+If A has a B and she is C then A is C.
+If A has an B and he is C then A is C.
+If A has an B and she is C then A is C.
+If A went with B to the C and D went with him to the E then D went with B to the E.

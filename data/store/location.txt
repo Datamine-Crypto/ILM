@@ -1,0 +1,95 @@
+Note: The known-good store of a text: each line below was discovered by the board's learner from the lessons of the kind that the note before it names, and is offered to later kinds as a candidate that each judges on its own lessons. Only the command store-lines writes this file.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R got the S there then The got of the S is R.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R took the S there then The got of the S is R.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R picked up the S there then The got of the S is R.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R grabbed the S there then The got of the S is R.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R dropped the S then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R left the S then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R discarded the S then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R put down the S there then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R put down the S then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R left the S there then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R dropped the S there then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If R discarded the S there then The got of the S is no more.
+Note: discovered on babi02 (src_babi), 400 lessons
+If S went to the T and The got of the R is S and at that time S went to the T then The R is in the T.
+Note: discovered on babi02 (src_babi), 400 lessons
+If The got of the C is A and A went to the B and at that time The got of the C is A then The C is in the B.
+Note: discovered on babi06 (src_babi), 400 lessons
+If A went to the B then Yes , A is in the B.
+Note: discovered on babi06 (src_babi), 400 lessons
+If A B the C and A went to the D then No , A is not in the D.
+Note: discovered on babi07 (src_babi), 400 lessons
+If A B the C then A is carrying one object.
+Note: discovered on babi07 (src_babi), 400 lessons
+If A B the C then A is carrying nothing.
+Note: discovered on babi08 (src_babi), 400 lessons
+If A B the C then A is carrying nothing.
+Note: discovered on babi08 (src_babi), 400 lessons
+If A got the B there then A is carrying the B.
+Note: discovered on babi09 (src_babi), 400 lessons
+If A B the C then No , A is not in the C.
+Note: discovered on babi09 (src_babi), 400 lessons
+If A B the C then Yes , A is in the C.
+Note: discovered on babi09 (src_babi), 400 lessons
+If A B the C and A B the D then No , A is not in the D.
+Note: discovered on babi09 (src_babi), 400 lessons
+If D B the E and A B the C and at that time D B the E then No , A is not in the E.
+Note: discovered on babi10 (src_babi), 400 lessons
+If A went to the B then Yes , A is in the B.
+Note: discovered on babi10 (src_babi), 400 lessons
+If A is in the C then Yes , A is in the C.
+Note: discovered on babi12 (src_babi), 400 lessons
+If B went to the C and The group named last is A And B and at that time B went to the C then A is in the C.
+Note: discovered on babi12 (src_babi), 400 lessons
+If A went to the B then A is in the B.
+Note: discovered on babi13 (src_babi), 400 lessons
+Write Afterwards A as A.
+Note: discovered on babi13 (src_babi), 400 lessons
+Write After that A as A.
+Note: discovered on babi13 (src_babi), 400 lessons
+Write Following that A as A.
+Note: discovered on babi13 (src_babi), 400 lessons
+Write Then A as A.
+Note: discovered on babi14 (src_babi), 400 lessons
+If This morning A went to the B and Yesterday A went to the C then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this morning and A went to the C yesterday then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this morning and Yesterday A went to the C then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B yesterday and This morning A went to the C then Where was A before the C B.
+Note: discovered on babi14 (src_babi), 400 lessons
+If This afternoon A went to the B and This morning A went to the C then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this afternoon and A went to the C this evening then Where was A before the C B.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this afternoon and This morning A went to the C then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this afternoon and A went to the C this morning then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If This afternoon A went to the B and This evening A went to the C then Where was A before the C B.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this evening and This afternoon A went to the C then Where was A before the B C.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this afternoon and This evening A went to the C then Where was A before the C B.
+Note: discovered on babi14 (src_babi), 400 lessons
+If A went to the B this morning and This afternoon A went to the C then Where was A before the C B.
+Note: discovered on babi20 (src_babi), 400 lessons
+If A is B and A went to the C then Why did A go to the C B.
+Note: discovered on babi20 (src_babi), 400 lessons
+If R got the S there and R is T then Why did R get the S T.
+Note: discovered on tomi_real (src_tomi), 400 lessons
+If A the B to the C then The B really is in the C.

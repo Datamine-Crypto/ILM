@@ -1,0 +1,15 @@
+Note: Time and order. Times come in an order, and a place where a person was at one time comes before the place at a later time. "Before the school" means before the last time that the person was in the school.
+Builds on movement, times.
+If A is before B and B is before C then A is before C.
+If A went to the B yesterday then A was in the B, yesterday.
+If A went to the B this morning then A was in the B, this morning.
+If A went to the B this afternoon then A was in the B, this afternoon.
+If A went to the B this evening then A was in the B, this evening.
+If Yesterday A went to the B then A was in the B, yesterday.
+If This morning A went to the B then A was in the B, this morning.
+If This afternoon A went to the B then A was in the B, this afternoon.
+If This evening A went to the B then A was in the B, this evening.
+If A was in the B, E and A was in the B, G and E is before G then A was in the B after E.
+If A was in the D, G and F is before G and G is before E then A moved between F And E.
+Where was A before the B? C if A was in the B, E and not A was in the B after E and A was in the C, F and F is before E and not A moved between F And E.
+Reply to "Where was A before the B?" with C: A was in the C before the B.

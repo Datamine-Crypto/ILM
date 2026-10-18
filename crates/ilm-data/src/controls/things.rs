@@ -58,22 +58,6 @@ pub(crate) fn choices_mark(lessons: &[Case]) -> Option<String> {
 }
 because!(choices_mark, ThingChanges, "the word that starts the choices: of the words that stand two times or more in a question, the one with which the answer is a choice in the most lessons, the first of equals; only when that holds for nearly all lessons");
 
-fn things_of(choices: &[Vec<String>]) -> Option<Vec<Vec<String>>> {
-    let first = choices.first()?;
-    let shortest = choices.iter().map(Vec::len).min()?;
-    let mut head = 0usize;
-    while head < shortest && choices.iter().all(|choice| choice[head] == first[head]) {
-        head += 1;
-    }
-    let mut tail = 0usize;
-    while head + tail < shortest && choices.iter().all(|choice| choice[choice.len() - 1 - tail] == first[first.len() - 1 - tail]) {
-        tail += 1;
-    }
-    let things: Vec<Vec<String>> = choices.iter().map(|choice| choice[head..choice.len() - tail].to_vec()).collect();
-    things.iter().enumerate().all(|(at, thing)| !thing.is_empty() && !things[..at].contains(thing)).then_some(things)
-}
-because!(things_of, ThingChanges, "the things of a story: the part of each choice between the words that every choice starts with and ends with; nothing when a choice has no such part or two choices have the same one");
-
 fn exchanged(text: &str, one: &[String], other: &[String]) -> String {
     let runs = byte_runs(text, u8::is_ascii_alphanumeric);
     let low: Vec<String> = runs.iter().map(|(start, end)| text[*start..*end].to_ascii_lowercase()).collect();
@@ -124,3 +108,20 @@ pub fn thing_changes(lessons: &[Case], whole: bool) -> Vec<ChangedCase> {
     out
 }
 because!(thing_changes, ThingChanges, "the changed stories of the lessons that the model does not learn, or of all lessons for a model of all lessons: the thing of the answer changed for each other thing, with the choice of that thing as the new truth, and two other things changed for each other, with the old truth");
+
+fn things_of(choices: &[Vec<String>]) -> Option<Vec<Vec<String>>> {
+    let first = choices.first()?;
+    let shortest = choices.iter().map(Vec::len).min()?;
+    let mut head = 0usize;
+    while head < shortest && choices.iter().all(|choice| choice[head] == first[head]) {
+        head += 1;
+    }
+    let mut tail = 0usize;
+    while head + tail < shortest && choices.iter().all(|choice| choice[choice.len() - 1 - tail] == first[first.len() - 1 - tail]) {
+        tail += 1;
+    }
+    let things: Vec<Vec<String>> = choices.iter().map(|choice| choice[head..choice.len() - tail].to_vec()).collect();
+    let distinct = things.iter().enumerate().all(|(at, thing)| !thing.is_empty() && !things[..at].contains(thing));
+    distinct.then_some(things)
+}
+because!(things_of, ThingChanges, "the things of a case: the part of each choice between the words that every choice starts with and the words that every choice ends with; nothing when a choice has no such part or two choices have the same one");

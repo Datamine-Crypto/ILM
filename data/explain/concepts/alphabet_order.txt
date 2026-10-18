@@ -1,0 +1,10 @@
+Note: The words of a list in the order of the alphabet: each word of the list takes the place that the number of words of the list before it in the alphabet gives, and the list is written again in that order.
+If List : S then S is a listed word.
+If List : S BB then S is a listed word.
+If List : AA S then S is a listed word.
+If List : AA S BB then S is a listed word.
+If V is a listed word and W is a listed word and V comes before W in the alphabet then V is before W in the list.
+If W is a listed word and N is the number of V where V is before W in the list and N plus 1 is K then W comes at K.
+If W comes at 1 then the sorted list to 1 is W.
+If the sorted list to K is AA and K plus 1 is L and W comes at L then the sorted list to L is AA W.
+If N is the number of W where W is a listed word and the sorted list to N is AA then the sorted list is AA.

@@ -1,7 +1,10 @@
 pub mod asked;
 pub mod classes;
 pub mod facts;
+pub mod letters;
 pub mod store;
+pub mod text_facts;
+pub mod titles;
 
 use crate::sets::export::Described;
 use patterns::{because, source};

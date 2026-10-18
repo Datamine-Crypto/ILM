@@ -1,0 +1,40 @@
+pub mod abduction;
+pub mod bridges;
+pub mod chain;
+pub mod clauses;
+pub mod costs;
+pub mod curriculum;
+pub mod derive;
+pub mod discovery;
+pub mod learn;
+pub mod known_good;
+pub mod lessons;
+pub mod marks;
+pub mod positions;
+pub mod provenance;
+pub mod scopes;
+pub mod states;
+pub mod story_disk;
+pub mod text;
+pub mod why;
+pub mod wording;
+pub mod wording_joining;
+pub mod wording_meanings;
+pub mod wording_numbers;
+pub mod wording_patterns;
+pub mod wording_reading;
+pub mod wording_rewrite;
+pub mod wording_words;
+pub mod worlds;
+pub mod worlds_solve;
+pub mod words;
+
+use crate::tools::call::Tool;
+use crate::tools::explain::learn::learn_explain;
+use patterns::{because, source};
+
+pub struct ExplainTool;
+source!(ExplainTool, "a tool that reasons with logic told in English: its rules and question forms are sentences of a library of texts that a person can read and add to, and the tool chains them over the told sentences of a case");
+
+pub const EXPLAIN_TOOL: Tool = Tool { name: "explain", needs_labels: false, learn: learn_explain };
+because!(EXPLAIN_TOOL, ExplainTool, "the tool in the list of the tools: it needs no labels and gives no control by the form of the question, because its answers come from the told sentences through the rules");

@@ -1,0 +1,23 @@
+Note: Classes and kinds. A thing of a kind has what every thing of that kind has, and a kind inside a bigger kind passes this on. "Every cat is furry", "each cat is furry", "all cats are furry" and "cats are furry" say the same. A thing of a kind also does what every thing of that kind does: if all mammals give birth to young ones, a bat does give birth to young ones.
+Note: When things of one kind are told to have a colour, a thing of that kind that is not told its colour is taken to have the colour told last for its kind.
+Builds on plurals, colours.
+If C is an A then C is a A.
+If C is a A then C is an A.
+If every A is B and C is a A then C is B.
+If each A is B and C is a A then C is B.
+If all Aes are B and C is a A then C is B.
+If all As are B and C is a A then C is B.
+If Aes are Bes and C is a A then C is a B.
+If Aes are Bs and C is a A then C is a B.
+If As are Bes and C is a A then C is a B.
+If As are Bs and C is a A then C is a B.
+If Aes are B and C is a A then C is B.
+If As are B and C is a A then C is B.
+If all As B and C is a A then C does B.
+If D is the plural of A and D are B and C is a A then C is B.
+If D is a colour and C is D and C is a B then the colour of the kind B is D.
+Reply to "Is A a B or C?" with A is a B: A is a B.
+Reply to "Is A a B or C?" with A is a C: A is a C.
+Reply to "What color is A?" with D: A is D.
+Reply to "What colour is A?" with D: A is D.
+Reply to "What is A afraid of?" with D: A is afraid of the D.

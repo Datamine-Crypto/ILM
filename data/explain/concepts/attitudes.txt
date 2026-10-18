@@ -1,0 +1,13 @@
+Note: Attitudes to a statement. A factive verb (knows, sees, recognizes, realizes, understands, learns, remembers, notices, discovers, forgets) tells that its statement is true: whoever knows that it rains, it rains. A verb of belief (believes, thinks, assumes, suspects, supposes, guesses, hopes, fears) does not: one can think that it rains when it does not. What follows from what a person holds, the person holds too, so a belief that someone knows a statement is a belief of that statement. Another person's attitude does not follow, and neither does a belief that is only someone else's.
+Knows is a factive verb.
+Sees is a factive verb.
+Recognizes is a factive verb.
+Realizes is a factive verb.
+Understands is a factive verb.
+Learns is a factive verb.
+Remembers is a factive verb.
+Notices is a factive verb.
+Discovers is a factive verb.
+Forgets is a factive verb.
+If the case grants that R V that BB and V is a factive verb then the case grants that BB.
+If the case grants that R V that S W that BB and W is a factive verb then the case grants that R V that BB.

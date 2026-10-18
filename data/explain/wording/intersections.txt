@@ -1,0 +1,263 @@
+Note: Points where shapes in a plane meet: line segments, circles and polygons (a polygon is the segments between its corners in order, and from the last corner back to the first). Two segments cross when the ends of each lie on the two sides of the other; the side of a point to a segment is the sign of a cross product. A segment meets a circle at one point when one end is inside and one outside, and at two points when both ends are outside, the point of the segment nearest the centre lies between the ends, and that point is inside: the signs of the quadratic of the segment's points, with no square root. Two circles meet at two points when the distance of their centres lies between the difference and the sum of their radii. A point where shapes touch, a tangent, and a corner that two shapes share count once. The count of points sums each meeting from both shapes, so it is twice the number of points.
+Builds on numbers.
+If There is a W segment from ( R , S ) to ( T , U ) then the edge from R S to T U is in the segment from R S to T U.
+If There is a W segment from ( R , S ) to ( T , U ) then R S is a corner of the segment from R S to T U.
+If There is a W segment from ( R , S ) to ( T , U ) then T U is a corner of the segment from R S to T U.
+If There is a W centered at ( R , S ) with radius T then the circle around R S of radius T is drawn.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the side from CC to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the side from CC to DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the side from DD to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) ] then the corner DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the side from CC to DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the side from DD to EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the corner DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the side from EE to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) ] then the corner EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from CC to DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from DD to EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from EE to FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the side from FF to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) ] then the corner FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from CC to DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from DD to EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from EE to FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from FF to GG is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the side from GG to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) ] then the corner GG is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from AA to BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from BB to CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner BB is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from CC to DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner CC is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from DD to EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner DD is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from EE to FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner EE is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from FF to GG is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner FF is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from GG to HH is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner GG is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the side from HH to AA is in the polygon from AA.
+If There is a W with coordinates [ ( AA ) , ( BB ) , ( CC ) , ( DD ) , ( EE ) , ( FF ) , ( GG ) , ( HH ) ] then the corner HH is in the polygon from AA.
+If the side from R , S to T , U is in the polygon from AA then the edge from R S to T U is in the polygon from AA.
+If the corner R , S is in the polygon from AA then R S is a corner of the polygon from AA.
+If the edge from R S to T U is in KK then the edge from R S to T U is drawn.
+If the edge from R S to T U is drawn and T minus R is A and U minus S is B then the edge from R S to T U goes A by B.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is more than F then V W is left of R S to T U.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is less than F then V W is right of R S to T U.
+If V W is left of R S to T U and X Y is right of R S to T U and the edge from V W to X Y is drawn then the edge from V W to X Y crosses the line of R S to T U.
+If V W is right of R S to T U and X Y is left of R S to T U and the edge from V W to X Y is drawn then the edge from V W to X Y crosses the line of R S to T U.
+If the edge from V W to X Y crosses the line of R S to T U and the edge from R S to T U crosses the line of V W to X Y then the edge from R S to T U meets the edge from V W to X Y at 1 points.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and R is at most V and V is at most T and S is at most W and W is at most U and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is at least F and D is at most F then V W touches the edge from R S to T U.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and R is at most V and V is at most T and U is at most W and W is at most S and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is at least F and D is at most F then V W touches the edge from R S to T U.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and T is at most V and V is at most R and S is at most W and W is at most U and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is at least F and D is at most F then V W touches the edge from R S to T U.
+If the edge from R S to T U is in KK and V W is a corner of LL and not KK is the same as LL and T is at most V and V is at most R and U is at most W and W is at most S and the edge from R S to T U goes A by B and W minus S is C and C times A is D and V minus R is E and E times B is F and D is at least F and D is at most F then V W touches the edge from R S to T U.
+If V W touches the edge from R S to T U and not V W is an end of the edge from R S to T U then the point V W meets the edge from R S to T U at 1 points.
+If V W touches the edge from R S to T U and not V W is an end of the edge from R S to T U then the edge from R S to T U meets the point V W at 1 points.
+If R S is a corner of KK and R S is a corner of LL and not KK is the same as LL then R S is a shared corner.
+If R S is a shared corner then the corner R S meets one more shape at 1 points.
+If R S is a shared corner then one more shape meets the corner R S at 1 points.
+If the edge from R S to T U is drawn then R S is an end.
+If the edge from R S to T U is drawn then R S is an end of the edge from R S to T U.
+If the edge from R S to T U is drawn then T U is an end of the edge from R S to T U.
+If the edge from R S to T U is drawn then T U is an end.
+If R S is an end and the circle around V W of radius Z is drawn and R minus V is A and S minus W is B and A times A is C and B times B is D and C plus D is E and Z times Z is F and E minus F is G then the power of R S to the circle around V W of radius Z is G.
+If the power of R S to the circle around V W of radius Z is G and G is less than 0 then R S is inside the circle around V W of radius Z.
+If the power of R S to the circle around V W of radius Z is G and G is more than 0 then R S is outside the circle around V W of radius Z.
+If the power of R S to the circle around V W of radius Z is G and G is at least 0 and G is at most 0 then R S is on the circle around V W of radius Z.
+If R S is inside the circle around V W of radius Z and the edge from R S to T U goes A by B and T U is outside the circle around V W of radius Z then the edge from R S to T U meets the circle around V W of radius Z at 1 points.
+If R S is outside the circle around V W of radius Z and the edge from R S to T U goes A by B and T U is inside the circle around V W of radius Z then the edge from R S to T U meets the circle around V W of radius Z at 1 points.
+If the edge from R S to T U meets the circle around V W of radius Z at N points then the circle around V W of radius Z meets the edge from R S to T U at N points.
+If R S is outside the circle around V W of radius Z and the edge from R S to T U goes A by B and T U is outside the circle around V W of radius Z and A times A is C and B times B is D and C plus D is E and R minus V is F and S minus W is G and A times F is H and B times G is J and H plus J is K and the power of R S to the circle around V W of radius Z is N then the edge from R S to T U passes the circle around V W of radius Z with K and E and N.
+If the edge from R S to T U passes the circle around V W of radius Z with K And E And N and K is less than 0 and 0 minus K is L and L is less than E and K times K is M and E times N is O and M is more than O then the edge from R S to T U meets the circle around V W of radius Z at 2 points.
+If the edge from R S to T U passes the circle around V W of radius Z with K And E And N and K is less than 0 and 0 minus K is L and L is less than E and K times K is M and E times N is O and M is at least O and M is at most O then the edge from R S to T U meets the circle around V W of radius Z at 1 points.
+If R S is on the circle around V W of radius Z and the edge from R S to T U goes A by B and T U is outside the circle around V W of radius Z and A times A is C and B times B is D and C plus D is E and R minus V is F and S minus W is G and A times F is H and B times G is J and H plus J is K and K is less than 0 and 0 minus K is L and L plus L is M and M is less than E then the edge from R S to T U meets the circle around V W of radius Z at 1 points.
+If T U is on the circle around V W of radius Z and the edge from R S to T U goes A by B and R S is outside the circle around V W of radius Z and A times A is C and B times B is D and C plus D is E and T minus V is F and U minus W is G and A times F is H and B times G is J and H plus J is K and K is more than 0 and K plus K is M and M is less than E then the edge from R S to T U meets the circle around V W of radius Z at 1 points.
+If R S is on the circle around V W of radius Z then the point R S meets the circle around V W of radius Z at 1 points.
+If R S is on the circle around V W of radius Z then the circle around V W of radius Z meets the point R S at 1 points.
+If the circle around R S of radius X is drawn and the circle around T U of radius Y is drawn and R minus T is A and S minus U is B and A times A is C and B times B is D and C plus D is E and E is more than 0 and X plus Y is F and F times F is G and X minus Y is H and H times H is J and E is less than G and E is more than J then the circle around R S of radius X meets the circle around T U of radius Y at 2 points.
+If the circle around R S of radius X is drawn and the circle around T U of radius Y is drawn and R minus T is A and S minus U is B and A times A is C and B times B is D and C plus D is E and E is more than 0 and X plus Y is F and F times F is G and X minus Y is H and H times H is J and E is at least G and E is at most G then the circle around R S of radius X meets the circle around T U of radius Y at 1 points.
+If the circle around R S of radius X is drawn and the circle around T U of radius Y is drawn and R minus T is A and S minus U is B and A times A is C and B times B is D and C plus D is E and E is more than 0 and X plus Y is F and F times F is G and X minus Y is H and H times H is J and E is at least J and E is at most J then the circle around R S of radius X meets the circle around T U of radius Y at 1 points.
+Twice 0 is 0.
+Twice 1 is 2.
+Twice 2 is 4.
+Twice 3 is 6.
+Twice 4 is 8.
+Twice 5 is 10.
+Twice 6 is 12.
+Twice 7 is 14.
+Twice 8 is 16.
+Twice 9 is 18.
+Twice 10 is 20.
+Twice 11 is 22.
+Twice 12 is 24.
+Twice 13 is 26.
+Twice 14 is 28.
+Twice 15 is 30.
+Twice 16 is 32.
+Twice 17 is 34.
+Twice 18 is 36.
+Twice 19 is 38.
+Twice 20 is 40.
+Twice 21 is 42.
+Twice 22 is 44.
+Twice 23 is 46.
+Twice 24 is 48.
+Twice 25 is 50.
+Twice 26 is 52.
+Twice 27 is 54.
+Twice 28 is 56.
+Twice 29 is 58.
+Twice 30 is 60.
+Twice 31 is 62.
+Twice 32 is 64.
+Twice 33 is 66.
+Twice 34 is 68.
+Twice 35 is 70.
+Twice 36 is 72.
+Twice 37 is 74.
+Twice 38 is 76.
+Twice 39 is 78.
+Twice 40 is 80.
+Twice 41 is 82.
+Twice 42 is 84.
+Twice 43 is 86.
+Twice 44 is 88.
+Twice 45 is 90.
+Twice 46 is 92.
+Twice 47 is 94.
+Twice 48 is 96.
+Twice 49 is 98.
+Twice 50 is 100.
+Twice 51 is 102.
+Twice 52 is 104.
+Twice 53 is 106.
+Twice 54 is 108.
+Twice 55 is 110.
+Twice 56 is 112.
+Twice 57 is 114.
+Twice 58 is 116.
+Twice 59 is 118.
+Twice 60 is 120.
+Twice 61 is 122.
+Twice 62 is 124.
+Twice 63 is 126.
+Twice 64 is 128.
+Twice 65 is 130.
+Twice 66 is 132.
+Twice 67 is 134.
+Twice 68 is 136.
+Twice 69 is 138.
+Twice 70 is 140.
+Twice 71 is 142.
+Twice 72 is 144.
+Twice 73 is 146.
+Twice 74 is 148.
+Twice 75 is 150.
+Twice 76 is 152.
+Twice 77 is 154.
+Twice 78 is 156.
+Twice 79 is 158.
+Twice 80 is 160.
+Twice 81 is 162.
+Twice 82 is 164.
+Twice 83 is 166.
+Twice 84 is 168.
+Twice 85 is 170.
+Twice 86 is 172.
+Twice 87 is 174.
+Twice 88 is 176.
+Twice 89 is 178.
+Twice 90 is 180.
+Twice 91 is 182.
+Twice 92 is 184.
+Twice 93 is 186.
+Twice 94 is 188.
+Twice 95 is 190.
+Twice 96 is 192.
+Twice 97 is 194.
+Twice 98 is 196.
+Twice 99 is 198.
+Twice 100 is 200.
+Twice 101 is 202.
+Twice 102 is 204.
+Twice 103 is 206.
+Twice 104 is 208.
+Twice 105 is 210.
+Twice 106 is 212.
+Twice 107 is 214.
+Twice 108 is 216.
+Twice 109 is 218.
+Twice 110 is 220.
+Twice 111 is 222.
+Twice 112 is 224.
+Twice 113 is 226.
+Twice 114 is 228.
+Twice 115 is 230.
+Twice 116 is 232.
+Twice 117 is 234.
+Twice 118 is 236.
+Twice 119 is 238.
+Twice 120 is 240.
+Twice 121 is 242.
+Twice 122 is 244.
+Twice 123 is 246.
+Twice 124 is 248.
+Twice 125 is 250.
+Twice 126 is 252.
+Twice 127 is 254.
+Twice 128 is 256.
+Twice 129 is 258.
+Twice 130 is 260.
+Twice 131 is 262.
+Twice 132 is 264.
+Twice 133 is 266.
+Twice 134 is 268.
+Twice 135 is 270.
+Twice 136 is 272.
+Twice 137 is 274.
+Twice 138 is 276.
+Twice 139 is 278.
+Twice 140 is 280.
+Twice 141 is 282.
+Twice 142 is 284.
+Twice 143 is 286.
+Twice 144 is 288.
+Twice 145 is 290.
+Twice 146 is 292.
+Twice 147 is 294.
+Twice 148 is 296.
+Twice 149 is 298.
+Twice 150 is 300.
+To answer "How many W points are there?": N if M is the sum of B where AA meets BB at B points and twice N is M.

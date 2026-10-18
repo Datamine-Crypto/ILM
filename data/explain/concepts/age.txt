@@ -1,0 +1,3 @@
+Note: A person born in an earlier year was born before the other and is older.
+If A was born in C and B was born in D and C is less than D then A was born before B.
+If A was born before B then A is older than B.

@@ -1,5 +1,5 @@
 use ilm_core::base::cursor::ItemReader;
-use ilm_core::know::signs::{is_space, is_word_sign};
+use ilm_core::base::signs::{is_space, is_word_sign};
 use patterns::{because, source};
 
 pub struct PythonPatterns;

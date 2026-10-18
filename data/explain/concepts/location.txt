@@ -1,0 +1,10 @@
+Note: Objects and places. A person or a thing is in one place at a time: the place that the story told last.
+Note: Going to a place puts the goer there. A person who is no longer in a place, or not in it, is not there. A person who is either in one place or another may be in each. A thing that someone moves is where it was moved to. A person who moves to a city lives there. A thing that someone takes is where that person is at that time, a carried thing goes where its holder goes, and a dropped thing stays where it was.
+Builds on movement, possession, reference, grammar.
+Reply to "Where is A?" with B: A is in the B.
+Reply to "Is A in the B?" with yes: Yes, A is in the B.
+Reply to "Is A in the B?" with no: No, A is not in the B.
+Reply to "Is A in the B?" with maybe: A may be in the B.
+Reply to "Where is the A really?" with B: The A is really in the B.
+Reply to "Where was the A before the B?" with C: The A was in the C before the B.
+Reply to "Where does A live?" with B: A lives in B.

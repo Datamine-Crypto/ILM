@@ -1,0 +1,30 @@
+Note: Things in rows and columns. A thing to the left of another is in its row, further left; a thing above another is in its column, higher. A thing further left than a second is further left than everything in the column of the second, and the same for higher and rows.
+Note: A thing in between two others is further left than one of them and further right than the other.
+If A is to the left of B then A is further left than B.
+If A is to the right of B then B is further left than A.
+If A is above B then A is higher than B.
+If A is below B then B is higher than A.
+If A is to the left of B then A is in the row of B.
+If A is to the right of B then A is in the row of B.
+If A is above B then A is in the column of B.
+If A is below B then A is in the column of B.
+If A is in the row of B then B is in the row of A.
+If A is in the column of B then B is in the column of A.
+If A is in the row of B and B is in the row of C then A is in the row of C.
+If A is in the column of B and B is in the column of C then A is in the column of C.
+If A is further left than B and C is in the column of A then C is further left than B.
+If A is further left than B and C is in the column of B then A is further left than C.
+If A is higher than B and C is in the row of A then C is higher than B.
+If A is higher than B and C is in the row of B then A is higher than C.
+If A is further left than B and B is further left than C then A is further left than C.
+If A is higher than B and B is higher than C then A is higher than C.
+Reply to "Is A to the left of B?" with yes: Yes, A is to the left of B.
+Reply to "Is A to the left of B?" with no: No, A is not to the left of B.
+Reply to "Is A to the right of B?" with yes: Yes, A is to the right of B.
+Reply to "Is A to the right of B?" with no: No, A is not to the right of B.
+Reply to "Is A above B?" with yes: Yes, A is above B.
+Reply to "Is A above B?" with no: No, A is not above B.
+Reply to "Is A below B?" with yes: Yes, A is below B.
+Reply to "Is A below B?" with no: No, A is not below B.
+Reply to "Is A in between B and C?" with yes: Yes, A is in between B and C.
+Reply to "Is A in between B and C?" with no: No, A is not in between B and C.

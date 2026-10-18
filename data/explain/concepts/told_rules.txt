@@ -1,0 +1,15 @@
+Note: Rules told in a story. A told sentence "If someone is big then they are kind." is a rule for any thing: someone, something, it and they name the same thing. "They" and "it" name one thing here, so "they are" says "it is" and "they like" says "it likes". "All big things are kind", "Big things are kind" and "Big, red people are kind" are rules too. A list of qualities ("big and red") says each quality of the same thing.
+Read told rules with something, someone, it and they for any thing.
+Write A they are B as A it is B.
+Write A they do not F B as A it does not F B.
+Write A they F B as A it Fs B.
+Write A and E is S and T then B as A and E is S and E is T then B.
+Write if E is S and T then B as if E is S and E is T then B.
+If all S things are T then if something is S then it is T.
+If S things are T then if something is S then it is T.
+If all S people are T then if someone is S then it is T.
+If S people are T then if someone is S then it is T.
+If all S , T things are U then if something is S and it is T then it is U.
+If S , T things are U then if something is S and it is T then it is U.
+If all S , T people are U then if someone is S and it is T then it is U.
+If S , T people are U then if someone is S and it is T then it is U.

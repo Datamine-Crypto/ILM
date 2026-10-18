@@ -1,0 +1,10 @@
+Note: The wording of MindGames with an inner state (thirsty): each person feels the person's own state and not the states of the others.
+Builds on mindgames.
+Write everyone is visible to others as every person sees the person's own fact.
+Write A not everyone is thirsty as A not every person holds.
+Write A someone is thirsty as A some person holds.
+Write A everyone is thirsty as A every person holds.
+Write A nobody is thirsty as A no person holds.
+Write A R is not thirsty as A R does not hold.
+Write A R is thirsty as A R holds.
+To answer "A": entailment if the question asks B and it follows that B. not_entailment otherwise.

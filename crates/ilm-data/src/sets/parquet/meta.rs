@@ -13,9 +13,6 @@ because!(INT32_TYPE, ParquetMeta, "the physical type of a column of whole number
 pub const INT64_TYPE: i32 = 2;
 because!(INT64_TYPE, ParquetMeta, "the physical type of a column of whole numbers of eight bytes");
 
-pub const INT96_TYPE: i32 = 3;
-because!(INT96_TYPE, ParquetMeta, "the physical type of a column of whole numbers of twelve bytes, an old form of a time");
-
 pub const FLOAT_TYPE: i32 = 4;
 because!(FLOAT_TYPE, ParquetMeta, "the physical type of a column of numbers with a point of the narrow width");
 

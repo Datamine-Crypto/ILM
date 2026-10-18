@@ -1,0 +1,76 @@
+Note: Shapes of matrices under the steps of linear algebra. A matrix of shape (R,S) has R rows and S columns; a step makes a new matrix, the result, from one or two matrices, and the next step reads that result. Transposing reverses the order of the axes. The kronecker product multiplies the sizes of the same axes. A matrix product keeps the axes before the last two (the batch), takes the rows of the first matrix and the columns of the second. A sum, a difference or a hadamard product keeps the shape. A sum over one axis removes that axis.
+Builds on numbers.
+The kronecker product multiplies sizes.
+The hadamard product keeps the shape.
+Write Compute the Z product of AA with BB as the Z product of AA And BB.
+Write Multiply AA with BB as the matrix product of AA And BB.
+Write Add AA to BB as the sum of AA And BB.
+Write Subtract AA from BB as the difference of BB And AA.
+Write Take AA And sum over the Z axis as the sum of AA over its Z axis.
+Write Sum the result over the Z axis as the sum of the result over its Z axis.
+Write AA a matrix of shape ( R , S ) BB as AA a R by S matrix BB.
+Write AA a matrix of shape ( R , S ) as AA a R by S matrix.
+Write AA a matrix of shape ( R , S ) BB a matrix of shape ( V , W ) as AA a R by S matrix BB a V by W matrix.
+Write AA a matrix of shape ( R , S , T ) BB as AA a R by S by T matrix BB.
+Write AA a matrix of shape ( R , S , T ) as AA a R by S by T matrix.
+Write AA a matrix of shape ( R , S , T ) BB a matrix of shape ( V , W , X ) as AA a R by S by T matrix BB a V by W by X matrix.
+Write AA a matrix of shape ( R , S , T , U ) BB as AA a R by S by T by U matrix BB.
+Write AA a matrix of shape ( R , S , T , U ) as AA a R by S by T by U matrix.
+Write AA a matrix of shape ( R , S , T , U ) BB a matrix of shape ( V , W , X , Y ) as AA a R by S by T by U matrix BB a V by W by X by Y matrix.
+If the shape of the result is R by S then the number of axes of the result is 2.
+If Transpose a R by S matrix then the shape of the result is S by R.
+If Transpose the result and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 then the shape of the result is S by R.
+If the Z product of a R by S matrix And a V by W matrix and the Z product multiplies sizes and R times V is A and S times W is B then the shape of the result is A by B.
+If the Z product of the result And a V by W matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 and the Z product multiplies sizes and R times V is A and S times W is B then the shape of the result is A by B.
+If the Z product of AA And a V by W matrix and the Z product keeps the shape then the shape of the result is V by W.
+If the matrix product of a R by S matrix And a V by W matrix then the shape of the result is R by W.
+If the matrix product of the result And a V by W matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 then the shape of the result is R by W.
+If the sum of AA And a V by W matrix then the shape of the result is V by W.
+If the difference of a V by W matrix And AA then the shape of the result is V by W.
+If the sum of a R by S matrix over its first axis then the shape of the result is S.
+If the sum of the result over its first axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 then the shape of the result is S.
+If the sum of a R by S matrix over its second axis then the shape of the result is R.
+If the sum of the result over its second axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 then the shape of the result is R.
+If the sum of a R by S matrix over its last axis then the shape of the result is R.
+If the sum of the result over its last axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2 then the shape of the result is R.
+If the shape of the result is R by S by T then the number of axes of the result is 3.
+If Transpose a R by S by T matrix then the shape of the result is T by S by R.
+If Transpose the result and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is T by S by R.
+If the Z product of a R by S by T matrix And a V by W by X matrix and the Z product multiplies sizes and R times V is A and S times W is B and T times X is C then the shape of the result is A by B by C.
+If the Z product of the result And a V by W by X matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 and the Z product multiplies sizes and R times V is A and S times W is B and T times X is C then the shape of the result is A by B by C.
+If the Z product of AA And a V by W by X matrix and the Z product keeps the shape then the shape of the result is V by W by X.
+If the matrix product of a R by S by T matrix And a V by W by X matrix then the shape of the result is R by S by X.
+If the matrix product of the result And a V by W by X matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is R by S by X.
+If the sum of AA And a V by W by X matrix then the shape of the result is V by W by X.
+If the difference of a V by W by X matrix And AA then the shape of the result is V by W by X.
+If the sum of a R by S by T matrix over its first axis then the shape of the result is S by T.
+If the sum of the result over its first axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is S by T.
+If the sum of a R by S by T matrix over its second axis then the shape of the result is R by T.
+If the sum of the result over its second axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is R by T.
+If the sum of a R by S by T matrix over its third axis then the shape of the result is R by S.
+If the sum of the result over its third axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is R by S.
+If the sum of a R by S by T matrix over its last axis then the shape of the result is R by S.
+If the sum of the result over its last axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3 then the shape of the result is R by S.
+If the shape of the result is R by S by T by U then the number of axes of the result is 4.
+If Transpose a R by S by T by U matrix then the shape of the result is U by T by S by R.
+If Transpose the result and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is U by T by S by R.
+If the Z product of a R by S by T by U matrix And a V by W by X by Y matrix and the Z product multiplies sizes and R times V is A and S times W is B and T times X is C and U times Y is D then the shape of the result is A by B by C by D.
+If the Z product of the result And a V by W by X by Y matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 and the Z product multiplies sizes and R times V is A and S times W is B and T times X is C and U times Y is D then the shape of the result is A by B by C by D.
+If the Z product of AA And a V by W by X by Y matrix and the Z product keeps the shape then the shape of the result is V by W by X by Y.
+If the matrix product of a R by S by T by U matrix And a V by W by X by Y matrix then the shape of the result is R by S by T by Y.
+If the matrix product of the result And a V by W by X by Y matrix and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is R by S by T by Y.
+If the sum of AA And a V by W by X by Y matrix then the shape of the result is V by W by X by Y.
+If the difference of a V by W by X by Y matrix And AA then the shape of the result is V by W by X by Y.
+If the sum of a R by S by T by U matrix over its first axis then the shape of the result is S by T by U.
+If the sum of the result over its first axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is S by T by U.
+If the sum of a R by S by T by U matrix over its second axis then the shape of the result is R by T by U.
+If the sum of the result over its second axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is R by T by U.
+If the sum of a R by S by T by U matrix over its third axis then the shape of the result is R by S by U.
+If the sum of the result over its third axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is R by S by U.
+If the sum of a R by S by T by U matrix over its fourth axis then the shape of the result is R by S by T.
+If the sum of the result over its fourth axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is R by S by T.
+If the sum of a R by S by T by U matrix over its last axis then the shape of the result is R by S by T.
+If the sum of the result over its last axis and before that time the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4 then the shape of the result is R by S by T.
+To answer "": ( R , S ) if latest the number of axes of the result is N and at that time the shape of the result is R by S and N is at least 2 and N is at most 2.
+To answer "": ( R , S , T ) if latest the number of axes of the result is N and at that time the shape of the result is R by S by T and N is at least 3 and N is at most 3.
+To answer "": ( R , S , T , U ) if latest the number of axes of the result is N and at that time the shape of the result is R by S by T by U and N is at least 4 and N is at most 4.

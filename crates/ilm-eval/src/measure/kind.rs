@@ -1,11 +1,14 @@
+use ilm_core::base::lanes::{BUDGET_STOPPED, MOST_LEARNING_WORK, in_work_scope_offering};
+use ilm_core::tools::explain::costs::{close_costs, open_costs};
 use ilm_core::cases::Case;
 use ilm_core::classes::WordClasses;
 use ilm_core::choice::{picked, picked_labels, take};
-use ilm_core::base::lanes::{on_lanes, shards};
+use ilm_core::base::lanes::on_spare_lanes;
 use ilm_core::base::shares::share;
-use ilm_core::tools::call::{Learner, Lessons, Tool};
+use ilm_core::tools::call::{AnswerMark, Learner, Lessons, Reading, Tool};
 use ilm_core::tools::plain::Plain;
-use ilm_core::split::parts;
+use crate::measure::question_list::question_list_share;
+use ilm_core::split::{parts, told_texts};
 use ilm_core::base::words::{answer_words, words};
 use patterns::{because, source};
 use std::collections::{HashMap, HashSet};
@@ -43,9 +46,6 @@ because!(EMPTY_MOST, ExactMeasure, "a kind has no result when more than this sha
 const LEAST_FRESH: usize = 50;
 because!(LEAST_FRESH, ExactMeasure, "with copies of lessons among the read cases, the share on the other read cases counts, and only when there are this many of them or more");
 
-const PROBE_MOST: usize = 1000;
-because!(PROBE_MOST, ExactMeasure, "the most lessons for the model that gives the control by the form of the question when another tool is measured alone, so that a run with very many lessons does not wait for a second model");
-
 const SIZES: &[usize] = &[25, 50, 100, 200, 400, 600, 1000, 2000];
 because!(SIZES, ExactMeasure, "the numbers of lessons of the curve: each about the double of the one before, from the least lessons of a measured kind to more than a kind of the board learns from");
 
@@ -64,8 +64,23 @@ because!(TOO_FEW, ExactMeasure, "the note of a kind with too few lessons or too 
 const NO_WORD_NOTE: &str = "answers hold no word for the tokeniser: no result";
 because!(NO_WORD_NOTE, ExactMeasure, "the note of a kind whose answers the cutter of words cannot read");
 
+const CHAIN_WORK_HEAD: &str = "chain work ";
+because!(CHAIN_WORK_HEAD, ExactMeasure, "the words before the work of the chains of the learning of a kind in its line of costs (facts read and fillings taken, the work that the bound of a learning counts)");
+
+const CHAIN_WORK_STOPPED: &str = ", stopped at the budget";
+because!(CHAIN_WORK_STOPPED, ExactMeasure, "the mark after the work of the chains of a learning whose learners stopped at the bound of the work of one learning");
+
+const CHAIN_WORK_BETWEEN: &str = " | ";
+because!(CHAIN_WORK_BETWEEN, ExactMeasure, "the mark between the costs of a learning and the work of its chains, and before the mark of a learning stopped at its bound");
+
 const LEARNER_FAILED: &str = "the run of the learner ended with an error";
-because!(LEARNER_FAILED, ExactMeasure, "the note of a kind where no tool gave a model or the model broke; the controls of the kind are still given");
+because!(LEARNER_FAILED, ExactMeasure, "the note of a kind where the learner or its model broke, before where it broke; a kind where no tool gave a model has what the tools said as its note; the controls of the kind are still given");
+
+const LEARNER_BROKE: &str = "the learner broke while it learned";
+because!(LEARNER_BROKE, ExactMeasure, "what the note of a kind says when the learner broke while it learned, so that it said nothing");
+
+const MODEL_BROKE: &str = "the model broke while it read the read part";
+because!(MODEL_BROKE, ExactMeasure, "what the note of a kind says when its model broke while it read the read part");
 
 #[derive(Clone, Debug, Default)]
 pub struct Row {
@@ -74,6 +89,8 @@ pub struct Row {
     pub learn: usize,
     pub read: usize,
     pub note: String,
+    pub costs: String,
+    pub spent_ways: Vec<(&'static str, f64)>,
     pub copies: usize,
     pub answers: usize,
     pub one_answer: f64,
@@ -85,13 +102,26 @@ pub struct Row {
     pub all_seconds: f64,
     pub tool: String,
     pub stopped: Option<(String, String)>,
+    pub bound_stops: usize,
+    pub learning_work: usize,
+    pub budget_stopped: bool,
+    pub marks: MarkCounts,
+    pub one_case: Option<(f64, f64)>,
+    pub named: Option<(usize, usize)>,
     pub labels: bool,
+    pub curriculum: bool,
+    pub curriculum_from: Vec<usize>,
+    pub stored_from: Vec<String>,
+    pub reading: Option<Reading>,
+    pub rules: (usize, usize),
+    pub facts: (usize, usize),
     pub asked: Option<(usize, usize)>,
     pub new_words: Option<(f64, f64, usize)>,
+    pub default_shares: Option<(f64, f64)>,
     pub curve: Vec<(usize, f64)>,
     pub wrong: Vec<String>,
 }
-because!(Row, ExactMeasure, "what the measure gives for one kind: the sizes of its parts, the controls (one answer for all, plain counting, the question alone), the share of the model on the read part and on the read cases that are no copies of lessons, the tool that was taken, and what the asked extras gave (new words, the curve by lessons, wrong lesson cases, questions of the tool)");
+because!(Row, ExactMeasure, "what the measure gives for one kind: the sizes of its parts, the controls (one answer for all, plain counting, the question alone), the share of the model on the read part and on the read cases that are no copies of lessons, the tool that was taken, how its model reads the kind (learned, written or mixed), how many rules of the library (given) and rules learned from the lessons (discovered) the proofs of its answers rest on, how many readings of the read part ended at a bound of the model's work, the answers of the read part by their marks (by proof, by default and guesses, each right and wrong, and no answer), the share of the cases whose told text the kind tells once in the lessons and in the read part (none for a final part), how many learned forms of the model name a word that a form with fewer fixed words reads too, and what the asked extras gave (new words, with the shares of the read cases answered by a default without and with them, the curve by lessons, wrong lesson cases, questions of the tool); and where the learning spent its time, as a line and by way; and the places, in the order of its set before it, of the kinds whose lessons gave lines of its model; and the kinds, other than itself, whose lines of the known-good store its learning took, as a task that rests on them stands on more than its own lessons");
 
 #[derive(Clone, Copy, Debug)]
 pub struct Asked {
@@ -105,8 +135,9 @@ pub struct Asked {
     pub tool: Option<usize>,
     pub lanes: usize,
     pub small: bool,
+    pub control_fit: Option<usize>,
 }
-because!(Asked, ExactMeasure, "what a run of the measure asks for: the most lessons and the most read cases, the final part in place of the read part, the extras, one tool alone in place of the choice among all, the threads, and whether a read part of any size is read, as the official test split of a benchmark is read whole however few cases a kind of it has");
+because!(Asked, ExactMeasure, "what a run of the measure asks for: the most lessons and the most read cases, the final part in place of the read part, the extras, one tool alone in place of the choice among all, the threads, whether a read part of any size is read, as the official test split of a benchmark is read whole however few cases a kind of it has, and for a run that learns from fewer lessons than its set gives, the lessons of the set from which the controls are still learned, so that a weaker control does not make a kind look learned");
 
 #[derive(Clone, Copy)]
 pub struct Ground<'a> {
@@ -120,8 +151,10 @@ pub struct Ground<'a> {
     pub new_words: Option<&'a [(String, String)]>,
     pub answerer: Option<&'a (dyn Fn(&str) -> Option<String> + Sync)>,
     pub classes: Option<&'a WordClasses>,
+    pub before: Option<&'a (dyn Fn() -> Vec<Vec<Case>> + Sync)>,
+    pub stored: bool,
 }
-because!(Ground, ExactMeasure, "what a kind gives to the measure: its name, its cases with their label lines, the place of the first case to read for a kind of two halves, whether lessons are counted in stories, the final part when it is read, the sealed part when it is not the one of the cut, the table of new words, for a kind that a program made a way to get the answer of any text, and the table of word classes of the run");
+because!(Ground, ExactMeasure, "what a kind gives to the measure: its name, its cases with their label lines, the place of the first case to read for a kind of two halves, whether lessons are counted in stories, the final part when it is read, the sealed part when it is not the one of the cut, the table of new words, for a kind that a program made a way to get the answer of any text, the table of word classes of the run, and a way to read the lessons of the kinds before it in its set; and whether its learning may take lines of the known-good store, as a run that must learn from its own lessons alone may not");
 
 fn most_frequent(lessons: &[Case]) -> (Vec<String>, usize) {
     let mut place: HashMap<Vec<String>, usize> = HashMap::new();
@@ -146,36 +179,114 @@ fn most_frequent(lessons: &[Case]) -> (Vec<String>, usize) {
 }
 because!(most_frequent, ExactMeasure, "the answer that the lessons have most often, the first of equals in the order of the lessons, and the number of different answers: the control that gives one answer for every case");
 
-fn right_and_fresh(model: &dyn Learner, read: &[Case], truths: &[Vec<String>], copy: &[bool], lanes: usize) -> (usize, usize) {
-    let runs = shards(read.len(), lanes);
-    let counted = on_lanes(runs.len(), lanes, &|run| {
-        let mut right = 0usize;
-        let mut fresh = 0usize;
-        for place in runs[run].clone() {
-            if model.answer(&read[place].sentences, &read[place].question).words == truths[place] {
-                right += 1;
-                fresh += usize::from(!copy[place]);
-            }
-        }
-        (right, fresh)
+fn right_and_fresh(model: &dyn Learner, read: &[Case], truths: &[Vec<String>], copy: &[bool], lanes: usize) -> ReadCounts {
+    let counted = on_spare_lanes(read.len(), lanes, &|place| {
+        let said = model.answer(&read[place].sentences, &read[place].question);
+        let right = said.words == truths[place];
+        ReadCounts { right: usize::from(right), fresh: usize::from(right && !copy[place]), marks: MarkCounts::of(said.mark, right) }
     });
-    counted.into_iter().fold((0, 0), |sum, one| (sum.0 + one.0, sum.1 + one.1))
+    counted.into_iter().fold(ReadCounts::default(), |sum, one| ReadCounts { right: sum.right + one.right, fresh: sum.fresh + one.fresh, marks: sum.marks.added(one.marks) })
 }
-because!(right_and_fresh, ExactMeasure, "the read cases that a model answers right, and those of them that are no copies of lessons; the cases are read in runs on the threads");
 
-fn by_question(probe: &dyn Learner, read: &[Case], truths: &[Vec<String>], lanes: usize) -> Option<f64> {
-    let runs = shards(read.len(), lanes);
-    let counted = on_lanes(runs.len(), lanes, &|run| {
-        let mut right = 0usize;
-        for place in runs[run].clone() {
-            right += usize::from(probe.question_alone(&read[place].sentences, &read[place].question)? == truths[place]);
-        }
-        Some(right)
-    });
-    let right: Option<usize> = counted.into_iter().sum();
-    right.map(|right| share(right, read.len()))
+#[derive(Clone, Copy, Default)]
+struct ReadCounts {
+    right: usize,
+    fresh: usize,
+    marks: MarkCounts,
 }
-because!(by_question, ExactMeasure, "the share right when a model answers by its rule of the form of the question alone; nothing when the model has no such rule for a case");
+because!(ReadCounts, ExactMeasure, "what the reading of the read part counts: the cases answered right, those of them that are no copies of lessons, and the answers by their marks");
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct MarkCounts {
+    pub proof: (usize, usize),
+    pub default: (usize, usize),
+    pub guess: (usize, usize),
+    pub none: usize,
+}
+because!(MarkCounts, ExactMeasure, "the answers of the read part by their marks: by proof, by default and guesses, each right and wrong, and the cases with no answer, so that the board shows whether an answer that claims a proof can be trusted and how many answers claim one");
+
+impl MarkCounts {
+    fn of(mark: AnswerMark, right: bool) -> MarkCounts {
+        let one = (usize::from(right), usize::from(!right));
+        match mark {
+            AnswerMark::Proof => MarkCounts { proof: one, ..MarkCounts::default() },
+            AnswerMark::Default => MarkCounts { default: one, ..MarkCounts::default() },
+            AnswerMark::Guess => MarkCounts { guess: one, ..MarkCounts::default() },
+            AnswerMark::NoAnswer => MarkCounts { none: 1, ..MarkCounts::default() },
+        }
+    }
+
+    pub fn added(self, other: MarkCounts) -> MarkCounts {
+        let sum = |one: (usize, usize), two: (usize, usize)| (one.0 + two.0, one.1 + two.1);
+        MarkCounts { proof: sum(self.proof, other.proof), default: sum(self.default, other.default), guess: sum(self.guess, other.guess), none: self.none + other.none }
+    }
+
+    pub fn read_cases(&self) -> usize {
+        self.proof.0 + self.proof.1 + self.default.0 + self.default.1 + self.guess.0 + self.guess.1 + self.none
+    }
+
+    pub fn shares(&self) -> String {
+        let all = self.read_cases();
+        let right = |(good, bad): (usize, usize)| if good + bad > usize::default() { format!("{:.places$}", share(good, good + bad), places = SHARE_PLACES) } else { NO_MARKED.to_string() };
+        format!(
+            "proof {:.places$} ({} right), default {:.places$}, guess {:.places$} ({} right), none {:.places$}",
+            share(self.proof.0 + self.proof.1, all),
+            right(self.proof),
+            share(self.default.0 + self.default.1, all),
+            share(self.guess.0 + self.guess.1, all),
+            right(self.guess),
+            share(self.none, all),
+            places = SHARE_PLACES
+        )
+    }
+}
+
+impl MarkCounts {
+    pub fn counts(&self) -> String {
+        format!(
+            "proof {} ({} wrong), default {} ({} wrong), guess {} ({} wrong), none {}",
+            self.proof.0 + self.proof.1,
+            self.proof.1,
+            self.default.0 + self.default.1,
+            self.default.1,
+            self.guess.0 + self.guess.1,
+            self.guess.1,
+            self.none
+        )
+    }
+}
+
+const NO_MARKED: &str = "-";
+because!(NO_MARKED, ExactMeasure, "what the share right of the answers of a mark says when no answer has that mark");
+
+fn one_case_shares(cases: &[Case], learn: &[usize], read: &[usize]) -> (f64, f64) {
+    let (keys, sizes) = told_texts(cases);
+    let once = |part: &[usize]| share(part.iter().filter(|at| sizes[keys[**at]] == 1).count(), part.len());
+    (once(learn), once(read))
+}
+because!(one_case_shares, ExactMeasure, "the share of the cases whose told text the kind tells once, in the lessons and in the read part: the cut takes whole told texts, the lessons those seen first and the read part those seen last, so where told texts of many cases and told texts of one case are different kinds of story, the read part may hold mostly one kind and the lessons the other");
+
+pub const DEFAULT_RISE_POINTS: f64 = 5.0;
+because!(DEFAULT_RISE_POINTS, NewWords, "the points by which the share of the read cases answered by a default must grow with new words before the board names the kind: as many as a model must stand above its controls: a reading that needs the words of its lessons sends cases to the answer otherwise (lonli_negation without its text, by the names of names.txt: seven points)");
+
+pub const READ_UNLIKE_POINTS: f64 = 30.0;
+because!(READ_UNLIKE_POINTS, ExactMeasure, "the points by which the share of told texts told once in the read part must differ from that share in the lessons before the measure says that the read part is unlike the lessons: a few points come by chance, while a read part of one kind of story beside lessons of another differs by most of the scale (lonli_quantifier: four and ninety-seven)");
+fn rules_of(model: &dyn Learner, read: &[Case], lanes: usize) -> ((usize, usize), (usize, usize)) {
+    let picked: Vec<&Case> = read.iter().step_by((read.len() / RULE_CASES).max(1)).take(RULE_CASES).collect();
+    let used = on_spare_lanes(picked.len(), lanes, &|place| (model.rules_used(&picked[place].sentences, &picked[place].question), model.facts_used(&picked[place].sentences, &picked[place].question)));
+    let counted = |lines: Vec<&Vec<(String, bool)>>| {
+        let given: HashSet<&str> = lines.iter().copied().flatten().filter(|(_, held)| *held).map(|(line, _)| line.as_str()).collect();
+        let found: HashSet<&str> = lines.iter().copied().flatten().filter(|(_, held)| !*held).map(|(line, _)| line.as_str()).collect();
+        (given.len(), found.len())
+    };
+    (counted(used.iter().map(|(rules, _)| rules).collect()), counted(used.iter().map(|(_, facts)| facts).collect()))
+}
+because!(rules_of, ExactMeasure, "how many rules and how many known facts of the library (given), and how many that no text holds (discovered, as the model learned them from the lessons), the proofs of the answers of some read cases rest on, each rule once");
+
+const RULE_CASES: usize = 20;
+because!(RULE_CASES, ExactMeasure, "the read cases, spread over the read part, whose proofs tell which rules a model rests on: a rule that the kind needs stands in many of its proofs, and each proof chains a story again");
+
+because!(right_and_fresh, ExactMeasure, "the read cases that a model answers right, and those of them that are no copies of lessons, the answers that the model gave by a default, right and wrong, and the cases that it gave no answer; the cases are read in runs on the threads");
 
 pub fn renamed(text: &str, table: &HashMap<&str, &str>) -> String {
     let bytes = text.as_bytes();
@@ -213,7 +324,7 @@ pub fn renamed(text: &str, table: &HashMap<&str, &str>) -> String {
 }
 because!(renamed, NewWords, "a text with each word of the table replaced by its new word: a word is a run of letters, it is looked up in small letters, and the new word starts with a capital letter when the old one did");
 
-fn with_new_words(model: &dyn Learner, learn: &[Case], read: &[Case], pairs: &[(String, String)], lanes: usize) -> (f64, f64, usize) {
+fn with_new_words(model: &dyn Learner, learn: &[Case], read: &[Case], pairs: &[(String, String)], lanes: usize) -> ((f64, f64, usize), f64) {
     let table: HashMap<&str, &str> = pairs.iter().map(|(old, new)| (old.as_str(), new.as_str())).collect();
     let mut held: HashSet<String> = HashSet::new();
     for lesson in learn {
@@ -222,33 +333,29 @@ fn with_new_words(model: &dyn Learner, learn: &[Case], read: &[Case], pairs: &[(
         }
     }
     let known = table.values().filter(|new| held.contains(**new)).count();
-    let runs = shards(read.len(), lanes);
-    let counted = on_lanes(runs.len(), lanes, &|run| {
-        let mut right = 0usize;
-        let mut changed = 0usize;
-        for case in &read[runs[run].clone()] {
-            let sentences: Vec<String> = case.sentences.iter().map(|sentence| renamed(sentence, &table)).collect();
-            let question = renamed(&case.question, &table);
-            let answer = renamed(&case.answer, &table);
-            changed += usize::from(sentences != case.sentences || question != case.question || answer != case.answer);
-            right += usize::from(model.answer(&sentences, &question).words == answer_words(&answer));
-        }
-        (right, changed)
+    let counted = on_spare_lanes(read.len(), lanes, &|place| {
+        let case = &read[place];
+        let sentences: Vec<String> = case.sentences.iter().map(|sentence| renamed(sentence, &table)).collect();
+        let question = renamed(&case.question, &table);
+        let answer = renamed(&case.answer, &table);
+        let changed = sentences != case.sentences || question != case.question || answer != case.answer;
+        let said = model.answer(&sentences, &question);
+        (usize::from(said.words == answer_words(&answer)), usize::from(changed), usize::from(said.mark == AnswerMark::Default))
     });
-    let (right, changed) = counted.into_iter().fold((0, 0), |sum, one| (sum.0 + one.0, sum.1 + one.1));
-    (share(right, read.len()), share(changed, read.len()), known)
+    let (right, changed, guessed) = counted.into_iter().fold((0, 0, 0), |sum, one| (sum.0 + one.0, sum.1 + one.1, sum.2 + one.2));
+    ((share(right, read.len()), share(changed, read.len()), known), share(guessed, read.len()))
 }
-because!(with_new_words, NewWords, "the read cases again with the new words: the share right, the share of the cases that the new words changed, and how many of the new words stand in the lessons after all");
+because!(with_new_words, NewWords, "the read cases again with the new words: the share right, the share of the cases that the new words changed, and how many of the new words stand in the lessons after all; and the share of the read cases that the model answers by a default with the new words, which grows when a reading needs the words of its lessons (names that a list knows) and falls back to the answer otherwise");
 
 struct Made {
     model: Box<dyn Learner>,
-    probe: Option<Box<dyn Learner>>,
-    own_probe: bool,
     tool: String,
     stopped: Option<(String, String)>,
     labels: bool,
+    curriculum: bool,
+    kinds_before: Vec<usize>,
 }
-because!(Made, ExactMeasure, "the model of a kind as the measure reads it: the model, the model for the control by the form of the question (or the mark that the model itself gives that control), the name of its tool, the tools that stopped before it, and whether it got labels of its lessons");
+because!(Made, ExactMeasure, "the model of a kind as the measure reads it: the model, the name of its tool, the tools that stopped before it, whether it got labels of its lessons, whether it learned over the kinds before its kind in its set, and the places of those that gave it lines in the order of the set");
 
 fn made(tools: &[Tool], lessons: Lessons, asked: &Asked) -> Result<Made, String> {
     match asked.tool {
@@ -257,29 +364,24 @@ fn made(tools: &[Tool], lessons: Lessons, asked: &Asked) -> Result<Made, String>
             let taken = take(tools, quiet, asked.lanes, false)?;
             let stopped: Vec<&str> = taken.stopped.iter().map(|(tool, _)| tools[*tool].name).collect();
             let stopped = (!stopped.is_empty()).then(|| (stopped.join(", "), tools[taken.tool].name.to_string()));
-            Ok(Made { model: taken.model, probe: taken.probe, own_probe: false, tool: tools[taken.tool].name.to_string(), stopped, labels: taken.labels })
+            let curriculum = taken.model.used_kinds_before();
+            let kinds_before = taken.model.kinds_used_before();
+            Ok(Made { model: taken.model, tool: tools[taken.tool].name.to_string(), stopped, labels: taken.labels, curriculum, kinds_before })
         }
         Some(tool) => {
             let model = (tools[tool].learn)(lessons, asked.lanes)?;
-            let own_probe = tools[tool].probe;
-            let probe = match tools.iter().find(|other| other.probe) {
-                Some(other) if !own_probe => {
-                    let most = lessons.cases.len().min(PROBE_MOST);
-                    let labels = if lessons.labels.is_empty() { lessons.labels } else { &lessons.labels[..most] };
-                    (other.learn)(Lessons { cases: &lessons.cases[..most], labels, ask: None, classes: lessons.classes }, asked.lanes).ok()
-                }
-                _ => None,
-            };
-            Ok(Made { model, probe, own_probe, tool: tools[tool].name.to_string(), stopped: None, labels: tools[tool].needs_labels && lessons.labelled() })
+            let curriculum = model.used_kinds_before();
+            let kinds_before = model.kinds_used_before();
+            Ok(Made { model, tool: tools[tool].name.to_string(), stopped: None, labels: tools[tool].needs_labels && lessons.labelled(), curriculum, kinds_before })
         }
     }
 }
-because!(made, ExactMeasure, "the model of a kind: by the choice among all tools, or by one tool alone; a tool that is measured alone gets the same control by the form of the question as the choice has, from a model of the tool that gives it");
+because!(made, ExactMeasure, "the model of a kind: by the choice among all tools, or by one tool alone");
 
 fn wrong_lessons(tools: &[Tool], lessons: Lessons, asked: &Asked) -> Vec<String> {
     let cut = lessons.cases.len() * SHOWN_PARTS / SHOWN_OF;
     let labels = if lessons.labels.is_empty() { lessons.labels } else { &lessons.labels[..cut] };
-    let Ok(inner) = made(tools, Lessons { cases: &lessons.cases[..cut], labels, ask: None, classes: lessons.classes }, asked) else { return Vec::new() };
+    let Ok(inner) = made(tools, Lessons { cases: &lessons.cases[..cut], labels, ask: None, classes: lessons.classes, before: lessons.before }, asked) else { return Vec::new() };
     let mut wrong: Vec<String> = Vec::new();
     for case in &lessons.cases[cut..] {
         let got = inner.model.answer(&case.sentences, &case.question).words;
@@ -315,16 +417,28 @@ pub fn measure(ground: &Ground, tools: &[Tool], asked: &Asked) -> Row {
         return row;
     }
     let seen: HashSet<(&[String], &str)> = learn.iter().map(|lesson| (lesson.sentences.as_slice(), lesson.question.as_str())).collect();
+    let controls_from: Vec<Case> = match asked.control_fit {
+        Some(full) => {
+            let asked_cases: HashSet<usize> = cut.read.iter().chain(cut.sealed.iter()).copied().collect();
+            parts(ground.cases, full, asked.held, ground.start, ground.stories).learn.into_iter().filter(|place| !asked_cases.contains(place)).map(|place| ground.cases[place].clone()).collect()
+        }
+        None => learn.clone(),
+    };
     let copy: Vec<bool> = read.iter().map(|case| seen.contains(&(case.sentences.as_slice(), case.question.as_str()))).collect();
-    let (most, answers) = most_frequent(&learn);
+    let (most, answers) = most_frequent(&controls_from);
     row.copies = copy.iter().filter(|is| **is).count();
     row.one_answer = share(truths.iter().filter(|truth| **truth == most).count(), read.len());
     row.answers = answers;
-    let base = Plain::learn(&learn);
+    let base = Plain::learn(&controls_from);
     row.plain = share((0..read.len()).filter(|place| base.best(&read[*place].sentences, &read[*place].question) == Some(truths[*place].as_slice())).count(), read.len());
-    let bare: Vec<Case> = learn.iter().map(|lesson| Case { sentences: Vec::new(), question: lesson.question.clone(), answer: lesson.answer.clone() }).collect();
+    let bare: Vec<Case> = controls_from.iter().map(|lesson| Case { sentences: Vec::new(), question: lesson.question.clone(), answer: lesson.answer.clone() }).collect();
     let alone = Plain::learn(&bare);
     row.question = share((0..read.len()).filter(|place| alone.best(&[], &read[*place].question) == Some(truths[*place].as_slice())).count(), read.len());
+    if controls_from.iter().any(|lesson| !lesson.sentences.is_empty())
+        && let Some(listed) = question_list_share(&controls_from, &read)
+    {
+        row.question = row.question.max(listed);
+    }
     let fit_started = Instant::now();
     let questions: Mutex<(usize, usize)> = Mutex::new((0, 0));
     let closed: HashSet<Vec<String>> = if asked.questions > 0 && ground.answerer.is_some() {
@@ -348,34 +462,50 @@ pub fn measure(ground: &Ground, tools: &[Tool], asked: &Asked) -> Row {
         said
     };
     let asks = asked.questions > 0 && ground.answerer.is_some() && asked.tool.is_some();
-    let lessons = Lessons { cases: &learn, labels: &learn_labels, ask: if asks { Some(&ask) } else { None }, classes: ground.classes };
-    let Ok(Ok(made_model)) = catch_unwind(AssertUnwindSafe(|| made(tools, lessons, asked))) else {
-        row.note = LEARNER_FAILED.to_string();
-        row.all_seconds = started.elapsed().as_secs_f64();
-        return row;
+    let lessons = Lessons { cases: &learn, labels: &learn_labels, ask: if asks { Some(&ask) } else { None }, classes: ground.classes, before: ground.before };
+    open_costs();
+    let worked = in_work_scope_offering(MOST_LEARNING_WORK, ground.stored && asked.control_fit.is_none(), || catch_unwind(AssertUnwindSafe(|| made(tools, lessons, asked))));
+    let spent = close_costs();
+    let learned = worked.value;
+    row.learning_work = worked.work;
+    row.budget_stopped = worked.stopped;
+    row.stored_from = worked.taken.into_iter().filter(|kind| kind.as_str() != ground.name).collect();
+    let work = format!("{CHAIN_WORK_HEAD}{}{}", worked.work, if worked.stopped { CHAIN_WORK_STOPPED } else { "" });
+    row.costs = if spent.line.is_empty() { work } else { format!("{}{CHAIN_WORK_BETWEEN}{work}", spent.line) };
+    row.spent_ways = spent.ways;
+    let made_model = match learned {
+        Ok(Ok(made_model)) => made_model,
+        failed => {
+            row.note = failed.map_or_else(|_| format!("{LEARNER_FAILED}: {LEARNER_BROKE}"), |said| said.err().unwrap_or_default());
+            row.all_seconds = started.elapsed().as_secs_f64();
+            return row;
+        }
     };
     row.fit_seconds = fit_started.elapsed().as_secs_f64();
     row.tool = made_model.tool.clone();
     row.stopped = made_model.stopped.clone();
     row.labels = made_model.labels;
+    row.curriculum = made_model.curriculum;
+    row.curriculum_from = made_model.kinds_before.clone();
+    row.reading = made_model.model.reading();
     if asks {
         row.asked = questions.lock().ok().map(|count| *count);
     }
     let model = made_model.model.as_ref();
-    if learn.iter().any(|lesson| !lesson.sentences.is_empty()) {
-        let probe = if made_model.own_probe { Some(model) } else { made_model.probe.as_deref() };
-        if let Some(pattern) = probe.and_then(|probe| by_question(probe, &read, &truths, asked.lanes)) {
-            row.question = row.question.max(pattern);
-        }
-    }
-    let Ok((right, fresh)) = catch_unwind(AssertUnwindSafe(|| right_and_fresh(model, &read, &truths, &copy, asked.lanes))) else {
-        row.note = LEARNER_FAILED.to_string();
+    let stops_before = model.bound_stops();
+    let Ok(ReadCounts { right, fresh, marks }) = catch_unwind(AssertUnwindSafe(|| right_and_fresh(model, &read, &truths, &copy, asked.lanes))) else {
+        row.note = format!("{LEARNER_FAILED}: {MODEL_BROKE}");
         row.all_seconds = started.elapsed().as_secs_f64();
         return row;
     };
     if asked.show > 0 {
         row.wrong = wrong_lessons(tools, lessons, asked);
     }
+    row.bound_stops = model.bound_stops().saturating_sub(stops_before);
+    (row.rules, row.facts) = catch_unwind(AssertUnwindSafe(|| rules_of(model, &read, asked.lanes))).unwrap_or_default();
+    row.marks = marks;
+    row.one_case = (!asked.sealed).then(|| one_case_shares(ground.cases, &cut.learn, &cut.read));
+    row.named = model.named_words();
     row.learner = Some(share(right, read.len()));
     row.not_copies = share(fresh, (read.len() - row.copies).max(1));
     if asked.curve {
@@ -384,19 +514,21 @@ pub fn measure(ground: &Ground, tools: &[Tool], asked: &Asked) -> Row {
                 break;
             }
             let labels = if learn_labels.is_empty() { &learn_labels[..] } else { &learn_labels[..*size] };
-            if let Ok(small) = made(tools, Lessons { cases: &learn[..*size], labels, ask: None, classes: ground.classes }, asked) {
-                row.curve.push((*size, share(right_and_fresh(small.model.as_ref(), &read, &truths, &copy, asked.lanes).0, read.len())));
+            if let Ok(small) = made(tools, Lessons { cases: &learn[..*size], labels, ask: None, classes: ground.classes, before: ground.before }, asked) {
+                row.curve.push((*size, share(right_and_fresh(small.model.as_ref(), &read, &truths, &copy, asked.lanes).right, read.len())));
             }
         }
         row.curve.push((learn.len(), share(right, read.len())));
     }
     if let (true, Some(table)) = (asked.new_words, ground.new_words) {
-        row.new_words = Some(with_new_words(model, &learn, &read, table, asked.lanes));
+        let (counts, guessed) = with_new_words(model, &learn, &read, table, asked.lanes);
+        row.new_words = Some(counts);
+        row.default_shares = Some((share(marks.default.0 + marks.default.1, read.len()), guessed));
     }
     row.all_seconds = started.elapsed().as_secs_f64();
     row
 }
-because!(measure, ExactMeasure, "one kind through the measure: the cut, the controls, the model from the learned part, its share on the read part, and the asked extras; labels of the set reach the model for its lessons alone, and a model that fails leaves the controls of the kind in the row");
+because!(measure, ExactMeasure, "one kind through the measure: the cut, the controls, the model from the learned part, its share on the read part, and the asked extras; labels of the set reach the model for its lessons alone, and a model that fails leaves the controls of the kind in the row; the known-good store reaches the model only when the run learns from as many lessons as its set gives, as a run of another number of lessons asks what those lessons teach alone, and stored lines that discovery found on other lessons would answer for them");
 
 pub fn share_that_counts(row: &Row) -> Option<f64> {
     if row.copies > 0 {
@@ -478,14 +610,39 @@ pub fn line(row: &Row) -> String {
         let stand = if known > 0 { format!("; {known} of the new words stand in the lessons") } else { String::new() };
         text += &format!(" | new words: {right:.places$} ({changed:.none$}% of the read cases changed{stand})", places = SHARE_PLACES, none = 0);
     }
+    if let Some((without, with)) = row.default_shares {
+        text += &format!(" | answered by default: {without:.places$} of the read cases, {with:.places$} with new words", places = SHARE_PLACES);
+    }
     if row.labels {
         text += " | STRONGER LESSONS: the formal forms that the set gives for the lesson sentences";
+    }
+    if row.curriculum {
+        text += " | EARLIER KINDS: learned over the rules that the kinds before it in its set taught, from their lessons";
     }
     if let Some((asked, answered)) = row.asked {
         text += &format!(" | QUESTIONS: {asked} asked, {answered} answered");
     }
     if let Some((stopped, tool)) = &row.stopped {
         text += &format!(" | {stopped} was taken and stopped on all lessons: {tool} is the tool");
+    }
+    if row.bound_stops > usize::default() {
+        text += &format!(" | STOPPED AT A BOUND: {} readings of the read part", row.bound_stops);
+    }
+    if row.budget_stopped {
+        text += &format!("{CHAIN_WORK_BETWEEN}{BUDGET_STOPPED} {}", row.learning_work);
+    }
+    if row.marks.read_cases() > usize::default() {
+        text += &format!(" | answer marks of the read cases: {}", row.marks.shares());
+    }
+    if let Some((named, forms)) = row.named
+        && named > usize::default()
+    {
+        text += &format!(" | named words: {named} of {forms} learned forms name a word that a learned form with fewer fixed words reads too");
+    }
+    if let Some((lessons, read)) = row.one_case
+        && (lessons - read).abs() >= READ_UNLIKE_POINTS
+    {
+        text += &format!(" | read part unlike the lessons: told texts told once in {lessons:.places$} of the lessons and {read:.places$} of the read part", places = SHARE_PLACES);
     }
     text
 }

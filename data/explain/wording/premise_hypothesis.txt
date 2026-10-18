@@ -1,0 +1,6 @@
+Note: The wording of a premise and a hypothesis: the hypothesis is an entailment of the premise when it follows from the premise, and a non-entailment otherwise. Words in brackets are read as words of the sentence.
+Builds on attitudes.
+Write AAA ( BBB ) CCC as AAA BBB CCC.
+Write AAA ( BBB ) as AAA BBB.
+If Premise : BB then the case grants that BB.
+To answer "Relation:": entailment if Hypothesis : BB and the case grants that BB. non-entailment otherwise.

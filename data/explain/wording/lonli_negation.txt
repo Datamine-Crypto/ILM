@@ -1,0 +1,14 @@
+Note: The wording of the group "negation" of LoNLI: statements to judge as entailment or contradiction, with "never", "hardly", "scarcely", "rarely", "seldom", "barely" or "does not". After "hardly" and the like the set writes the verb without -s.
+Builds on language.
+To answer "A does not B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A never Bs C": entailment if (A) does not B C. contradiction if (A) does B C.
+To answer "A never Bes C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A hardly B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A scarcely B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A rarely B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A seldom B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A barely B C": entailment if (A) does not B C. contradiction if (A) does B C. neutral otherwise.
+To answer "A is not B": entailment if A is not B. contradiction if A is B. neutral otherwise.
+To answer "A is B": entailment if A is B. contradiction if A is not B. neutral otherwise.
+To answer "A Bes C": entailment if (A) does B C. contradiction if (A) does not B C.
+To answer "A Bs C": entailment if (A) does B C. contradiction if (A) does not B C. neutral otherwise.

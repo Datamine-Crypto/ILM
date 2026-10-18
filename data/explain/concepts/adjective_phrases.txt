@@ -1,0 +1,7 @@
+Note: The order of the adjectives of a phrase in quotes, inside any sentence: a quoted phrase is told as a phrase, and a phrase is out of order when an adjective stands before an adjective of a kind with a lower rank (opinion, size, age, shape, colour, origin, material, purpose), and in order when no pair of it is out of order.
+Builds on adjective_order.
+If AAA " BB " CCC and not BB holds the word " then the phrase ( BB ) is told.
+If AAA " BB " and not BB holds the word " then the phrase ( BB ) is told.
+If the phrase ( V W BB ) is told and V is a word of S and W is a word of T and the rank of S is X and the rank of T is Y and Y is less than X then the phrase ( V W BB ) is out of order.
+If the phrase ( AA V W BB ) is told and V is a word of S and W is a word of T and the rank of S is X and the rank of T is Y and Y is less than X then the phrase ( AA V W BB ) is out of order.
+If the phrase ( BB ) is told and not the phrase ( BB ) is out of order then the phrase ( BB ) is in order.

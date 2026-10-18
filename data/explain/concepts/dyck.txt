@@ -1,0 +1,4 @@
+Note: A sequence of brackets to complete: the input is the start of a sequence, and the output closes the brackets that stay open in it.
+Builds on brackets.
+If Input : AAAA then AAAA stays open.
+If Input : AAAA and BBBB closes AAAA then the output is BBBB.

@@ -1,0 +1,48 @@
+Note: Things in view: a told list of things of colours on a place, either in a row (each one thing, in the order told, from left to right) or with numbers of each (two yellow booklets), and questions about colours, places in the row, and how many remain.
+Builds on colours, numbers.
+Write AA arranged in a row : BB as row start , BB , end.
+Write On the AA , there is BB as row start , BB , end.
+Write On the AA , there are BB as row start , BB , end.
+Write On the AA , I see BB as row start , BB , end.
+Write On the AA , you see BB as row start , BB , end.
+Write row AA , and BB as row AA , BB.
+Write row AA , BB and W CC as row AA , BB , W CC.
+Write row AA an BB as row AA a BB.
+Write row AA , one BB as row AA , a BB.
+If row AA , a S B , CC and S is a colour then the B is S.
+If row AA , a S B , a T C , CC then S is directly left of T.
+If row AA , a S B , a T C , CC then S is left of T.
+If row AA , a S B , DD , a T C , CC then S is left of T.
+If row AA , a S D , CC and S is a colour then 1 S D are in view.
+If row AA , a S B D , CC and S is a colour and not B holds the word of then 1 S B D are in view.
+If row AA , a S pair of B , CC and S is a colour then 1 S pair of B are in view.
+If row AA , a S sheet of B , CC and S is a colour then 1 S sheet of B are in view.
+If row AA , W S Ds , CC and S is a colour and W is the number N then N S D are in view.
+If row AA , W S B Ds , CC and S is a colour and not B holds the word of and W is the number N then N S B D are in view.
+If row AA , W S pairs of B , CC and S is a colour and W is the number N then N S pair of B are in view.
+If row AA , W S sheets of B , CC and S is a colour and W is the number N then N S sheet of B are in view.
+If row start , a S B , CC then S is the left-most colour.
+If row AA , a S B , end then S is the right-most colour.
+What is the color R the left-most AA? S if S is the left-most colour.
+What is the color R the right-most AA? S if S is the right-most colour.
+What is the color R the AA directly to the right U the S BB? T if S is a colour and S is directly left of T.
+What is the color R the AA directly to the left U the S BB? T if S is a colour and T is directly left of S.
+What is the color R the AA directly to the right U the B? T if the B is S and S is directly left of T.
+What is the color R the AA directly to the left U the B? T if the B is S and T is directly left of S.
+What is the color U the AA furthest from the S BB? T if S is a colour and L is the number of D where D is left of S and R is the number of D where S is left of D and L is more than R and T is the left-most colour. T if L is the number of D where D is left of S and R is the number of D where S is left of D and R is more than L and T is the right-most colour and S is a colour.
+What is the color U the AA furthest from the B? T if the B is S and L is the number of D where D is left of S and R is the number of D where S is left of D and L is more than R and T is the left-most colour. T if the B is S and L is the number of D where D is left of S and R is the number of D where S is left of D and R is more than L and T is the right-most colour.
+What color is the B? S if the B is S.
+Is the B S? yes if the B is S. no otherwise.
+How many W AA do you see to R left of the T BB? M if T is a colour and W names what is not S and N is the number of D where D is left of T and S is left of T and N minus 1 is M. N if T is a colour and W names what is not S and N is the number of D where D is left of T.
+How many W AA do you see to R right of the T BB? M if T is a colour and W names what is not S and N is the number of D where T is left of D and T is left of S and N minus 1 is M. N if T is a colour and W names what is not S and N is the number of D where T is left of D.
+How many W AA do you see to R left of the B? M if W names what is not S and the B is T and N is the number of D where D is left of T and S is left of T and N minus 1 is M. N if W names what is not S and the B is T and N is the number of D where D is left of T.
+How many W AA do you see to R right of the B? M if W names what is not S and the B is T and N is the number of D where T is left of D and T is left of S and N minus 1 is M. N if W names what is not S and the B is T and N is the number of D where T is left of D.
+If I remove all the S AA from the CC , how many pairs of B remain on it? M if S is a colour and K is the sum of N where N T pair of B are in view and J is the sum of N where N S pair of B are in view and K minus J is M.
+If I remove all the S AA from the CC , how many sheets of B remain on it? M if S is a colour and K is the sum of N where N T sheet of B are in view and J is the sum of N where N S sheet of B are in view and K minus J is M.
+If I remove all the S AA from the CC , how many B Ds remain on it? M if S is a colour and not B holds the word of and K is the sum of N where N T B D are in view and J is the sum of N where N S B D are in view and K minus J is M.
+If I remove all the S AA from the CC , how many Ds remain on it? M if S is a colour and K is the sum of N where N T D are in view and J is the sum of N where N S D are in view and K minus J is M.
+If I remove all R pairs of B from the CC , how many S AA remain on it? M if S is a colour and K is the sum of N where N S E are in view and J is the sum of N where N S pair of B are in view and K minus J is M.
+If I remove all R sheets of B from the CC , how many S AA remain on it? M if S is a colour and K is the sum of N where N S E are in view and J is the sum of N where N S sheet of B are in view and K minus J is M.
+If I remove all the B Ds from the CC , how many S AA remain on it? M if S is a colour and not B holds the word of and K is the sum of N where N S E are in view and J is the sum of N where N S B D are in view and K minus J is M.
+If I remove all the Ds from the CC , how many S AA remain on it? M if S is a colour and K is the sum of N where N S E are in view and J is the sum of N where N S D are in view and K minus J is M.
+How many AA are neither S nor T? M if K is the sum of N where N U E are in view and J is the sum of N where N S E are in view and G is the sum of N where N T E are in view and K minus J is H and H minus G is M.

@@ -1,8 +1,7 @@
 use crate::cases::Case;
-use crate::base::lanes::{on_lanes, shards};
-use crate::tools::call::{Learner, Lessons, Said, StoryAsk, Tool, read_story};
+use crate::base::lanes::{on_lanes, on_spare_lanes};
+use crate::tools::call::{Learner, Lessons, Reading, Said, StoryAsk, Tool, read_story};
 use crate::split::told_texts;
-use crate::tools::pattern::shared_words::WordsScope;
 use crate::base::words::answer_words;
 use patterns::{because, source};
 use std::cmp::Ordering;
@@ -62,8 +61,7 @@ pub fn picked_labels(labels: &[Vec<String>], places: &[usize]) -> Vec<Vec<String
 because!(picked_labels, HeldChoice, "the label lines of the cases at the given places, and none for a kind that has no labels");
 
 pub fn right_of(model: &dyn Learner, cases: &[Case], lanes: usize) -> usize {
-    let runs = shards(cases.len(), lanes);
-    on_lanes(runs.len(), lanes, &|run| cases[runs[run].clone()].iter().filter(|case| model.answer(&case.sentences, &case.question).words == answer_words(&case.answer)).count()).into_iter().sum()
+    on_spare_lanes(cases.len(), lanes, &|place| usize::from(model.answer(&cases[place].sentences, &cases[place].question).words == answer_words(&cases[place].answer))).into_iter().sum()
 }
 because!(right_of, HeldChoice, "the cases that a model answers with exactly the words of the true answer; the cases are read in runs on the threads, and a count does not depend on their number");
 
@@ -73,12 +71,11 @@ struct Tried {
     skipped: bool,
     said: String,
     seconds: f64,
-    probe: Option<Box<dyn Learner>>,
 }
-because!(Tried, HeldChoice, "what one tool gave on the first part of the lessons: its share of right answers on the rest, whether it read every case of the rest right, whether it was not tried because an earlier tool did, what it said when it gave no model, its seconds, and its model when the tool gives the control by the form of the question");
+because!(Tried, HeldChoice, "what one tool gave on the first part of the lessons: its share of right answers on the rest, whether it read every case of the rest right, whether it was not tried because an earlier tool did, what it said when it gave no model, and its seconds");
 
 fn untried() -> Tried {
-    Tried { share: NO_SHARE, all: false, skipped: true, said: String::new(), seconds: f64::default(), probe: None }
+    Tried { share: NO_SHARE, all: false, skipped: true, said: String::new(), seconds: f64::default() }
 }
 because!(untried, HeldChoice, "a tool that was not tried because an earlier tool read every case of the rest of the lessons right: it has no share until it is tried");
 
@@ -91,8 +88,8 @@ fn tried(tool: &Tool, lessons: Lessons, first: Lessons, last: &[Case], lanes: us
     };
     let seconds = started.elapsed().as_secs_f64();
     match learned {
-        Ok((right, model)) => Tried { share: (right as f64) / (last.len().max(1) as f64), all: right == last.len(), skipped: false, said: String::new(), seconds, probe: tool.probe.then_some(model) },
-        Err(said) => Tried { share: NO_SHARE, all: false, skipped: false, said, seconds, probe: None },
+        Ok((right, _)) => Tried { share: (right as f64) / (last.len().max(1) as f64), all: right == last.len(), skipped: false, said: String::new(), seconds },
+        Err(said) => Tried { share: NO_SHARE, all: false, skipped: false, said, seconds },
     }
 }
 because!(tried, HeldChoice, "one tool on the first part of the lessons: a tool that says that it does not read the kind, or that breaks, has no share and does not stop the others");
@@ -105,23 +102,42 @@ pub struct Taken {
     pub said: Vec<String>,
     pub seconds: Vec<f64>,
     pub stopped: Vec<(usize, String)>,
-    pub probe: Option<Box<dyn Learner>>,
     pub labels: bool,
 }
-because!(Taken, HeldChoice, "the model of the tool that was taken, made from all lessons, with what the choice rests on: the share of every tool on the lessons that it did not learn from, what a tool said that gave no model, the seconds, the tools that were taken and then said on all lessons that they do not read the kind, the model for the control by the form of the question, and whether the tool got labels of its lessons. It answers as its model does and names the tool in the note");
+because!(Taken, HeldChoice, "the model of the tool that was taken, made from all lessons, with what the choice rests on: the share of every tool on the lessons that it did not learn from, what a tool said that gave no model, the seconds, the tools that were taken and then said on all lessons that they do not read the kind, and whether the tool got labels of its lessons. It answers as its model does and names the tool in the note");
 
 impl Learner for Taken {
     fn answer(&self, sentences: &[String], question: &str) -> Said {
         let said = self.model.answer(sentences, question);
-        Said { words: said.words, note: [self.named.as_str(), said.note.as_str()].join(NOTE_BETWEEN) }
-    }
-
-    fn question_alone(&self, sentences: &[String], question: &str) -> Option<Vec<String>> {
-        self.probe.as_ref().and_then(|probe| probe.question_alone(sentences, question))
+        Said { words: said.words, note: [self.named.as_str(), said.note.as_str()].join(NOTE_BETWEEN), mark: said.mark }
     }
 
     fn story<'a>(&'a self, sentences: &[String]) -> Option<Box<dyn StoryAsk + 'a>> {
         Some(Box::new(NamedStory { inner: read_story(self.model.as_ref(), sentences), named: &self.named }))
+    }
+
+    fn bound_stops(&self) -> usize {
+        self.model.bound_stops()
+    }
+
+    fn reading(&self) -> Option<Reading> {
+        self.model.reading()
+    }
+
+    fn proof(&self, sentences: &[String], question: &str) -> Vec<String> {
+        self.model.proof(sentences, question)
+    }
+
+    fn missing(&self, sentences: &[String], question: &str, expected: &[String]) -> Vec<String> {
+        self.model.missing(sentences, question, expected)
+    }
+
+    fn rules_used(&self, sentences: &[String], question: &str) -> Vec<(String, bool)> {
+        self.model.rules_used(sentences, question)
+    }
+
+    fn lines_from_lessons(&self) -> Vec<String> {
+        self.model.lines_from_lessons()
     }
 }
 
@@ -134,7 +150,7 @@ because!(NamedStory, HeldChoice, "a story read once by the model of the tool tha
 impl StoryAsk for NamedStory<'_> {
     fn ask(&mut self, question: &str) -> Said {
         let said = self.inner.ask(question);
-        Said { words: said.words, note: [self.named, said.note.as_str()].join(NOTE_BETWEEN) }
+        Said { words: said.words, note: [self.named, said.note.as_str()].join(NOTE_BETWEEN), mark: said.mark }
     }
 }
 
@@ -150,39 +166,25 @@ fn named(tools: &[Tool], tool: usize, stopped: &[(usize, String)]) -> String {
 }
 because!(named, HeldChoice, "the name of the tool in the note of an answer; it also names every tool that was taken before it and stopped on all lessons, so that an answer shows that the first choice did not hold");
 
-fn behind(tools: &[Tool], at: usize, before: &[Tried]) -> bool {
-    let Some(base) = tools[at].over else { return false };
-    let Some(place) = tools[..at].iter().position(|tool| tool.name == base) else { return false };
-    let best = before.iter().map(|one| one.share).fold(NO_SHARE, f64::max);
-    before[place].share + CLEARLY < best
-}
-because!(behind, HeldChoice, "whether a tool that runs the learner of another tool on texts that it reads in its own way is left out of the choice: it changes only how that learner reads the texts, so it is tried only where that learner has the highest share so far; where another tool before it read more of the rest right, it is not tried, which saves a whole run of the learner. A run that leaves the other tool out of its list tries it");
-
 pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Result<Taken, String> {
     let (first, last) = inner_parts(lessons.cases);
     let first_cases = picked(lessons.cases, &first);
     let first_labels = picked_labels(lessons.labels, &first);
     let last_cases = picked(lessons.cases, &last);
     let inner = lessons.part(&first_cases, &first_labels);
-    let shared = WordsScope::over(&first_cases);
     let mut tries: Vec<Tried> = if every {
         let each = (lanes / tools.len().max(1)).max(1);
-        let mut all: Vec<Tried> = on_lanes(tools.len(), lanes, &|tool| tried(&tools[tool], lessons, inner, &last_cases, each));
-        for at in 0..all.len() {
-            if behind(tools, at, &all[..at]) {
-                all[at] = untried();
-            }
-        }
-        all
+        on_lanes(tools.len(), lanes, &|tool| tried(&tools[tool], lessons, inner, &last_cases, each))
+    } else if tools.len() == 1 {
+        vec![untried()]
     } else {
         let mut found: Vec<Tried> = Vec::with_capacity(tools.len());
-        for (at, tool) in tools.iter().enumerate() {
-            let one = if found.iter().any(|held| held.all) || behind(tools, at, &found) { untried() } else { tried(tool, lessons, inner, &last_cases, lanes) };
+        for tool in tools {
+            let one = if found.iter().any(|held| held.all) { untried() } else { tried(tool, lessons, inner, &last_cases, lanes) };
             found.push(one);
         }
         found
     };
-    drop(shared);
     let mut best: Option<usize> = None;
     for (tool, one) in tries.iter().enumerate() {
         if best.is_none_or(|top| one.share > tries[top].share + CLEARLY) {
@@ -198,7 +200,7 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
         at += 1;
         match (tools[tool].learn)(lessons, lanes) {
             Ok(model) => {
-                let probe = tries.iter_mut().find_map(|one| one.probe.take());
+                let labels = tools[tool].needs_labels || model.used_labels();
                 return Ok(Taken {
                     model,
                     tool,
@@ -207,13 +209,12 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
                     said: tries.iter_mut().map(|one| std::mem::take(&mut one.said)).collect(),
                     seconds: tries.iter().map(|one| one.seconds).collect(),
                     stopped,
-                    probe,
-                    labels: tools[tool].needs_labels,
+                    labels,
                 });
             }
             Err(why) => stopped.push((tool, why)),
         }
-        if order.len() == 1 {
+        if order.len() == 1 && tools.len() > 1 {
             for (place, one) in tries.iter_mut().enumerate() {
                 if one.skipped {
                     *one = tried(&tools[place], lessons, inner, &last_cases, lanes);
@@ -227,4 +228,4 @@ pub fn take(tools: &[Tool], lessons: Lessons, lanes: usize, every: bool) -> Resu
     let said: Vec<String> = stopped.iter().map(|(tool, why)| format!("{}: {why}", tools[*tool].name)).collect();
     Err(format!("{NO_TOOL}: {}", said.join("; ")))
 }
-because!(take, HeldChoice, "the choice among the tools for one kind: the tools on the first part of the lessons, each with its share on the rest; the highest share is taken, of equals the earlier tool; that tool learns again from all lessons, and when it says there that it does not read the kind, the next tool in the order of the shares is taken. The tools are tried in their order, and a tool after one that read every case of the rest right is not tried, because a later tool is taken only with a higher share, nor is a tool that reads in its own way for the learner of another tool that does not lead; when the tool taken stops on all lessons, the tools not tried are tried then. With every, all tools are tried side by side, for a run that shows the share of each tool. While the tools are tried, a scope keeps the words of the first part of the lessons, so that the tools that read them learn them once");
+because!(take, HeldChoice, "the choice among the tools for one kind: the tools on the first part of the lessons, each with its share on the rest; the highest share is taken, of equals the earlier tool; that tool learns again from all lessons, and when it says there that it does not read the kind, the next tool in the order of the shares is taken. The tools are tried in their order, and a tool after one that read every case of the rest right is not tried, because a later tool is taken only with a higher share; when the tool taken stops on all lessons, the tools not tried are tried then. One tool alone is no choice, so it is not tried on the first part and learns from all lessons at once. With every, all tools are tried side by side, for a run that shows the share of each tool");

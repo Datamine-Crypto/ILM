@@ -1,4 +1,4 @@
-use ilm_core::know::signs::is_space;
+use ilm_core::base::signs::is_space;
 use ilm_core::cases::Case;
 use crate::sets::parquet::open;
 use crate::sets::parquet::records::Value;

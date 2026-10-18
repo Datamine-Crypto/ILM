@@ -1,0 +1,18 @@
+Note: Truth values inside any sentence: True and False joined by not, and, or, with brackets, worked out as Python and Boolean logic do it, a bracket first, then not, then and, then or. Brackets are read as the words open and close, and a part is written again with its value in its place, until no part is left to work out. A part with or is worked out only when no and stands beside it, since and binds more strongly than or.
+Write AAA ( BBB ) CCC as AAA open BBB close CCC.
+Write AAA open true close BBB as AAA true BBB.
+Write AAA open false close BBB as AAA false BBB.
+Write AAA not true BBB as AAA false BBB.
+Write AAA not false BBB as AAA true BBB.
+Write AAA true and true BBB as AAA true BBB.
+Write AAA true and false BBB as AAA false BBB.
+Write AAA false and true BBB as AAA false BBB.
+Write AAA false and false BBB as AAA false BBB.
+Write AAA R true or true S BBB as AAA R true S BBB if not R holds the word And and not S holds the word And.
+Write AAA R true or false S BBB as AAA R true S BBB if not R holds the word And and not S holds the word And.
+Write AAA R false or true S BBB as AAA R true S BBB if not R holds the word And and not S holds the word And.
+Write AAA R false or false S BBB as AAA R false S BBB if not R holds the word And and not S holds the word And.
+Write AAA R true or true S as AAA R true S if not R holds the word And and not S holds the word And.
+Write AAA R true or false S as AAA R true S if not R holds the word And and not S holds the word And.
+Write AAA R false or true S as AAA R true S if not R holds the word And and not S holds the word And.
+Write AAA R false or false S as AAA R false S if not R holds the word And and not S holds the word And.

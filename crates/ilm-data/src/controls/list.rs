@@ -2,7 +2,7 @@ use ilm_core::base::first_sight::{FirstSightCount, FirstSightTable};
 use ilm_core::base::words::answer_words;
 use crate::controls::file::ChangedCase;
 use crate::sets::readers::common::python_words;
-use ilm_core::know::signs::is_space;
+use ilm_core::base::signs::is_space;
 use ilm_core::choice::inner_parts;
 use ilm_core::cases::Case;
 use patterns::{because, source};

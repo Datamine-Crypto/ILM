@@ -1,0 +1,19 @@
+Note: The wording of the group "comparative" of LoNLI: statements to judge as entailment, contradiction or neutral, in the forms that the set writes.
+Note: Set wording: "atmost as D than" and "atleast as D than"; "A is D than B" with a plain adjective ("Tim is complicated than Lisa"); "can be compared in terms of how D they are"; the misspelled forms lonlier and guilter.
+Builds on order.
+Lonlier is the comparative of lonely.
+Guilter is the comparative of guilty.
+If A is D than B then A is above B in D.
+If A is D than B but not C then A is above B in D.
+If A is D than B but not C then C is above A in D.
+To answer "Among A, B and C the most D is A": entailment if A is above B in D and A is above C in D. contradiction if B is above A in D. contradiction if C is above A in D. neutral otherwise.
+To answer "Among A, B and C the most D is B": entailment if B is above A in D and B is above C in D. contradiction if A is above B in D. contradiction if C is above B in D. neutral otherwise.
+To answer "Among A, B and C the most D is C": entailment if C is above A in D and C is above B in D. contradiction if A is above C in D. contradiction if B is above C in D. neutral otherwise.
+To answer "Among A, B and C the D is A": entailment if D is the superlative of E and A is above B in E and A is above C in E. contradiction if D is the superlative of E and B is above A in E. contradiction if D is the superlative of E and C is above A in E. neutral otherwise.
+To answer "Among A, B and C the D is B": entailment if D is the superlative of E and B is above A in E and B is above C in E. contradiction if D is the superlative of E and A is above B in E. contradiction if D is the superlative of E and C is above B in E. neutral otherwise.
+To answer "Among A, B and C the D is C": entailment if D is the superlative of E and C is above A in E and C is above B in E. contradiction if D is the superlative of E and A is above C in E. contradiction if D is the superlative of E and B is above C in E. neutral otherwise.
+To answer "A is atmost as D than B": contradiction if A is above B in D. entailment if B is above A in D. neutral otherwise.
+To answer "A is atleast as D than B": entailment if A is above B in D. contradiction if B is above A in D. neutral otherwise.
+To answer "A and B can be compared in terms of how D they are": entailment if A is above B in D. entailment if B is above A in D. neutral otherwise.
+To answer "A is more D than B": entailment if A is above B in D. contradiction if B is above A in D. neutral otherwise.
+To answer "A is D than B": entailment if D is the comparative of E and A is above B in E. contradiction if D is the comparative of E and B is above A in E. entailment if A is above B in D. contradiction if B is above A in D. neutral otherwise.

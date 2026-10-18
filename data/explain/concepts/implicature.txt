@@ -1,0 +1,17 @@
+Note: What a speaker means beyond the words (implicature, after Grice). A speaker says the strongest thing that he knows to be true: "some" means not all, a number means that number and no more, "may" means that it is not sure. A speaker calls a thing "his" or "hers" when it is, so "a car" is a car of someone else, and "a woman" is no woman of the family. "Even" tells that the thing was a surprise. A person who asks for one of two things does not ask for the other.
+Builds on relations.
+If Some of A are B then only some of A are B.
+If Not all of A are B then only some of A are B.
+If A has B C and B is at least 0 then A has exactly B C.
+If A may B then it is not sure that A will B.
+If A asked B for C dollars and B had D and D is less than C then B did not have C dollars.
+If A And B are on offer and C asked for B then C did not ask for A.
+If A And B are on offer and C asked for A then C did not ask for B.
+If A is meeting a B and C means a D E then the B is not A's C.
+If A picked up a B then it is not A's B.
+If A sat in a B then it is not A's B.
+If A sat on a B then it is not A's B.
+If A waited outside a B then it is not A's B.
+If A walked in a B then it is not A's B.
+If A walked out of a B then it is not A's B.
+If Even A B then that A B was a surprise.

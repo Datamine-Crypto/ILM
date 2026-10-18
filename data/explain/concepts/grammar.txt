@@ -1,0 +1,1 @@
+Note: Grammar. "A is the B of C" says the same as "C has A as B": "Ann is the daughter of Bob" and "Bob has Ann as daughter". A sentence that starts with a word of sequence ("Then", "Afterwards", "After that", "Following that") tells its event after the one before, and the event holds.

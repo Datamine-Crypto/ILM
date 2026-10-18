@@ -26,32 +26,11 @@ because!(SHA_STATE, SecureHash, "the running words of the hash, which are also i
 const SHA_ROUNDS: usize = 80;
 because!(SHA_ROUNDS, SecureHash, "the rounds of mixing of one block, and the words of its schedule");
 
-const SHA_BLOCK: usize = 128;
-because!(SHA_BLOCK, SecureHash, "the bytes of one block of the message");
-
-const SHA_WORD: usize = 8;
-because!(SHA_WORD, SecureHash, "the bytes of one word of the hash");
-
-const SHA_LENGTH: usize = 16;
-because!(SHA_LENGTH, SecureHash, "the bytes at the end of the padded message that hold its length in bits, and the words of a block before the schedule grows");
-
 const SHA_MARK: u8 = 0x80;
 because!(SHA_MARK, SecureHash, "the byte with one bit that follows the message before the padding");
 
 const SHA_BYTE_BITS: u128 = 8;
 because!(SHA_BYTE_BITS, SecureHash, "the bits of one byte, for the length of the message in bits");
-
-const SHA_SMALL_ONE: (u32, u32, u32) = (1, 8, 7);
-because!(SHA_SMALL_ONE, SecureHash, "the two rotations and the shift of the first small sigma of the schedule");
-
-const SHA_SMALL_TWO: (u32, u32, u32) = (19, 61, 6);
-because!(SHA_SMALL_TWO, SecureHash, "the two rotations and the shift of the second small sigma of the schedule");
-
-const SHA_LARGE_ONE: (u32, u32, u32) = (28, 34, 39);
-because!(SHA_LARGE_ONE, SecureHash, "the three rotations of the first large sigma of a round");
-
-const SHA_LARGE_TWO: (u32, u32, u32) = (14, 18, 41);
-because!(SHA_LARGE_TWO, SecureHash, "the three rotations of the second large sigma of a round");
 
 const SHA_BACK_TWO: usize = 2;
 because!(SHA_BACK_TWO, SecureHash, "a word of the schedule takes the word this many places before it through the second small sigma");
@@ -61,55 +40,6 @@ because!(SHA_BACK_SEVEN, SecureHash, "a word of the schedule takes the word this
 
 const SHA_BACK_FIFTEEN: usize = 15;
 because!(SHA_BACK_FIFTEEN, SecureHash, "a word of the schedule takes the word this many places before it through the first small sigma");
-
-fn sha_small(word: u64, (first, second, shift): (u32, u32, u32)) -> u64 {
-    word.rotate_right(first) ^ word.rotate_right(second) ^ (word >> shift)
-}
-because!(sha_small, SecureHash, "a small sigma of the schedule: two rotations and a shift");
-
-fn sha_large(word: u64, (first, second, third): (u32, u32, u32)) -> u64 {
-    word.rotate_right(first) ^ word.rotate_right(second) ^ word.rotate_right(third)
-}
-because!(sha_large, SecureHash, "a large sigma of a round: three rotations");
-
-fn sha_block(state: &mut [u64; SHA_STATE], block: &[u8]) {
-    let mut schedule = [0u64; SHA_ROUNDS];
-    for (place, bytes) in block.chunks(SHA_WORD).enumerate() {
-        let mut word = [0u8; SHA_WORD];
-        word.copy_from_slice(bytes);
-        schedule[place] = u64::from_be_bytes(word);
-    }
-    for place in SHA_LENGTH..SHA_ROUNDS {
-        schedule[place] = sha_small(schedule[place - SHA_BACK_TWO], SHA_SMALL_TWO).wrapping_add(schedule[place - SHA_BACK_SEVEN]).wrapping_add(sha_small(schedule[place - SHA_BACK_FIFTEEN], SHA_SMALL_ONE)).wrapping_add(schedule[place - SHA_LENGTH]);
-    }
-    let [mut a, mut b, mut c, mut d, mut e, mut f, mut g, mut h] = *state;
-    for round in 0..SHA_ROUNDS {
-        let choice = (e & f) ^ (!e & g);
-        let first = h.wrapping_add(sha_large(e, SHA_LARGE_TWO)).wrapping_add(choice).wrapping_add(SHA_ROUND[round]).wrapping_add(schedule[round]);
-        let most = (a & b) ^ (a & c) ^ (b & c);
-        let second = sha_large(a, SHA_LARGE_ONE).wrapping_add(most);
-        (h, g, f, e, d, c, b, a) = (g, f, e, d.wrapping_add(first), c, b, a, first.wrapping_add(second));
-    }
-    for (held, added) in state.iter_mut().zip([a, b, c, d, e, f, g, h]) {
-        *held = held.wrapping_add(added);
-    }
-}
-because!(sha_block, SecureHash, "one block mixed into the running words: the schedule of its words, the rounds, and the sum with the words before the block");
-
-pub fn sha512(message: &[u8]) -> Vec<u8> {
-    let mut padded = message.to_vec();
-    padded.push(SHA_MARK);
-    while padded.len() % SHA_BLOCK != SHA_BLOCK - SHA_LENGTH {
-        padded.push(0);
-    }
-    padded.extend_from_slice(&((message.len() as u128) * SHA_BYTE_BITS).to_be_bytes());
-    let mut state = SHA_START;
-    for block in padded.chunks(SHA_BLOCK) {
-        sha_block(&mut state, block);
-    }
-    state.iter().flat_map(|word| word.to_be_bytes()).collect()
-}
-because!(sha512, SecureHash, "the hash of a message as bytes: the padded message in blocks, and the running words at the end, the high byte of each first");
 
 pub struct ShortHash;
 source!(ShortHash, "the variant of the Secure Hash Standard with words of thirty-two bits and a result of eight such words, which the hub and the other hosts give for their files: its first running words and the words of its rounds are the high halves of those of the long variant, since both are the first bits of the parts below one of the square and cube roots of the first primes; a file is hashed block by block as it is read, so a large file needs no room for all of it");
@@ -196,7 +126,7 @@ impl Sha256 {
             let second = short_large(a, SHORT_LARGE_ONE).wrapping_add(most);
             (h, g, f, e, d, c, b, a) = (g, f, e, d.wrapping_add(first), c, b, a, first.wrapping_add(second));
         }
-        for (held, added) in self.state.iter_mut().zip([a, b, c, d, e, f, g, h]) {
+        for (held, added) in self.state.iter_mut().zip([a, b, c, d].into_iter().chain([e, f, g, h])) {
             *held = held.wrapping_add(added);
         }
     }

@@ -1,0 +1,5 @@
+Note: The wording of the cycle question of NLGraph: an edge is written (A,B), and the answer is a sentence.
+Builds on cycles.
+If (A,B) then A is joined to B.
+If (A,B) then the join A B is told.
+To answer "Q: Is there a cycle in this graph?": Yes, there is a cycle in this graph if there is a cycle. No, there is no cycle in this graph otherwise.

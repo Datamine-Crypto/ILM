@@ -1,0 +1,26 @@
+Note: The statements of the group "boolean" of LoNLI and their labels. Lists with "respectively" pair each person with the place in the same order. A statement that the told text neither gives nor denies is neutral.
+Builds on connectives.
+If A And B are from C And D respectively then the home of A is C.
+If A And B are from C And D respectively then the home of B is D.
+If A, B And C are from D, E And F respectively then the home of A is D.
+If A, B And C are from D, E And F respectively then the home of B is E.
+If A, B And C are from D, E And F respectively then the home of C is F.
+If A, C, E And G are from B, D, F And H respectively then the home of A is B.
+If A, C, E And G are from B, D, F And H respectively then the home of C is D.
+If A, C, E And G are from B, D, F And H respectively then the home of E is F.
+If A, C, E And G are from B, D, F And H respectively then the home of G is H.
+If A, C, E, G And J are from B, D, F, H And K respectively then the home of A is B.
+If A, C, E, G And J are from B, D, F, H And K respectively then the home of C is D.
+If A, C, E, G And J are from B, D, F, H And K respectively then the home of E is F.
+If A, C, E, G And J are from B, D, F, H And K respectively then the home of G is H.
+If A, C, E, G And J are from B, D, F, H And K respectively then the home of J is K.
+To answer "A is not from B.": contradiction if the home of A is B. entailment if the home of A is C.
+To answer "A is from B.": entailment if the home of A is B. contradiction if the home of A is C.
+To answer "A is B. A is C.": entailment if A is B and A is C. neutral otherwise.
+To answer "B is A. C is A.": entailment if B is A and C is A. neutral otherwise.
+To answer "A is B but not C.": contradiction if A is C. entailment if A is B. neutral otherwise.
+To answer "A is both B and C.": contradiction if it is false that A is both B And C. entailment if A is B and A is C. neutral otherwise.
+To answer "A is B and C.": entailment if A is B and A is C. neutral otherwise.
+To answer "A and B are C.": entailment if A is C and B is C. neutral otherwise.
+To answer "A also asked for B.": neutral if A asked for C.
+To answer "A is B.": entailment if A is B. neutral otherwise.

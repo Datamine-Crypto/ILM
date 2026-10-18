@@ -1,0 +1,72 @@
+Note: The wording of ParaRules, the rules of ProofWriter put in their own words by people. A sentence about a person (named, or "he" after a name) gives the person each quality that it names: "From a certain angle Dave is blue but he is young" says that Dave is blue and young. A sentence about people in general, with no name and no "he", is a rule: the qualities that it names first are the condition and the quality named last is the outcome ("A kind, round person will surely be red as well." says that if someone is kind and round then they are red).
+Note: These readings are the convention of the set, not English; they hold in the labelled lessons.
+Builds on proofwriter.
+Alan is a name of the stories.
+Anne is a name of the stories.
+Bob is a name of the stories.
+Charlie is a name of the stories.
+Dave is a name of the stories.
+Eric is a name of the stories.
+Erin is a name of the stories.
+Fiona is a name of the stories.
+Fred is a name of the stories.
+Gary is a name of the stories.
+Harry is a name of the stories.
+Big is a quality.
+Blue is a quality.
+Cold is a quality.
+Furry is a quality.
+Green is a quality.
+Kind is a quality.
+Nice is a quality.
+Quiet is a quality.
+Red is a quality.
+Rough is a quality.
+Round is a quality.
+Smart is a quality.
+White is a quality.
+Young is a quality.
+Person is a word for anyone.
+People is a word for anyone.
+Someone is a word for anyone.
+Somebody is a word for anyone.
+Anyone is a word for anyone.
+Anybody is a word for anyone.
+Everyone is a word for anyone.
+Everybody is a word for anyone.
+Individual is a word for anyone.
+Individuals is a word for anyone.
+Folks is a word for anyone.
+Whoever is a word for anyone.
+Those is a word for anyone.
+Man is a word for anyone.
+Men is a word for anyone.
+Woman is a word for anyone.
+Women is a word for anyone.
+Guy is a word for anyone.
+Guys is a word for anyone.
+He is a word for a person.
+His is a word for a person.
+Him is a word for a person.
+She is a word for a person.
+Her is a word for a person.
+Himself is a word for a person.
+Herself is a word for a person.
+If GG is told and X is a name of the stories and GG holds the word X and S is a quality and GG holds the word S then the sentence (GG) tells that X is S.
+If the sentence (GG) tells that X is S then X is S.
+If the sentence (GG) tells that X is S then X is the person in view.
+If the sentence (GG) tells that X is S then the sentence (GG) has a name.
+If the sentence (GG) tells that X is S then the sentence (GG) names a person.
+If GG is told and before that time X is the person in view and GG holds the word P and P is a word for a person and S is a quality and GG holds the word S and not the sentence (GG) names a person and not the sentence (GG) speaks of anyone then X is S.
+If GG is told and P is a word for a person and GG holds the word P and S is a quality and GG holds the word S and not the sentence (GG) speaks of anyone then the sentence (GG) has a name.
+If GG is told and S is a quality and GG holds the word S then the sentence (GG) names the quality S.
+If GG is told and Y is a word for anyone and GG holds the word Y then the sentence (GG) speaks of anyone.
+If the sentence (GG) names the quality S and the sentence (GG) names the quality T and T comes after S in GG then in the sentence (GG) , T comes after S.
+If the sentence (GG) names the quality S and not in the sentence (GG) , T comes after S and not the sentence (GG) has a name then S ends the sentence (GG).
+If S ends the sentence (GG) and in the sentence (GG) , S comes after T and N is the number of K where the sentence (GG) names the quality K and N is at most 2 then if someone is T then it is S.
+If S ends the sentence (GG) and in the sentence (GG) , S comes after T and in the sentence (GG) , S comes after U and in the sentence (GG) , U comes after T and N is the number of K where the sentence (GG) names the quality K and N is at most 3 then if someone is T and it is U then it is S.
+If S ends the sentence (GG) and in the sentence (GG) , S comes after T and in the sentence (GG) , S comes after U and in the sentence (GG) , S comes after V and in the sentence (GG) , U comes after T and in the sentence (GG) , V comes after U and N is the number of K where the sentence (GG) names the quality K and N is at most 4 then if someone is T and it is U and it is V then it is S.
+To answer "A is not B.": True if A is not B. False if A is B. Unknown otherwise.
+To answer "A does not F B.": True if A does not F B. False if A Fs B. Unknown otherwise.
+To answer "A is B.": True if A is B. False if A is not B. Unknown otherwise.
+To answer "A Fs B.": True if A Fs B. False if A does not F B. Unknown otherwise.

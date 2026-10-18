@@ -1,0 +1,6 @@
+Note: The longest common subsequence of two strings: a subsequence keeps some letters of a string in their order. Each place where a letter of the first string is the same as a letter of the second string is a match; a chain of matches goes on in both strings at once, each match after the one before it in both strings. The longest common subsequence is as long as the longest chain of matches, and nought when no letter matches.
+Builds on numbers.
+If Strings : S T and letter U of S is X and letter V of T is X then the strings S And T match at U and V.
+If the strings S And T match at U And V then a chain of S and T ends at U and V with 1.
+If a chain of S And T ends at C And D with N and the strings S And T match at U And V and C is less than U and D is less than V and N plus 1 is M then a chain of S and T ends at U and V with M.
+To answer "Length of longest common subsequence:": N if Strings : S T and a chain of S And T ends at E And F with N and N plus 1 is M and not a chain of S And T ends at G And H with M. 0 if Strings : S T and not the strings S And T match at E And F.

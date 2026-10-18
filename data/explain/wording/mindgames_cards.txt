@@ -1,0 +1,11 @@
+Note: The wording of MindGames with cards: each person draws a card face down; a person sees a card only when it is shown to the person.
+Builds on mindgames.
+Write everyone is visible to others as nothing is seen.
+Write E's card is shown to R as R sees the fact of E.
+Write A not everyone picked a red card as A not every person holds.
+Write A someone picked a red card as A some person holds.
+Write A everyone picked a red card as A every person holds.
+Write A nobody picked a red card as A no person holds.
+Write A R picked a black card as A R does not hold.
+Write A R picked a red card as A R holds.
+To answer "A": entailment if the question asks B and it follows that B. not_entailment otherwise.

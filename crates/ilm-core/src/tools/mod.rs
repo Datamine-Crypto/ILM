@@ -1,49 +1,16 @@
-pub mod amount;
-pub mod arrange;
 pub mod call;
-pub mod frames;
-pub mod frequent;
-pub mod graph;
-pub mod grid;
-pub mod link;
-pub mod list;
-pub mod order;
-pub mod parts;
-pub mod pattern;
+pub mod explain;
 pub mod plain;
-pub mod ranks;
-pub mod requests;
-pub mod rule;
-pub mod space;
-pub mod state;
-pub mod table;
-pub mod together;
 
-use crate::tools::amount::AMOUNT_TOOL;
-use crate::tools::arrange::ARRANGE_TOOL;
-use crate::tools::frames::FRAMES_TOOL;
-use crate::tools::graph::GRAPH_TOOL;
-use crate::tools::grid::GRID_TOOL;
-use crate::tools::link::LINK_TOOL;
-use crate::tools::list::LIST_TOOL;
-use crate::tools::order::ORDER_TOOL;
-use crate::tools::parts::PARTS_TOOL;
-use crate::tools::pattern::PATTERNS_TOOL;
-use crate::tools::requests::REQUESTS_TOOL;
-use crate::tools::rule::RULE_TOOL;
-use crate::tools::space::SPACE_TOOL;
-use crate::tools::state::STATE_TOOL;
-use crate::tools::table::TABLE_TOOL;
-use crate::tools::together::TOGETHER_TOOL;
+use crate::tools::explain::EXPLAIN_TOOL;
 use crate::tools::call::Tool;
 use crate::tools::plain::{PLAIN_TOOL, QUESTION_TOOL};
-use crate::tools::ranks::RANKS_TOOL;
 use patterns::{because, source};
 
 pub struct ToolList;
 source!(ToolList, "the tools of the choice in one fixed list: with equal shares the tool that comes first in the list is taken, so a tool later in the list takes a kind only when it reads more of the lessons right; the plain controls have names beside them, so that a control is measured through the same call as a tool");
 
-const TOOLS: &[Tool] = &[PATTERNS_TOOL, STATE_TOOL, AMOUNT_TOOL, ORDER_TOOL, LINK_TOOL, RULE_TOOL, PARTS_TOOL, TOGETHER_TOOL, LIST_TOOL, REQUESTS_TOOL, FRAMES_TOOL, TABLE_TOOL, ARRANGE_TOOL, GRAPH_TOOL, GRID_TOOL, SPACE_TOOL, RANKS_TOOL];
+const TOOLS: &[Tool] = &[EXPLAIN_TOOL];
 because!(TOOLS, ToolList, "the tools that the choice is made among, in the order of the list");
 
 const CONTROLS: &[Tool] = &[PLAIN_TOOL, QUESTION_TOOL];

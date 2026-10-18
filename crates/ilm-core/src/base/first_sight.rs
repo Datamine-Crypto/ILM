@@ -1,5 +1,5 @@
 use patterns::{because, source};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 use std::ops::AddAssign;
 
@@ -14,6 +14,9 @@ because!(NUMBER_STEP, NumberHash, "the odd whole number nearest to the word size
 
 const NUMBER_TURN: u32 = 5;
 because!(NUMBER_TURN, NumberHash, "the bits by which the hash is turned before the next number is mixed in, so that the order of the numbers of a key counts");
+
+const NUMBER_FOLD: u32 = u64::BITS / 2;
+because!(NUMBER_FOLD, NumberHash, "the high half of the hash is folded onto its low half at the end: a multiply mixes every bit of a number into the high bits of its product and few into the low bits, and an open table takes its place from the low bits, so with no fold the keys of numbers that differ only in their high or middle bits fall into few places");
 
 const NUMBER_BYTE_BITS: u32 = 8;
 because!(NUMBER_BYTE_BITS, NumberHash, "the bits of one byte, for the rare key that reaches the hash as bytes");
@@ -32,7 +35,7 @@ impl NumberHasher {
 
 impl Hasher for NumberHasher {
     fn finish(&self) -> u64 {
-        self.state
+        self.state ^ (self.state >> NUMBER_FOLD)
     }
 
     fn write(&mut self, bytes: &[u8]) {
@@ -64,8 +67,6 @@ because!(NumberHashes, NumberHash, "the maker of the hash of numbers for the ope
 pub type NumberTable<K, V> = HashMap<K, V, NumberHashes>;
 because!(NumberTable, NumberHash, "an open table over keys of numbers, where the order of the keys is never asked for");
 
-pub type NumberBag<K> = HashSet<K, NumberHashes>;
-because!(NumberBag, NumberHash, "a set of keys of numbers that is only asked whether it holds a key");
 
 #[derive(Clone, Debug)]
 pub struct FirstSightTable<K, V> {
@@ -89,10 +90,6 @@ impl<K: Hash + Eq + Clone, V> FirstSightTable<K, V> {
         &self.rows
     }
 
-    pub fn rows_mut(&mut self) -> &mut [(K, V)] {
-        &mut self.rows
-    }
-
     pub fn place(&self, key: &K) -> Option<usize> {
         self.index.get(key).map(|row| *row as usize)
     }
@@ -103,13 +100,6 @@ impl<K: Hash + Eq + Clone, V> FirstSightTable<K, V> {
 
     pub fn get(&self, key: &K) -> Option<&V> {
         self.place(key).map(|row| &self.rows[row].1)
-    }
-
-    pub fn get_mut(&mut self, key: &K) -> Option<&mut V> {
-        match self.place(key) {
-            Some(row) => Some(&mut self.rows[row].1),
-            None => None,
-        }
     }
 
     fn row_with(&mut self, key: K, fresh: V) -> usize {
@@ -185,11 +175,6 @@ impl<K: Hash + Eq + Clone, V> FirstSightTable<K, V> {
 
 pub type FirstSightCount<K> = FirstSightTable<K, i64>;
 because!(FirstSightCount, FirstSightOrder, "how often each key was seen, with the keys in the order of first sight, so that the most frequent of equals is the one that the lessons showed first");
-
-pub fn key_count<K: Hash + Eq + Clone>(counts: &FirstSightCount<K>, key: &K) -> i64 {
-    counts.get(key).copied().unwrap_or_default()
-}
-because!(key_count, FirstSightOrder, "the count of a key, nought for a key that was never seen; asking changes nothing");
 
 pub fn all_counts<K: Hash + Eq + Clone>(counts: &FirstSightCount<K>) -> i64 {
     counts.rows().iter().map(|(_, count)| *count).sum()

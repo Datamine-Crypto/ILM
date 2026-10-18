@@ -5,14 +5,14 @@
 ## 📦 Install
 
 ```
-cargo install datamine-ilm
+cargo install --locked datamine-ilm
 ```
 
-This builds the program `ilm`. The build needs Rust 1.90 or later and a C compiler.
+This builds the program `ilm`. The build needs Rust 1.97 or later and a C compiler.
 
 ## 🚀 Run
 
-The program reads the descriptions of the public sets from a clone of the GitHub repository, so run it from the root of a clone:
+The program reads its library of texts and the descriptions of the public sets from a clone of the GitHub repository, so run it from the root of a clone:
 
 ```
 git clone https://github.com/Datamine-Crypto/ILM
@@ -22,7 +22,7 @@ ilm export src_babi data/sets/final/src_babi.txt cases/final/src_babi
 ilm measure cases/final/src_babi
 ```
 
-The last line gives the right answers of each of the 20 bAbI tasks. Their sum is 19,356 of 19,399.
+The last line gives the right answers of each of the 20 bAbI tasks. Their sum is 18,903 of 19,399.
 
 ## 🔗 Links
 

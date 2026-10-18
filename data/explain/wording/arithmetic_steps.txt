@@ -1,0 +1,41 @@
+Note: Steps of arithmetic told one after another, over several sentences and the question: a step on two numbers makes a new value, a step on the result changes the latest value, and a step on both joins the two latest values, the older first. The values are kept as the two latest, the older first, and none for no value; the steps of a sentence are read in their order, and a sentence starts from the values that the sentence before it left. The answer is the choice worth the latest value.
+Builds on numbers, choices.
+The values are now none and none.
+If What is the W of the following X Y ? : AA then the list AA is read.
+If GG is told and What is the W of the following X Y ? : BB and not GG holds the word ? then the list GG is read.
+If the question is AA ? : BB choice : CC and not BB holds the word choice then the list BB is read.
+If the question is BB choice : CC and What is the W of the following X Y ? : DD and not BB holds the word ? and not BB holds the word choice then the list BB is read.
+If the list AA is read then the rest of AA after 0 is AA.
+If the rest of PP after K is AA , BB and not AA holds the word , and K plus 1 is L then step L of PP is AA.
+If the rest of PP after K is AA , BB and not AA holds the word , and K plus 1 is L then the rest of PP after L is BB.
+If the rest of PP after K is AA and not AA holds the word , and K plus 1 is L then step L of PP is AA.
+If the rest of PP after K is AA and not AA holds the word , and K plus 1 is L then PP has L steps.
+If the rest of PP after K is AA , and not AA holds the word , and K plus 1 is L then step L of PP is AA.
+If the rest of PP after K is AA , and not AA holds the word , and K plus 1 is L then PP has L steps.
+If step 1 of PP is AA and before that time the values are now X And Y then within PP after 0 the values are X and Y.
+If step L of PP is multiply R to S and L minus 1 is K and within PP after K the values are X And Y and S times R is M then within PP after L the values are Y and M.
+If step L of PP is multiply R by S and L minus 1 is K and within PP after K the values are X And Y and R times S is M then within PP after L the values are Y and M.
+If step L of PP is divide R by S and L minus 1 is K and within PP after K the values are X And Y and R divided by S is M then within PP after L the values are Y and M.
+If step L of PP is add R to S and L minus 1 is K and within PP after K the values are X And Y and S plus R is M then within PP after L the values are Y and M.
+If step L of PP is subtract R from S and L minus 1 is K and within PP after K the values are X And Y and S minus R is M then within PP after L the values are Y and M.
+If step L of PP is multiply result by R and L minus 1 is K and within PP after K the values are X And Y and Y times R is M then within PP after L the values are X and M.
+If step L of PP is divide result by R and L minus 1 is K and within PP after K the values are X And Y and Y divided by R is M then within PP after L the values are X and M.
+If step L of PP is add result to R and L minus 1 is K and within PP after K the values are X And Y and Y plus R is M then within PP after L the values are X and M.
+If step L of PP is subtract R from result and L minus 1 is K and within PP after K the values are X And Y and Y minus R is M then within PP after L the values are X and M.
+If step L of PP is subtract result from R and L minus 1 is K and within PP after K the values are X And Y and R minus Y is M then within PP after L the values are X and M.
+If step L of PP is multiply R by the result and L minus 1 is K and within PP after K the values are X And Y and R times Y is M then within PP after L the values are X and M.
+If step L of PP is divide R by the result and L minus 1 is K and within PP after K the values are X And Y and R divided by Y is M then within PP after L the values are X and M.
+If step L of PP is add R to the result and L minus 1 is K and within PP after K the values are X And Y and Y plus R is M then within PP after L the values are X and M.
+If step L of PP is subtract R from the result and L minus 1 is K and within PP after K the values are X And Y and Y minus R is M then within PP after L the values are X and M.
+If step L of PP is subtract the result from R and L minus 1 is K and within PP after K the values are X And Y and R minus Y is M then within PP after L the values are X and M.
+If step L of PP is And Then add both and L minus 1 is K and within PP after K the values are X And Y and X plus Y is M then within PP after L the values are none and M.
+If step L of PP is add both and L minus 1 is K and within PP after K the values are X And Y and X plus Y is M then within PP after L the values are none and M.
+If step L of PP is And Then subtract both and L minus 1 is K and within PP after K the values are X And Y and X minus Y is M then within PP after L the values are none and M.
+If step L of PP is subtract both and L minus 1 is K and within PP after K the values are X And Y and X minus Y is M then within PP after L the values are none and M.
+If step L of PP is And Then multiply both and L minus 1 is K and within PP after K the values are X And Y and X times Y is M then within PP after L the values are none and M.
+If step L of PP is multiply both and L minus 1 is K and within PP after K the values are X And Y and X times Y is M then within PP after L the values are none and M.
+If step L of PP is And Then divide both and L minus 1 is K and within PP after K the values are X And Y and X divided by Y is M then within PP after L the values are none and M.
+If step L of PP is divide both and L minus 1 is K and within PP after K the values are X And Y and X divided by Y is M then within PP after L the values are none and M.
+If PP has L steps and within PP after L the values are X And Y then the values are now X and Y.
+To answer "choice:BBB": BB if latest the values are now X And Y and the choice BB is worth M and M is at least Y and M is at most Y.
+To answer "AAA choice:BBB": BB if latest the values are now X And Y and the choice BB is worth M and M is at least Y and M is at most Y.

@@ -1,5 +1,5 @@
 use crate::cases::Case;
-use crate::tools::call::{Learned, Learner, Lessons, Said, Tool};
+use crate::tools::call::{AnswerMark, Learned, Learner, Lessons, Said, Tool};
 use crate::base::sums::{CompensatedSum, compensated};
 use crate::base::symbols::Symbols;
 use crate::base::words::{answer_words, words};
@@ -93,13 +93,13 @@ fn hits_by_answer(rows: &[&Vec<(u32, u32)>], answers: usize) -> (Vec<usize>, Vec
 }
 because!(hits_by_answer, PlainCounting, "the counts of the keys of a case grouped by answer, each group in the order of the keys: the keys that an answer had are found by a walk, and every other key of the answer has the estimate of a key that it never had");
 
-fn bump(row: &mut Vec<(u32, u32)>, answer: u32) {
+pub(crate) fn bump<T: PartialEq>(row: &mut Vec<(T, u32)>, answer: T) {
     match row.iter_mut().find(|(seen, _)| *seen == answer) {
         Some((_, count)) => *count += 1,
         None => row.push((answer, 1)),
     }
 }
-because!(bump, PlainCounting, "one more reading of an answer under a key");
+because!(bump, PlainCounting, "one more reading of an answer under a key, in a short list of answers with their counts");
 
 impl Plain {
     pub fn learn(cases: &[Case]) -> Plain {
@@ -153,16 +153,23 @@ impl Plain {
 
 impl Learner for Plain {
     fn answer(&self, sentences: &[String], question: &str) -> Said {
-        Said { words: self.best(sentences, question).map(<[String]>::to_vec).unwrap_or_default(), note: String::new() }
+        plain_said(self.best(sentences, question))
     }
 }
+
+fn plain_said(best: Option<&[String]>) -> Said {
+    let words = best.map(<[String]>::to_vec).unwrap_or_default();
+    let mark = if words.is_empty() { AnswerMark::NoAnswer } else { AnswerMark::Guess };
+    Said { words, note: String::new(), mark }
+}
+because!(plain_said, PlainCounting, "the answer of plain counting, marked as a guess: a count of the lessons proves nothing of the case");
 
 pub fn learn_plain(lessons: Lessons, _lanes: usize) -> Learned {
     Ok(Box::new(Plain::learn(lessons.cases)))
 }
 because!(learn_plain, PlainCounting, "plain counting as a tool of the one call, so that the line which every learner is compared with can be measured as a learner is");
 
-pub const PLAIN_TOOL: Tool = Tool { name: "plain", needs_labels: false, probe: false, asks: false, over: None, learn: learn_plain };
+pub const PLAIN_TOOL: Tool = Tool { name: "plain", needs_labels: false, learn: learn_plain };
 because!(PLAIN_TOOL, PlainCounting, "plain counting on the whole case, as a tool with a name");
 
 pub struct QuestionAlone {
@@ -172,7 +179,7 @@ because!(QuestionAlone, PlainCounting, "plain counting that learns from the ques
 
 impl Learner for QuestionAlone {
     fn answer(&self, _sentences: &[String], question: &str) -> Said {
-        Said { words: self.counts.best(&[], question).map(<[String]>::to_vec).unwrap_or_default(), note: String::new() }
+        plain_said(self.counts.best(&[], question))
     }
 }
 
@@ -182,5 +189,5 @@ pub fn learn_question(lessons: Lessons, _lanes: usize) -> Learned {
 }
 because!(learn_question, PlainCounting, "plain counting of the question alone as a tool of the one call");
 
-pub const QUESTION_TOOL: Tool = Tool { name: "question", needs_labels: false, probe: false, asks: false, over: None, learn: learn_question };
+pub const QUESTION_TOOL: Tool = Tool { name: "question", needs_labels: false, learn: learn_question };
 because!(QUESTION_TOOL, PlainCounting, "plain counting of the question alone, as a tool with a name");

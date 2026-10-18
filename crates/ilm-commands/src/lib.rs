@@ -2,5 +2,4 @@
 #![deny(non_snake_case)]
 #![deny(unreachable_patterns)]
 
-pub mod ask;
 pub mod command;

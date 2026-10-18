@@ -97,7 +97,7 @@ because!(ChainStory, ChainChanges, "the links of a story, whether they lead one 
 fn graph_edge(sentence: &str) -> Option<(String, String)> {
     let inner = stripped(sentence).strip_prefix(CHAIN_OPEN)?.strip_suffix(CHAIN_CLOSE)?;
     let (one, other) = inner.split_once(CHAIN_COMMA)?;
-    let other = other.trim_start_matches(ilm_core::know::signs::is_space);
+    let other = other.trim_start_matches(ilm_core::base::signs::is_space);
     let digits = |part: &str| !part.is_empty() && part.bytes().all(|byte| byte.is_ascii_digit());
     (digits(one) && digits(other)).then(|| (one.to_string(), other.to_string()))
 }

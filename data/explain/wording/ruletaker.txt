@@ -1,0 +1,5 @@
+Note: The closed form of RuleTaker: a statement is an entailment when the story and its rules give it; "not entailment" otherwise.
+Builds on proofwriter_closed.
+To answer "A is not B.": not entailment if A is B. entailment otherwise.
+To answer "A does not F B.": not entailment if A Fs B. entailment otherwise.
+To answer "A.": entailment if A. not entailment otherwise.

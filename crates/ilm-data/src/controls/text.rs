@@ -1,4 +1,4 @@
-use ilm_core::know::signs::is_space;
+use ilm_core::base::signs::is_space;
 use patterns::{because, source};
 
 pub struct StoryPieces;
@@ -126,6 +126,11 @@ pub fn list_pieces(text: &str) -> Vec<&str> {
     out
 }
 because!(list_pieces, StoryPieces, "the pieces of a list between its marks, read from the left, with an empty piece where two marks meet or a mark stands at an end");
+
+pub(crate) fn whole_numbers(text: &str, signed: bool) -> Option<Vec<i128>> {
+    number_runs(text, signed).iter().map(|(start, end)| text[*start..*end].parse::<i128>().ok()).collect()
+}
+because!(whole_numbers, StoryPieces, "the numbers of a text in their order, or nothing when one is too large to hold");
 
 pub fn number_runs(text: &str, signed: bool) -> Vec<(usize, usize)> {
     let bytes = text.as_bytes();

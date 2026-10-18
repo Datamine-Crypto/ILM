@@ -10,7 +10,6 @@ pub mod held;
 pub mod list;
 pub mod loops;
 pub mod lonli;
-pub mod made;
 pub mod more;
 pub mod numbers;
 pub mod parts;

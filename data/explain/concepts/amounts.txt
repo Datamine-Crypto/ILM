@@ -1,0 +1,26 @@
+Builds on numbers.
+If A has B coins then the coins of A are B.
+If A has B dollars and B is at least 0 then the dollars of A are B.
+If A has B dollars and B is the number C then the dollars of A are C.
+If the dollars of A are B and A received C more dollars and C is at least 0 and B plus C is D then the money of A after the change is D.
+If the dollars of A are B and A received C more dollars and C is the number E and B plus E is D then the money of A after the change is D.
+If the dollars of A are B and she received C more dollars and C is at least 0 and B plus C is D then the money of A after the change is D.
+If the dollars of A are B and she received C more dollars and C is the number E and B plus E is D then the money of A after the change is D.
+If the dollars of A are B and he received C more dollars and C is at least 0 and B plus C is D then the money of A after the change is D.
+If the dollars of A are B and he received C more dollars and C is the number E and B plus E is D then the money of A after the change is D.
+If the dollars of A are B and A gave away C dollars and C is at least 0 and B minus C is D then the money of A after the change is D.
+If the dollars of A are B and A gave away C dollars and C is the number E and B minus E is D then the money of A after the change is D.
+If the dollars of A are B and she gave away C dollars and C is at least 0 and B minus C is D then the money of A after the change is D.
+If the dollars of A are B and she gave away C dollars and C is the number E and B minus E is D then the money of A after the change is D.
+If the dollars of A are B and he gave away C dollars and C is at least 0 and B minus C is D then the money of A after the change is D.
+If the dollars of A are B and he gave away C dollars and C is the number E and B minus E is D then the money of A after the change is D.
+If the money of A after the change is B then the money of A in the end is B.
+If the dollars of A are B and not the money of A after the change is C then the money of A in the end is B.
+If A is the child of B then A is a known child of B.
+If A is the only child of B then A is a known child of B.
+If A is a known child of B and C is the number of D where D is a known child of B then the known children of B are C.
+If A is the only child of B then the full count of the children of B is 1.
+If A And C are the only children of B then the full count of the children of B is 2.
+If A, C And D are the only children of B then the full count of the children of B is 3.
+If A, D, G And J are the only children of B then the full count of the children of B is 4.
+If A, D, G, J And M are the only children of B then the full count of the children of B is 5.

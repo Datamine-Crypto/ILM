@@ -1,0 +1,16 @@
+Note: Written by hand, not learned: functions on lists of words, each named by what it does to a list or to two lists, and a question made of functions and lists worked out from the inside: a function whose list holds no function word, followed by a comma or by the end, is applied first, the list that it makes takes its place, and the value of the question is the list that is left once no function word stands in it.
+Write the question is AAAA as the value is AAAA , end.
+Write AAAA V B , CCCC as AAAA B , CCCC if V says a list as it is and not B holds a function word.
+Write AAAA V B , CCCC as AAAA C , CCCC if V says a list backward and not B holds a function word and C is B backward.
+Write AAAA V B , CCCC as AAAA B B , CCCC if V says a list twice and not B holds a function word.
+Write AAAA V B R , CCCC as AAAA B R R , CCCC if V says the last word of a list again and not B holds a function word and not R is a function word.
+Write AAAA V R , CCCC as AAAA R R , CCCC if V says the last word of a list again and not R is a function word.
+Write AAAA V R B , CCCC as AAAA B R , CCCC if V moves the first word of a list to its end and not R is a function word and not B holds a function word.
+Write AAAA V R , CCCC as AAAA R , CCCC if V moves the first word of a list to its end and not R is a function word.
+Write AAAA V R B S , CCCC as AAAA S B R , CCCC if V swaps the ends of a list and not R is a function word and not B holds a function word and not S is a function word.
+Write AAAA V R S , CCCC as AAAA S R , CCCC if V swaps the ends of a list and not R is a function word and not S is a function word.
+Write AAAA V R , CCCC as AAAA R , CCCC if V swaps the ends of a list and not R is a function word.
+Write AAAA V B , C , CCCC as AAAA B C , CCCC if V joins two lists and not B holds a function word and not C holds a function word.
+Write AAAA V B , C , CCCC as AAAA C B , CCCC if V joins two lists the other way round and not B holds a function word and not C holds a function word.
+Write AAAA V B , C , CCCC as AAAA C , CCCC if V keeps the second of two lists and not B holds a function word and not C holds a function word.
+Write AAAA V B , C , CCCC as AAAA B , CCCC if V keeps the first of two lists and not B holds a function word and not C holds a function word.

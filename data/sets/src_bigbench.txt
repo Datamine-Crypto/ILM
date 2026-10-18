@@ -146,7 +146,6 @@ no_names	color
 no_names	unnatural_in_context_learning
 no_names	list_functions
 no_names	word_sorting
-not_counted	geometric_shapes	the parts tool passes it with a class that counts the line commands of the path and the marks of the question: two of the ten answers have the same number of line commands, and it tells them apart by the number of choices that the question lists
 all	track_3
 all	track_5
 all	track_7

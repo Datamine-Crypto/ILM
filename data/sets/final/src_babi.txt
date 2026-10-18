@@ -42,8 +42,6 @@ task	babi17	babi17
 task	babi18	babi18
 task	babi19	babi19
 task	babi20	babi20
-not_counted	babi18	the things have one order of sizes in every story; with a supporting sentence taken out, so that the story no longer gives the answer, a sure rule of the learner keeps the old answer in 304 of 651 trials (46.7%)
-not_counted	babi03	a part of the rules does not read all that the question names: with a supporting sentence taken out, a sure rule keeps the old answer in 80 of 1,261 trials (6.3%; the line is 5%)
 all	babi01
 all	babi02
 all	babi03

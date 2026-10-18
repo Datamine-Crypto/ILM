@@ -1,0 +1,43 @@
+Note: Comparison and scales. A comparison puts two things in order on the scale of one quality (brave, tall, polite, big).
+Note: The order goes on through a third thing; a word with the opposite meaning puts the same things the other way round; the thing at the top of a group is above each other thing of the group. A thing that fits inside another is smaller.
+Builds on adjective_forms, antonyms.
+If A is D than B and D is the comparative of C then A is above B in C.
+If A is more C than B then A is above B in C.
+If A is less C than B then B is above A in C.
+If A is above B in C and B is above D in C then A is above D in C.
+If A is above B in C and C is the opposite of D then B is above A in D.
+If D is the comparative of C and A is C and B is D then B is above A in C.
+If A is C and B is more C then B is above A in C.
+If among A, B And C the D is A and D is the superlative of E then A is above B in E.
+If among A, B And C the most D is A then A is above B in D.
+If among A, B And C the D is A and D is the superlative of E then A is above C in E.
+If among A, B And C the most D is A then A is above C in D.
+If among A, B And C the D is B and D is the superlative of E then B is above A in E.
+If among A, B And C the most D is B then B is above A in D.
+If among A, B And C the D is B and D is the superlative of E then B is above C in E.
+If among A, B And C the most D is B then B is above C in D.
+If among A, B And C the D is C and D is the superlative of E then C is above A in E.
+If among A, B And C the most D is C then C is above A in D.
+If among A, B And C the D is C and D is the superlative of E then C is above B in E.
+If among A, B And C the most D is C then C is above B in D.
+If A is D than B but not C and D is the comparative of E then A is above B in E.
+If A is D than B but not C and D is the comparative of E then C is above A in E.
+If A is more D than B but not C then A is above B in D.
+If A is more D than B but not C then C is above A in D.
+If A fits inside B then B is above A in big.
+If A fits in B then B is above A in big.
+Is A D than B? yes if D is the comparative of C and A is above B in C. no if D is the comparative of C and B is above A in C.
+Reply to "Is A D than B?" with yes: Yes, A is D than B.
+Reply to "Is A D than B?" with no: No, A is not D than B.
+Is A more C than B? yes if A is above B in C. no if B is above A in C.
+Reply to "Is A more C than B?" with yes: Yes, A is more C than B.
+Reply to "Is A more C than B?" with no: No, A is not more C than B.
+Is A less C than B? yes if B is above A in C. no if A is above B in C.
+Reply to "Is A less C than B?" with yes: Yes, A is less C than B.
+Reply to "Is A less C than B?" with no: No, A is not less C than B.
+Does A fit in B? yes if B is above A in big. no if A is above B in big.
+Reply to "Does A fit in B?" with yes: Yes, A fits in B.
+Reply to "Does A fit in B?" with no: No, A does not fit in B.
+Does A fit inside B? yes if B is above A in big. no if A is above B in big.
+Reply to "Does A fit inside B?" with yes: Yes, A fits inside B.
+Reply to "Does A fit inside B?" with no: No, A does not fit inside B.

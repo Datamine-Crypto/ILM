@@ -1,7 +1,7 @@
 use ilm_core::base::first_sight::{FirstSightCount, FirstSightTable};
 use crate::controls::file::ChangedCase;
 use crate::sets::readers::common::stripped;
-use ilm_core::know::signs::is_word_sign;
+use ilm_core::base::signs::is_word_sign;
 use ilm_core::choice::inner_parts;
 use ilm_core::cases::Case;
 use patterns::{because, source};
@@ -161,33 +161,44 @@ fn name_as_word(name: &str) -> String {
 }
 because!(name_as_word, StoryState, "a name with its spaces made joining signs, so that it is one word in the state");
 
-fn story_events(sentences: &[String]) -> Vec<StoryEvent> {
+fn story_events(sentences: &[String], thing: Option<&str>) -> Vec<StoryEvent> {
+    let ours = |name: &str| thing.is_none_or(|asked| name_as_word(name) == asked);
     let mut out: Vec<StoryEvent> = Vec::new();
     for sentence in sentences {
         if let Some((person, room)) = person_room(sentence, TOMI_ENTERED) {
             out.push(StoryEvent::Enter(name_as_word(&person), name_as_word(&room)));
         } else if let Some((person, _)) = person_room(sentence, TOMI_EXITED) {
             out.push(StoryEvent::Exit(name_as_word(&person)));
-        } else if let Some((person, _, place)) = moved(sentence) {
-            out.push(StoryEvent::Move(name_as_word(&person), name_as_word(&place)));
-        } else if let Some((_, place)) = placed(sentence) {
-            out.push(StoryEvent::Place(name_as_word(&place)));
+        } else if let Some((person, moved_thing, place)) = moved(sentence) {
+            if ours(&moved_thing) {
+                out.push(StoryEvent::Move(name_as_word(&person), name_as_word(&place)));
+            }
+        } else if let Some((placed_thing, place)) = placed(sentence) {
+            if ours(&placed_thing) {
+                out.push(StoryEvent::Place(name_as_word(&place)));
+            }
+        } else if thing.is_some()
+            && let Some((person, room)) = person_room(sentence, TOMQA_PERSON_IS_IN)
+        {
+            out.push(StoryEvent::Enter(name_as_word(&person), name_as_word(&room)));
         }
     }
     out
 }
-because!(story_events, StoryState, "the events of a story in their order; a sentence that is no event gives none");
+because!(story_events, StoryState, "the events of a story in their order; a sentence that is no event gives none; with a thing named, only the placings and moves of that thing, since a story of the belief set places and moves other things too, and a person who is in a room at the start counts as entering it");
 
 struct ThingState {
     real: Option<String>,
     begin: Option<String>,
     first: HashMap<String, String>,
+    second: HashMap<(String, String), String>,
 }
-because!(ThingState, StoryState, "what the state of a story gives for its statements: where the thing really is, where it was at the beginning, and the first belief of each person");
+because!(ThingState, StoryState, "what the state of a story gives for its statements: where the thing really is, where it was at the beginning, the first belief of each person, and for two persons the place where the first thinks that the second believes the thing to be");
 
 fn thing_state(events: &[StoryEvent]) -> ThingState {
     let mut where_is: FirstSightTable<String, Option<String>> = FirstSightTable::new();
     let mut first: HashMap<String, String> = HashMap::new();
+    let mut second: HashMap<(String, String), String> = HashMap::new();
     let (mut room, mut real, mut begin): (Option<String>, Option<String>, Option<String>) = (None, None, None);
     for event in events {
         let place = match event {
@@ -197,6 +208,12 @@ fn thing_state(events: &[StoryEvent]) -> ThingState {
                     && let Some(seen) = &real
                 {
                     first.insert(person.clone(), seen.clone());
+                    for (other, held) in where_is.rows() {
+                        if held.as_ref() == Some(entered) {
+                            second.insert((person.clone(), other.clone()), seen.clone());
+                            second.insert((other.clone(), person.clone()), seen.clone());
+                        }
+                    }
                 }
                 continue;
             }
@@ -223,13 +240,15 @@ fn thing_state(events: &[StoryEvent]) -> ThingState {
             }
         };
         real = Some(place.clone());
-        for (person, held) in where_is.rows() {
-            if held.is_some() && *held == room {
-                first.insert(person.clone(), place.clone());
+        let here: Vec<String> = where_is.rows().iter().filter(|(_, held)| held.is_some() && *held == room).map(|(person, _)| person.clone()).collect();
+        for person in &here {
+            first.insert(person.clone(), place.clone());
+            for other in &here {
+                second.insert((person.clone(), other.clone()), place.clone());
             }
         }
     }
-    ThingState { real, begin, first }
+    ThingState { real, begin, first, second }
 }
 because!(thing_state, StoryState, "the state of a story after its events");
 
@@ -243,6 +262,11 @@ fn statement_parts(kind: &str, statement: &str) -> Option<Vec<String>> {
         TOMI_LOOK_KIND => vec![None, Some(TOMI_LOOK), None, Some(TOMI_TO), None],
         _ => return None,
     };
+    named_steps(text, &steps)
+}
+because!(statement_parts, StoryState, "the names of a statement of a kind: the thing and the place, or the person, the thing and the place; nothing for a statement of another form");
+
+fn named_steps(text: &str, steps: &[Option<&str>]) -> Option<Vec<String>> {
     let mut parts: Vec<String> = Vec::new();
     let mut at = 0;
     for step in steps {
@@ -266,11 +290,11 @@ fn statement_parts(kind: &str, statement: &str) -> Option<Vec<String>> {
     let rest = &text[at..];
     (rest.is_empty() || rest == TOMI_LINE).then_some(parts)
 }
-because!(statement_parts, StoryState, "the names of a statement of a kind: the thing and the place, or the person, the thing and the place; nothing for a statement of another form");
+because!(named_steps, StoryState, "the names of a text that follows fixed words with a place for one name between them, or nothing when the text has another form");
 
 fn tomi_label(kind: &str, sentences: &[String], statement: &str) -> Option<&'static str> {
     let parts = statement_parts(kind, statement)?;
-    let state = thing_state(&story_events(sentences));
+    let state = thing_state(&story_events(sentences, None));
     let place = match kind {
         TOMI_REAL_KIND => state.real,
         TOMI_BEGIN_KIND => state.begin,
@@ -354,3 +378,129 @@ pub fn tomi_changes(lessons: &[Case], whole: bool, kind: &str) -> Vec<ChangedCas
     out
 }
 because!(tomi_changes, StoryState, "the changed stories of the lessons that the model does not learn, or of all lessons for a model of all lessons, whose state gives the label of the set, each with the label that the state gives");
+
+const TOMQA_WHERE_IS: &str = "Where is the ";
+because!(TOMQA_WHERE_IS, StoryState, "the words before the thing of a question of where it really is");
+
+const TOMQA_REALLY: &str = " really?";
+because!(TOMQA_REALLY, StoryState, "the words after the thing of a question of where it really is");
+
+const TOMQA_WHERE_WAS: &str = "Where was the ";
+because!(TOMQA_WHERE_WAS, StoryState, "the words before the thing of a question of where it was at the beginning");
+
+const TOMQA_BEGINNING: &str = " at the beginning?";
+because!(TOMQA_BEGINNING, StoryState, "the words after the thing of a question of where it was at the beginning");
+
+const TOMQA_WHERE_WILL: &str = "Where will ";
+because!(TOMQA_WHERE_WILL, StoryState, "the words before the person of a question of where the person will look");
+
+const TOMQA_LOOK_FOR: &str = " look for the ";
+because!(TOMQA_LOOK_FOR, StoryState, "the words between the person and the thing of a question of where the person will look");
+
+const TOMQA_WHERE_DOES: &str = "Where does ";
+because!(TOMQA_WHERE_DOES, StoryState, "the words before the first person of a question of where one person thinks that another person searches");
+
+const TOMQA_THINK_THAT: &str = " think that ";
+because!(TOMQA_THINK_THAT, StoryState, "the words between the two persons of a question of where one person thinks that another person searches");
+
+const TOMQA_SEARCHES_FOR: &str = " searches for the ";
+because!(TOMQA_SEARCHES_FOR, StoryState, "the words between the second person and the thing of a question of where one person thinks that another person searches");
+
+const TOMQA_ASKED_END: &str = "?";
+because!(TOMQA_ASKED_END, StoryState, "the mark at the end of a question of where a person will look or searches");
+
+const TOMQA_PERSON_IS_IN: &str = " is in the ";
+because!(TOMQA_PERSON_IS_IN, StoryState, "the words between a person and the room where the person is at the start of a story");
+
+const SORT_ANOTHER_LEAVES: &str = "another person leaves in place of the person who left before the move";
+because!(SORT_ANOTHER_LEAVES, StoryState, "the sort of the change where a person that the story does not hold enters before the placing and is the one who leaves, so that the person who left sees the move");
+
+const SORT_COMES_BACK: &str = "the person who left comes back before the move";
+because!(SORT_COMES_BACK, StoryState, "the sort of the change where the person who left enters the room again right after leaving, so that the person sees the move");
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum Asked {
+    Real,
+    Begin,
+    Look,
+    Think,
+}
+because!(Asked, StoryState, "what a question of the belief set asks: where the thing really is, where it was at the beginning, where a person will look for it, or where one person thinks that another person searches for it");
+
+const TOMQA_FORMS: &[(Asked, &[Option<&str>])] = &[
+    (Asked::Real, &[Some(TOMQA_WHERE_IS), None, Some(TOMQA_REALLY)]),
+    (Asked::Begin, &[Some(TOMQA_WHERE_WAS), None, Some(TOMQA_BEGINNING)]),
+    (Asked::Look, &[Some(TOMQA_WHERE_WILL), None, Some(TOMQA_LOOK_FOR), None, Some(TOMQA_ASKED_END)]),
+    (Asked::Think, &[Some(TOMQA_WHERE_DOES), None, Some(TOMQA_THINK_THAT), None, Some(TOMQA_SEARCHES_FOR), None, Some(TOMQA_ASKED_END)]),
+];
+because!(TOMQA_FORMS, StoryState, "the forms of the questions of the belief set: fixed words, and a place for one name between them (a person or the thing)");
+
+fn asked_parts(question: &str) -> Option<(Asked, Vec<String>)> {
+    TOMQA_FORMS.iter().find_map(|(asked, steps)| named_steps(stripped(question), steps).map(|names| (*asked, names)))
+}
+because!(asked_parts, StoryState, "what a question of the belief set asks and its names, the thing last; nothing for a question of another form");
+
+fn tomqa_answer(sentences: &[String], question: &str) -> Option<String> {
+    let (asked, names) = asked_parts(question)?;
+    let state = thing_state(&story_events(sentences, Some(names.last()?)));
+    match asked {
+        Asked::Real => state.real,
+        Asked::Begin => state.begin,
+        Asked::Look => state.first.get(&names[0]).cloned(),
+        Asked::Think => state.second.get(&(names[0].clone(), names[1].clone())).cloned(),
+    }
+}
+because!(tomqa_answer, StoryState, "the true answer of a question of the belief set by the state of the story: the place of the thing, its first place, the first belief of the person, or the place where the first person thinks that the second believes it to be");
+
+fn one_leaving(sentences: &[String], thing: &str) -> Option<(usize, usize, usize)> {
+    let placing = sentences.iter().rposition(|sentence| placed(sentence).is_some_and(|(placed_thing, _)| name_as_word(&placed_thing) == thing))?;
+    let moves: Vec<usize> = moves_at(sentences).into_iter().filter(|at| *at > placing && moved(&sentences[*at]).is_some_and(|(_, moved_thing, _)| name_as_word(&moved_thing) == thing)).collect();
+    let exits: Vec<usize> = sentences.iter().enumerate().filter(|(at, sentence)| *at > placing && person_room(sentence, TOMI_EXITED).is_some()).map(|(at, _)| at).collect();
+    match (moves.as_slice(), exits.as_slice()) {
+        ([moving], [leaving]) if leaving < moving => Some((placing, *leaving, *moving)),
+        _ => None,
+    }
+}
+because!(one_leaving, StoryState, "the places of the placing of the thing, of the one leaving after it and of the one move of the thing after it, when the leaving comes before the move: the stories where a person does not see the move");
+
+fn another_leaves(sentences: &[String], thing: &str, free: &[String]) -> Option<Vec<String>> {
+    let (placing, leaving, _) = one_leaving(sentences, thing)?;
+    let (_, room) = person_room(&sentences[leaving], TOMI_EXITED)?;
+    let told = sentences.join(TOMI_WORD_GAP);
+    let third = free.iter().find(|name| !told.split(TOMI_GAP).any(|word| word.trim_end_matches(TOMI_END) == name.as_str()))?;
+    let mut out = sentences.to_vec();
+    out[leaving] = format!("{third}{TOMI_EXITED}{room}{TOMI_END}");
+    out.insert(placing, format!("{third}{TOMI_ENTERED}{room}{TOMI_END}"));
+    Some(out)
+}
+because!(another_leaves, StoryState, "the story where a person that it does not hold enters before the placing and leaves in place of the person who left, so that this person stays and sees the move");
+
+fn comes_back(sentences: &[String], thing: &str) -> Option<Vec<String>> {
+    let (_, leaving, _) = one_leaving(sentences, thing)?;
+    let (person, room) = person_room(&sentences[leaving], TOMI_EXITED)?;
+    let mut out = sentences.to_vec();
+    out.insert(leaving + 1, format!("{person}{TOMI_ENTERED}{room}{TOMI_END}"));
+    Some(out)
+}
+because!(comes_back, StoryState, "the story where the person who left enters the room again right after leaving, so that the person sees the move");
+
+pub fn tomqa_changes(lessons: &[Case], whole: bool) -> Vec<ChangedCase> {
+    let part: Vec<usize> = if whole { (0..lessons.len()).collect() } else { inner_parts(lessons).1 };
+    let free: Vec<String> = lessons.iter().flat_map(|case| case.sentences.iter().filter_map(|sentence| person_room(sentence, TOMI_ENTERED).map(|(person, _)| person))).collect::<BTreeSet<String>>().into_iter().collect();
+    let mut out: Vec<ChangedCase> = Vec::new();
+    for place in part {
+        let case = &lessons[place];
+        let Some((asked, names)) = asked_parts(&case.question) else { continue };
+        if !matches!(asked, Asked::Look | Asked::Think) || tomqa_answer(&case.sentences, &case.question).as_deref() != Some(case.answer.as_str()) {
+            continue;
+        }
+        let Some(thing) = names.last() else { continue };
+        for (sort, changed) in [(SORT_ANOTHER_LEAVES, another_leaves(&case.sentences, thing, &free)), (SORT_COMES_BACK, comes_back(&case.sentences, thing))] {
+            let Some(sentences) = changed else { continue };
+            let Some(truth) = tomqa_answer(&sentences, &case.question) else { continue };
+            out.push(ChangedCase { place: Some(place), sort: sort.to_string(), sentences, question: case.question.clone(), truth });
+        }
+    }
+    out
+}
+because!(tomqa_changes, StoryState, "the changed stories of the belief questions of the lessons that the model does not learn, or of all lessons for a model of all lessons, whose state gives the answer of the set: a person who did not see the move now sees it, so a learner that tracks the persons follows the new answer and a learner that reads the order of the words does not");

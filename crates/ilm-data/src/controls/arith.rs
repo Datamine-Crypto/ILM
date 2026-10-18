@@ -1,5 +1,5 @@
 use crate::controls::file::ChangedCase;
-use crate::controls::text::{number_runs, with_numbers};
+use crate::controls::text::{number_runs, whole_numbers, with_numbers};
 use crate::sets::readers::common::stripped;
 use ilm_core::choice::inner_parts;
 use ilm_core::cases::Case;
@@ -43,15 +43,10 @@ pub fn arithmetic_result(operation: &str, first: i128, second: i128) -> Option<i
 }
 because!(arithmetic_result, ArithmeticChanges, "the result of the operation of a kind on two numbers; nothing for a quotient that is not whole or a number too large to hold");
 
-fn arithmetic_values(text: &str) -> Option<Vec<i128>> {
-    number_runs(text, true).iter().map(|(start, end)| text[*start..*end].parse::<i128>().ok()).collect()
-}
-because!(arithmetic_values, ArithmeticChanges, "the numbers of a text in their order");
-
 fn arithmetic_change(operation: &str, question: &str, answer: &str, turned: bool) -> Option<(String, String)> {
     let (head, tail) = question.split_once(ARITH_ASK).unwrap_or((question, ""));
-    let [first, second] = arithmetic_values(head)?[..] else { return None };
-    let mut choices = arithmetic_values(tail)?;
+    let [first, second] = whole_numbers(head, true)?[..] else { return None };
+    let mut choices = whole_numbers(tail, true)?;
     let (first, second) = if operation == ARITH_DIV { (first.checked_add(second)?, second) } else { (first, second.checked_add(1)?) };
     let truth = arithmetic_result(operation, first, second)?;
     let old = stripped(answer).parse::<i128>().ok()?;

@@ -1,0 +1,13 @@
+Note: Written by hand, not learned: a sum of whole numbers in brackets is worked out from the inside out, in any sentence that holds it: in each pair of brackets that holds no other pair, the products first, then the sums and differences from the left; a pair of brackets around one number goes, and the number stays.
+Write inside R * S as T if R times S is T.
+Write inside R * S BB as T BB if R times S is T.
+Write inside AA R * S as AA T if R times S is T.
+Write inside AA R * S BB as AA T BB if R times S is T.
+Write inside R + S as T if R plus S is T.
+Write inside R + S BB as T BB if R plus S is T.
+Write inside R - S as T if R minus S is T.
+Write inside R - S BB as T BB if R minus S is T.
+Write inside AAA ( T ) BBB as AAA T BBB.
+Write inside ( T ) BBB as T BBB.
+Write inside AAA ( T ) as AAA T.
+Write inside ( T ) as T.

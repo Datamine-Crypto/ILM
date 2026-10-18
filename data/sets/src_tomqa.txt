@@ -22,7 +22,6 @@ pair	where the thing is after the last move	tomqa_easy_real	tomqa_hard_real
 pair	where the thing was before the move	tomqa_easy_begin	tomqa_hard_begin
 pair	first belief: where a person will look for the thing	tomqa_easy_look	tomqa_hard_look
 pair	second belief: where one person thinks that another person searches	tomqa_easy_think	tomqa_hard_think
-not_counted	second belief: where one person thinks that another person searches	in its easy part the tool that is taken keeps its answer for 218 of 218 stories that were changed so that the true answer flips: no person is tracked (the set allows it: the order of words gives every answer)
 all	tomqa_easy_real
 all	tomqa_easy_begin
 all	tomqa_easy_look

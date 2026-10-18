@@ -1,0 +1,73 @@
+Note: Puzzles of things in a fixed order (BIG-bench logical_deduction): books or birds from left to right, cars from the oldest to the newest, fruits from the cheapest to the most expensive, golfers from the first to the last, with a list of the things and conditions on their order, and the choice that holds in the one order that the conditions leave. Each told sentence and each choice is read into the same forms of the concept of a row; the told ones are conditions, and a choice is so when the row found has it.
+Builds on arrangements, numbers, calendar, choices.
+If AA , there are W BB : CC and W is the number Z then the row holds Z things.
+If AA , there are W BB : CC then the items after 0 are CC , end.
+If AA , there were W BB : CC and W is the number Z then the row holds Z things.
+If AA , there were W BB : CC then the items after 0 are CC , end.
+If AA sells W BB : CC and W is the number Z then the row holds Z things.
+If AA sells W BB : CC then the items after 0 are CC , end.
+If the items after X are W , EE and X plus 1 is Y then item Y is W.
+If the items after X are W , EE and X plus 1 is Y then the items after Y are EE.
+If the items after X are V W , EE and X plus 1 is Y then item Y is V W.
+If the items after X are V W , EE and X plus 1 is Y then the items after Y are EE.
+If the items after X are U V W , EE and X plus 1 is Y then item Y is U V W.
+If the items after X are U V W , EE and X plus 1 is Y then the items after Y are EE.
+If the items after X are T U V W , EE and X plus 1 is Y then item Y is T U V W.
+If the items after X are T U V W , EE and X plus 1 is Y then the items after Y are EE.
+Write item Y is and DD as item Y is DD.
+Write item Y is a DD as item Y is DD.
+Write item Y is an DD as item Y is DD.
+If item Y is DD then thing Y of the row is DD.
+If GG is told then ( told ) : GG.
+If BB . is a choice then BB is an option.
+If BB is a choice and not BB holds the word . then BB is an option.
+If BB is an option then ( BB ) : BB.
+If ( GG ) : the B is to the S of the C and S is the same as left then ( GG ) : B comes before C.
+If ( GG ) : the B is to the S of the C and S is the same as right then ( GG ) : C comes before B.
+If ( GG ) : the B is the leftmost then ( GG ) : B stands at place 1 from the start.
+If ( GG ) : the B is the rightmost then ( GG ) : B stands at place 1 from the end.
+If ( GG ) : the B is the W from the left and W is the ordinal of X then ( GG ) : B stands at place X from the start.
+If ( GG ) : the B is the W from the right and W is the ordinal of X then ( GG ) : B stands at place X from the end.
+If ( GG ) : the B is older than the C then ( GG ) : B comes before C.
+If ( GG ) : the B is newer than the C then ( GG ) : C comes before B.
+If ( GG ) : the B is the oldest then ( GG ) : B stands at place 1 from the start.
+If ( GG ) : the B is the newest then ( GG ) : B stands at place 1 from the end.
+If ( GG ) : the B are less expensive than the C then ( GG ) : B comes before C.
+If ( GG ) : the B are more expensive than the C then ( GG ) : C comes before B.
+If ( GG ) : the B are the cheapest then ( GG ) : B stands at place 1 from the start.
+If ( GG ) : the B are the most expensive then ( GG ) : B stands at place 1 from the end.
+If ( GG ) : B finished above C then ( GG ) : B comes before C.
+If ( GG ) : B finished below C then ( GG ) : C comes before B.
+If ( GG ) : B finished last then ( GG ) : B stands at place 1 from the end.
+If ( GG ) : B finished W and W is the ordinal of X then ( GG ) : B stands at place X from the start.
+If ( GG ) : the B is the second-oldest then ( GG ) : B stands at place 2 from the start.
+If ( GG ) : the B is the second-newest then ( GG ) : B stands at place 2 from the end.
+If ( GG ) : the B are the second-cheapest then ( GG ) : B stands at place 2 from the start.
+If ( GG ) : the B are the second-most expensive then ( GG ) : B stands at place 2 from the end.
+If ( GG ) : B finished second-to-last then ( GG ) : B stands at place 2 from the end.
+If ( GG ) : the B is the third-oldest then ( GG ) : B stands at place 3 from the start.
+If ( GG ) : the B is the third-newest then ( GG ) : B stands at place 3 from the end.
+If ( GG ) : the B are the third-cheapest then ( GG ) : B stands at place 3 from the start.
+If ( GG ) : the B are the third-most expensive then ( GG ) : B stands at place 3 from the end.
+If ( GG ) : B finished third-to-last then ( GG ) : B stands at place 3 from the end.
+If ( GG ) : the B is the fourth-oldest then ( GG ) : B stands at place 4 from the start.
+If ( GG ) : the B is the fourth-newest then ( GG ) : B stands at place 4 from the end.
+If ( GG ) : the B are the fourth-cheapest then ( GG ) : B stands at place 4 from the start.
+If ( GG ) : the B are the fourth-most expensive then ( GG ) : B stands at place 4 from the end.
+If ( GG ) : B finished fourth-to-last then ( GG ) : B stands at place 4 from the end.
+If ( GG ) : the B is the fifth-oldest then ( GG ) : B stands at place 5 from the start.
+If ( GG ) : the B is the fifth-newest then ( GG ) : B stands at place 5 from the end.
+If ( GG ) : the B are the fifth-cheapest then ( GG ) : B stands at place 5 from the start.
+If ( GG ) : the B are the fifth-most expensive then ( GG ) : B stands at place 5 from the end.
+If ( GG ) : B finished fifth-to-last then ( GG ) : B stands at place 5 from the end.
+If ( GG ) : the B is the sixth-oldest then ( GG ) : B stands at place 6 from the start.
+If ( GG ) : the B is the sixth-newest then ( GG ) : B stands at place 6 from the end.
+If ( GG ) : the B are the sixth-cheapest then ( GG ) : B stands at place 6 from the start.
+If ( GG ) : the B are the sixth-most expensive then ( GG ) : B stands at place 6 from the end.
+If ( GG ) : B finished sixth-to-last then ( GG ) : B stands at place 6 from the end.
+If ( told ) : B comes before C then B comes before C.
+If ( told ) : B stands at place X from the start then B stands at place X from the start.
+If ( told ) : B stands at place X from the end then B stands at place X from the end.
+If ( GG ) : B stands at place X from the start and B is at place X from the start then GG is so.
+If ( GG ) : B stands at place X from the end and B is at place X from the end then GG is so.
+To answer "choice:BBB": GG if GG is an option and GG is so.

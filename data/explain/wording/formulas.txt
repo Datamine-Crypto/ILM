@@ -1,0 +1,21 @@
+Note: Steps of arithmetic written as a formula of operations (add, subtract, multiply, divide) on numbers or on other operations, and a choice of answers. Brackets are read as the words open and close; an operation on two numbers is worked out and the formula is written again with its value in its place, until one number is left; the answer is the choice worth that number.
+Builds on numbers, choices.
+Write AAA ( BBB ) CCC as AAA open BBB close CCC.
+Write inside AAA ( BBB ) CCC as AAA open BBB close CCC.
+Write inside AAA ( BBB ) as AAA open BBB close.
+Write inside ( BBB ) CCC as open BBB close CCC.
+Write inside ( BBB ) as open BBB close.
+If the question is AA ? : BB choice : CC and not BB holds the word choice then the formula is BB.
+If the formula is AA W open R , S close BB then work out W on R and S.
+If the formula is AA W open R , S close BB and W on R And S gives C then the formula is AA C BB.
+If the formula is W open R , S close BB then work out W on R and S.
+If the formula is W open R , S close BB and W on R And S gives C then the formula is C BB.
+If the formula is AA W open R , S close then work out W on R and S.
+If the formula is AA W open R , S close and W on R And S gives C then the formula is AA C.
+If the formula is W open R , S close then work out W on R and S.
+If the formula is W open R , S close and W on R And S gives C then the formula is C.
+If work out add on R And S and R plus S is C then add on R and S gives C.
+If work out subtract on R And S and R minus S is C then subtract on R and S gives C.
+If work out multiply on R And S and R times S is C then multiply on R and S gives C.
+If work out divide on R And S and R divided by S is C then divide on R and S gives C.
+To answer "What is the W of the following X Y?:AAA": BB if the formula is Z and the choice BB is worth M and M is at least Z and M is at most Z.

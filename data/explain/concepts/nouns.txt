@@ -1,0 +1,4 @@
+Note: Nouns. A noun names a person, an animal or a thing. A member of a kind is named by a noun ("a zebra is a mammal": zebra is a noun). A noun names one thing (singular) or more than one (plural). A regular plural adds -s, or -es after s, x, z, ch and sh (zebras, walruses); the list of plurals holds the others.
+Builds on kinds, plurals.
+If a S is C then S is a noun.
+If an S is C then S is a noun.

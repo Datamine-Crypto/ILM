@@ -1,0 +1,3 @@
+Note: The wording of MindGames: a statement is "entailment" when it follows from what the story tells and announces, and "not_entailment" otherwise.
+Builds on worlds.
+To answer "A": entailment if the question asks B and it follows that B. not_entailment otherwise.

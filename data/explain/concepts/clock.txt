@@ -1,0 +1,7 @@
+Note: A clock time is a minute of the day. "H:M AM" is H hours and M minutes after midnight, and "H:M PM" is 12 hours later; 12 AM is midnight, and 12 PM is noon. Who arrives at an earlier minute arrives before.
+If A arrived at B : C am and B is less than 12 and B times 60 is D and D plus C is E then A arrived at minute E.
+If A arrived at 12 : B am then A arrived at minute B.
+If A arrived at B : C pm and B is less than 12 and B plus 12 is D and D times 60 is E and E plus C is F then A arrived at minute F.
+If A arrived at 12 : B pm and 720 plus B is C then A arrived at minute C.
+If A arrived at 12 : B noon and 720 plus B is C then A arrived at minute C.
+If A arrived at minute C and B arrived at minute D and C is less than D then A arrived before B.

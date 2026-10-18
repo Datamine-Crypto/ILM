@@ -1,0 +1,7 @@
+Note: Going from place to place. Every verb of going (moved, travelled, journeyed, went back, came, walked, ran) is read as "went to"; two people who go together ("Mary and Daniel moved to the office") each go there.
+Note: The time words that a story puts after such a sentence stay with it ("Julie went to the office yesterday").
+If A moved to the B then A went to the B.
+If A travelled to the B then A went to the B.
+If A journeyed to the B then A went to the B.
+If A went back to the B then A went to the B.
+If A And B went to the C then B went to the C.

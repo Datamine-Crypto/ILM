@@ -1,0 +1,132 @@
+Note: Facts of the text capitals learned by the step that reads facts from a large text (ilm facts), not written by a person, lines print 38771f8e94111f0c: the text wiki_text (10 files), its own form A is the capital of B, sentence shapes learned from the 33 pairs of that form that the proofs of the lessons confirmed, and each fact kept only when the proof of a right answer of the lessons of lonli_world rests on it and the proof of no wrong answer does.
+Note: 108 shapes in the last round, which together find 1954 seed sentences right and 48 wrong; the shapes themselves stay in the step's dump, out of the library, as each holds words of the text.
+Abu Dhabi is the capital of United Arab Emirates.
+Note: 52 sentences, round 0, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 18898299, wiki2023_00.txt.clean line 19085825, wiki2023_01.txt.clean line 14789969
+Accra is the capital of Ghana.
+Note: 70 sentences, round 1, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 10001242, wiki2023_00.txt.clean line 11168438, wiki2023_00.txt.clean line 13734856
+Amsterdam is the capital of Netherlands.
+Note: 13 sentences, round 0, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 15297521, wiki2023_00.txt.clean line 17390416, wiki2023_00.txt.clean line 17592476
+Ankara is the capital of Turkey.
+Note: 36 sentences, round 0, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 4959683, wiki2023_00.txt.clean line 13459961, wiki2023_01.txt.clean line 4381847
+Athens is the capital of Greece.
+Note: 16 sentences, round 0, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 5082467, wiki2023_02.txt.clean line 7992729, wiki2023_02.txt.clean line 24260472
+Baghdad is the capital of Iraq.
+Note: 24 sentences, round 0, right answers of lessons that rest on it 3; first sentences: wiki2023_00.txt.clean line 6715123, wiki2023_00.txt.clean line 20199320, wiki2023_01.txt.clean line 3750241
+Baku is the capital of Azerbaijan.
+Note: 60 sentences, round 0, right answers of lessons that rest on it 9; first sentences: wiki2023_00.txt.clean line 2394137, wiki2023_00.txt.clean line 10531516, wiki2023_00.txt.clean line 11272497
+Bangkok is the capital of Thailand.
+Note: 20 sentences, round 0, right answers of lessons that rest on it 9; first sentences: wiki2023_00.txt.clean line 20747936, wiki2023_01.txt.clean line 4670387, wiki2023_01.txt.clean line 8309138
+Beijing is the capital of China.
+Note: 16 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_01.txt.clean line 20145209, wiki2023_03.txt.clean line 8695214, wiki2023_04.txt.clean line 9067556
+Berlin is the capital of Germany.
+Note: 50 sentences, round 0, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 8275972, wiki2023_00.txt.clean line 8279198, wiki2023_00.txt.clean line 8488408
+Bern is the capital of Switzerland.
+Note: 9 sentences, round 1, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 16000683, wiki2023_03.txt.clean line 3652642, wiki2023_03.txt.clean line 23249548
+Bogotá is the capital of Colombia.
+Note: 31 sentences, round 0, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 2159452, wiki2023_00.txt.clean line 9755600, wiki2023_00.txt.clean line 10425673
+Brasilia is the capital of Brazil.
+Note: 27 sentences, round 0, right answers of lessons that rest on it 7; first sentences: wiki2023_01.txt.clean line 758410, wiki2023_01.txt.clean line 17680808, wiki2023_01.txt.clean line 21563892
+Brussels is the capital of Belgium.
+Note: 19 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 2388245, wiki2023_00.txt.clean line 15995810, wiki2023_01.txt.clean line 13410962
+Budapest is the capital of Hungary.
+Note: 73 sentences, round 0, right answers of lessons that rest on it 2; first sentences: wiki2023_00.txt.clean line 1584179, wiki2023_00.txt.clean line 10793329, wiki2023_00.txt.clean line 13583794
+Buenos Aires is the capital of Argentina.
+Note: 18 sentences, round 1, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 1778168, wiki2023_00.txt.clean line 9278487, wiki2023_00.txt.clean line 9572765
+Cairo is the capital of Egypt.
+Note: 8 sentences, round 1, right answers of lessons that rest on it 4; first sentences: wiki2023_02.txt.clean line 1817306, wiki2023_03.txt.clean line 2290445, wiki2023_03.txt.clean line 22995381
+Canberra is the capital of Australia.
+Note: 74 sentences, round 1, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 4909875, wiki2023_00.txt.clean line 5761396, wiki2023_00.txt.clean line 7559446
+Copenhagen is the capital of Denmark.
+Note: 11 sentences, round 1, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 6715092, wiki2023_00.txt.clean line 14997120, wiki2023_03.txt.clean line 18575180
+Dhaka is the capital of Bangladesh.
+Note: 95 sentences, round 0, right answers of lessons that rest on it 3; first sentences: wiki2023_00.txt.clean line 410082, wiki2023_00.txt.clean line 1386731, wiki2023_00.txt.clean line 5284680
+Doha is the capital of Qatar.
+Note: 26 sentences, round 1, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 12787671, wiki2023_00.txt.clean line 15834571, wiki2023_01.txt.clean line 17313284
+Dublin is the capital of Ireland.
+Note: 7 sentences, round 0, right answers of lessons that rest on it 5; first sentences: wiki2023_01.txt.clean line 25003822, wiki2023_02.txt.clean line 13451042, wiki2023_02.txt.clean line 17277248
+Hanoi is the capital of Vietnam.
+Note: 37 sentences, round 0, right answers of lessons that rest on it 9; first sentences: wiki2023_00.txt.clean line 2298704, wiki2023_00.txt.clean line 15364170, wiki2023_00.txt.clean line 15364201
+Harare is the capital of Zimbabwe.
+Note: 40 sentences, round 1, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 12531172, wiki2023_00.txt.clean line 18192725, wiki2023_00.txt.clean line 21393345
+Havana is the capital of Cuba.
+Note: 16 sentences, round 1, right answers of lessons that rest on it 17; first sentences: wiki2023_00.txt.clean line 4735717, wiki2023_00.txt.clean line 11151999, wiki2023_01.txt.clean line 3713252
+Helsinki is the capital of Finland.
+Note: 40 sentences, round 0, right answers of lessons that rest on it 10; first sentences: wiki2023_00.txt.clean line 6387837, wiki2023_00.txt.clean line 7200193, wiki2023_00.txt.clean line 10286001
+Islamabad is the capital of Pakistan.
+Note: 30 sentences, round 0, right answers of lessons that rest on it 13; first sentences: wiki2023_00.txt.clean line 6113876, wiki2023_00.txt.clean line 10189316, wiki2023_00.txt.clean line 10315506
+Jakarta is the capital of Indonesia.
+Note: 29 sentences, round 0, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 7284759, wiki2023_00.txt.clean line 12299974, wiki2023_01.txt.clean line 8270736
+Jerusalem is the capital of Israel.
+Note: 15 sentences, round 0, right answers of lessons that rest on it 12; first sentences: wiki2023_01.txt.clean line 10875253, wiki2023_01.txt.clean line 17764752, wiki2023_02.txt.clean line 9888555
+Kabul is the capital of Afghanistan.
+Note: 31 sentences, round 1, right answers of lessons that rest on it 9; first sentences: wiki2023_00.txt.clean line 24648772, wiki2023_01.txt.clean line 5754742, wiki2023_02.txt.clean line 20026206
+Kathmandu is the capital of Nepal.
+Note: 44 sentences, round 1, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 67548, wiki2023_00.txt.clean line 780895, wiki2023_00.txt.clean line 6109498
+Kuala Lumpur is the capital of Malaysia.
+Note: 19 sentences, round 1, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 109069, wiki2023_00.txt.clean line 15301331, wiki2023_00.txt.clean line 17843222
+Kyiv is the capital of Ukraine.
+Note: 109 sentences, round 0, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 3786175, wiki2023_00.txt.clean line 3990574, wiki2023_00.txt.clean line 9025311
+Lisbon is the capital of Portugal.
+Note: 74 sentences, round 1, right answers of lessons that rest on it 5; first sentences: wiki2023_00.txt.clean line 2388252, wiki2023_00.txt.clean line 6487379, wiki2023_00.txt.clean line 6519175
+London is the capital of United Kingdom.
+Note: 43 sentences, round 1, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 6649339, wiki2023_00.txt.clean line 21753957, wiki2023_00.txt.clean line 21754277
+Male is the capital of Maldives.
+Note: 16 sentences, round 0, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 170201, wiki2023_00.txt.clean line 170201, wiki2023_01.txt.clean line 11101078
+Manila is the capital of Philippines.
+Note: 40 sentences, round 0, right answers of lessons that rest on it 11; first sentences: wiki2023_00.txt.clean line 8131787, wiki2023_00.txt.clean line 12868800, wiki2023_01.txt.clean line 22510091
+Mexico City is the capital of Mexico.
+Note: 15 sentences, round 1, right answers of lessons that rest on it 4; first sentences: wiki2023_00.txt.clean line 19675894, wiki2023_02.txt.clean line 432920, wiki2023_02.txt.clean line 714332
+Minsk is the capital of Belarus.
+Note: 29 sentences, round 0, right answers of lessons that rest on it 11; first sentences: wiki2023_00.txt.clean line 2946036, wiki2023_02.txt.clean line 5341915, wiki2023_02.txt.clean line 20479443
+Montevideo is the capital of Uruguay.
+Note: 17 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 14433876, wiki2023_00.txt.clean line 20401661, wiki2023_00.txt.clean line 20405873
+Moscow is the capital of Russia.
+Note: 18 sentences, round 0, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 2643913, wiki2023_00.txt.clean line 23806900, wiki2023_01.txt.clean line 5876108
+Muscat is the capital of Oman.
+Note: 12 sentences, round 1, right answers of lessons that rest on it 3; first sentences: wiki2023_00.txt.clean line 12786164, wiki2023_02.txt.clean line 1733252, wiki2023_03.txt.clean line 18772924
+New Delhi is the capital of India.
+Note: 23 sentences, round 1, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 7855053, wiki2023_00.txt.clean line 18066501, wiki2023_01.txt.clean line 14265241
+Ottawa is the capital of Canada.
+Note: 19 sentences, round 1, right answers of lessons that rest on it 2; first sentences: wiki2023_00.txt.clean line 2337679, wiki2023_00.txt.clean line 6781583, wiki2023_00.txt.clean line 15975740
+Paris is the capital of France.
+Note: 31 sentences, round 0, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 3652376, wiki2023_00.txt.clean line 6447005, wiki2023_00.txt.clean line 22149623
+Port-au-Prince is the capital of Haiti.
+Note: 9 sentences, round 1, right answers of lessons that rest on it 8; first sentences: wiki2023_01.txt.clean line 8255418, wiki2023_02.txt.clean line 5532117, wiki2023_02.txt.clean line 6070266
+Pyongyang is the capital of North Korea.
+Note: 25 sentences, round 0, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 1856782, wiki2023_01.txt.clean line 1688754, wiki2023_01.txt.clean line 1688754
+Quito is the capital of Ecuador.
+Note: 30 sentences, round 1, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 10009095, wiki2023_00.txt.clean line 19880324, wiki2023_01.txt.clean line 21879059
+Reykjavik is the capital of Iceland.
+Note: 13 sentences, round 1, right answers of lessons that rest on it 7; first sentences: wiki2023_02.txt.clean line 5891609, wiki2023_02.txt.clean line 24478202, wiki2023_02.txt.clean line 26454131
+Riyadh is the capital of Saudi Arabia.
+Note: 29 sentences, round 0, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 1640045, wiki2023_00.txt.clean line 11934739, wiki2023_00.txt.clean line 19712636
+Rome is the capital of Italy.
+Note: 25 sentences, round 0, right answers of lessons that rest on it 5; first sentences: wiki2023_00.txt.clean line 1025760, wiki2023_00.txt.clean line 2388248, wiki2023_01.txt.clean line 6818389
+Santiago is the capital of Chile.
+Note: 36 sentences, round 0, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 7797405, wiki2023_00.txt.clean line 15113420, wiki2023_00.txt.clean line 20395276
+Seoul is the capital of South Korea.
+Note: 23 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 9790521, wiki2023_00.txt.clean line 10308942, wiki2023_01.txt.clean line 10692902
+Stockholm is the capital of Sweden.
+Note: 24 sentences, round 0, right answers of lessons that rest on it 5; first sentences: wiki2023_00.txt.clean line 161975, wiki2023_00.txt.clean line 13762587, wiki2023_00.txt.clean line 15069193
+Suva is the capital of Fiji.
+Note: 10 sentences, round 0, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 13387141, wiki2023_00.txt.clean line 22498590, wiki2023_02.txt.clean line 9740344
+Taipei is the capital of Taiwan.
+Note: 10 sentences, round 0, right answers of lessons that rest on it 8; first sentences: wiki2023_00.txt.clean line 21954522, wiki2023_01.txt.clean line 8308046, wiki2023_02.txt.clean line 5964457
+Tbilisi is the capital of Georgia.
+Note: 68 sentences, round 1, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 5617044, wiki2023_00.txt.clean line 6715108, wiki2023_00.txt.clean line 7965646
+Tehran is the capital of Iran.
+Note: 44 sentences, round 1, right answers of lessons that rest on it 9; first sentences: wiki2023_00.txt.clean line 565012, wiki2023_00.txt.clean line 566315, wiki2023_00.txt.clean line 1666328
+Thimphu is the capital of Bhutan.
+Note: 6 sentences, round 1, right answers of lessons that rest on it 11; first sentences: wiki2023_02.txt.clean line 8319657, wiki2023_02.txt.clean line 16638717, wiki2023_03.txt.clean line 9375743
+Tokyo is the capital of Japan.
+Note: 14 sentences, round 1, right answers of lessons that rest on it 2; first sentences: wiki2023_00.txt.clean line 17943333, wiki2023_00.txt.clean line 22112212, wiki2023_01.txt.clean line 17625865
+Tripoli is the capital of Libya.
+Note: 9 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_02.txt.clean line 19195857, wiki2023_03.txt.clean line 2600909, wiki2023_03.txt.clean line 18333285
+Vienna is the capital of Austria.
+Note: 30 sentences, round 0, right answers of lessons that rest on it 5; first sentences: wiki2023_00.txt.clean line 4392698, wiki2023_00.txt.clean line 4600568, wiki2023_00.txt.clean line 9872699
+Vientiane is the capital of Laos.
+Note: 10 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_01.txt.clean line 26720926, wiki2023_03.txt.clean line 15318844, wiki2023_03.txt.clean line 15380575
+Warsaw is the capital of Poland.
+Note: 44 sentences, round 0, right answers of lessons that rest on it 7; first sentences: wiki2023_00.txt.clean line 9259140, wiki2023_00.txt.clean line 12020779, wiki2023_00.txt.clean line 14871298
+Wellington is the capital of New Zealand.
+Note: 28 sentences, round 1, right answers of lessons that rest on it 6; first sentences: wiki2023_00.txt.clean line 47470, wiki2023_00.txt.clean line 860594, wiki2023_00.txt.clean line 2328708

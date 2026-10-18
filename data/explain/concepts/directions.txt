@@ -1,0 +1,15 @@
+Note: Directions. North and south are opposite, and so are east and west: when a place is north of another, the other is south of it. The way from one place to the next goes in one direction, and two ways in a row make a route.
+Note: Turns: a right turn from north faces east, a left turn goes back the other way, and a turn back faces the opposite direction.
+Builds on compass.
+If C is a direction and C is the opposite of D and A is C of B then B is D of A.
+If C is a direction and A is C of B then the way from B to A is C.
+If the way from A to B is C and the way from B to D is E then the route from A to D is C E.
+If a right turn from B faces C then a left turn from C faces B.
+If B is the opposite of C then a turn back from B faces C.
+If A was facing B And turned to D right and a right turn from B faces C then A is now facing C.
+If A was facing B And turned to D left and a left turn from B faces C then A is now facing C.
+If A was facing B And turned to D back and a turn back from B faces C then A is now facing C.
+Reply to "What is A of the B?" with C: The C is A of the B.
+Reply to "What is the A B of?" with C: The A is B of the C.
+Reply to "How do you go from A to B?" with C: The way from A to B is C.
+Reply to "Which way is A facing now?" with B: A is now facing B.

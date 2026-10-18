@@ -1,0 +1,3 @@
+Note: Flow through a network. Each link carries things from one end to the other, at most as much as its capacity. The most that can go from a source to a sink at one time is the maximum flow: the engine finds it from the links and their capacities, as a search over the paths of the network does (Ford and Fulkerson).
+What is the maximum flow from A to B? N if N is the flow from A to B where C goes to D with capacity E.
+Reply to "What is the maximum flow from A to B?" with N: The maximum flow from A to B is N.

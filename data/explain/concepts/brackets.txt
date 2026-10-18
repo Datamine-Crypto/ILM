@@ -1,0 +1,10 @@
+Note: Written by hand, not learned: each opening bracket has its own closing bracket, and the bracket that opened last closes first: a pair of brackets with nothing between them closes, and so do the pairs of a sequence, one after another, so the brackets that are left after every such pair is crossed out stay open; a sequence of brackets that stay open is closed from its last bracket back.
+( is closed by ).
+[ is closed by ].
+{ is closed by }.
+< is closed by >.
+Write AAAA RR SS BBBB as AAAA BBBB if RR is closed by SS.
+Write AAAA RR SS as AAAA if RR is closed by SS.
+If AAAA RR stays open then AAAA stays open.
+If RR stays open and RR is closed by SS then SS closes RR.
+If AAAA RR stays open and RR is closed by SS and BBBB closes AAAA then SS BBBB closes AAAA RR.

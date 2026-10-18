@@ -1,0 +1,5 @@
+Note: The wording of the group "relational" of LoNLI: "A is mother of B" without "the". One relation is told, and a statement about the two people is true when the concept family finds it; a statement with another word of a relation is false.
+Builds on family.
+If A is B of C then C has A as B.
+To answer "A went to C with a stranger": contradiction if A went to C with a relative.
+To answer "A is B of C": entailment if A is a B of C. contradiction if B means a D E.

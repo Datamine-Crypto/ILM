@@ -9,8 +9,6 @@ kind	tomi_think	belief, a statement to judge: second belief: where one person th
 task	where the thing is after the last move	tomi_real
 task	where the thing was before the move	tomi_begin
 task	first belief: where a person will look for the thing	tomi_look
-not_counted	where the thing is after the last move	a regularity of the copy: the rule that passes is "the statement names the first place: false", and it reads no move (the entry point follows 0 of 1,119 changed lesson stories where the true label turns)
-not_counted	where the thing was before the move	a regularity of the copy: the true statement is the one that does not name the place of the move (the entry point follows 19 of 300 changed lesson stories where the first place is another one)
 all	tomi_real
 all	tomi_begin
 all	tomi_look

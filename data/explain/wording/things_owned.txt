@@ -1,0 +1,24 @@
+Note: Things that a person has: a told list of things, each with a number (a, one, two, ...), and the question how many things of a kind the person has: the sum of the numbers of the things of that kind. A unit of a thing is one of that thing: a head of broccoli is one broccoli, and a lettuce head is one lettuce.
+Builds on classes, kinds, plurals, numbers.
+Write I have BB as row start , BB , end.
+Write row AA , and BB as row AA , BB.
+Write row AA and BB , end as row AA , BB , end.
+Write row AA an BB as row AA a BB.
+Write row AA , one BB as row AA , a BB.
+If row AA , a B , CC then the B count 1.
+If row AA , W Bs , CC and W is the number X then the B count X.
+If row AA , W Bes , CC and W is the number X then the B count X.
+If row AA , W S Bs , CC and W is the number X then the S B count X.
+If row AA , W B , CC and W is the number X and B is the plural of T then the T count X.
+If row AA , W Ds of B , CC and W is the number X then the D of B count X.
+If the head of T count X then the T count X.
+If the stalk of T count X then the T count X.
+If the T head count X then the T count X.
+If the T count X and a T is a D then the T count X in the group D.
+If the T count X and a T is an D then the T count X in the group D.
+If the T count X and an T is a D then the T count X in the group D.
+If the T count X and an T is an D then the T count X in the group D.
+If the T count X and every T is a D then the T count X in the group D.
+If the T count X and every T is an D then the T count X in the group D.
+How many Ds do I have? N if M is the sum of B where the T count B in the group D and N is the number M.
+How many R Ds do I have? N if M is the sum of B where the T count B in the group R D and N is the number M.

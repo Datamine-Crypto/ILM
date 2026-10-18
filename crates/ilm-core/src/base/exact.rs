@@ -88,7 +88,7 @@ pub struct Amount {
     top: i128,
     bottom: i128,
 }
-because!(Amount, ExactAmounts, WholeRange, "an exact amount: a whole number over a whole number above nothing, with no common divisor, so equal amounts have equal parts. whole makes the amount of a count; from_digits reads the digits of a text before and after its point; plus, minus, times and over are the four steps, each with no result when it leaves the width, and over with no result when it divides by nothing; a step on two whole amounts takes no divisor; written gives the digits of a whole amount, or the decimal that ends within the given places, and nothing for an amount whose decimal does not end there; two amounts compare by their values, by the whole parts first and then by the parts below one turned over, as Euclid takes the remainders, so no product can leave the width");
+because!(Amount, ExactAmounts, WholeRange, "an exact amount: a whole number over a whole number above nothing, with no common divisor, so equal amounts have equal parts. whole makes the amount of a count; from_digits reads the digits of a text before and after its point; plus, minus, times and over are the four steps, each with no result when it leaves the width, and over with no result when it divides by nothing; a step on two whole amounts takes no divisor; written gives the digits of a whole amount, or the decimal that ends within the given places, and nothing for an amount whose decimal does not end there; two amounts compare by their values, by the whole parts first and then by the parts below one turned over, as Euclid takes the remainders, so no product can leave the width; written_over gives the whole number over the whole number, with a mark between them, for an amount whose decimal does not end; whole_part gives the largest whole number that is not above the amount, so that it rounds down also below nothing (the whole part of minus two and a half is minus three)");
 
 impl Ord for Amount {
     fn cmp(&self, other: &Amount) -> std::cmp::Ordering {
@@ -190,6 +190,14 @@ impl Amount {
         let bottom = in_range(other.top.checked_abs())?;
         let top = if other.top < 0 { -other.bottom } else { other.bottom };
         self.times(Amount { top, bottom })
+    }
+
+    pub fn whole_part(&self) -> Amount {
+        Amount::whole(self.top.div_euclid(self.bottom))
+    }
+
+    pub fn written_over(&self, mark: char) -> String {
+        format!("{}{mark}{}", self.top, self.bottom)
     }
 
     pub fn written(&self, most_places: usize) -> Option<String> {

@@ -1,0 +1,39 @@
+Note: Plane figures drawn by a path of commands, as an SVG path draws them (the path is the d of a path element, d = " ... ", in any sentence): move to a point (m), a line to a point (l), and an arc to a point (a, with its two radii first). The points that the path reaches tell the figure: two points and no arc draw a line; three to eight points and no arc draw a polygon of that many corners; the path joins each point to the next one that a line reaches; four corners of which two joined ones are right angles draw a rectangle, and four corners of which two each join two sides of the same length draw a kite (as near as the written digits allow: one part in a hundred); arcs alone with equal radii draw a circle, with two radii an ellipse, and an arc with lines draws a sector.
+If the path is BB then the rest of the path is BB.
+If the rest of the path is m R , S CC then the path has the point R , S.
+If the rest of the path is m R , S CC then the rest of the path is CC.
+If the rest of the path is l R , S CC then the path has the point R , S.
+If the rest of the path is l R , S CC then the rest of the path is CC.
+If the rest of the path is l R , S CC then the path has a line part.
+If the rest of the path is l R , S then the path has the point R , S.
+If the rest of the path is l R , S then the path has a line part.
+If the rest of the path is a CC then the path has an arc.
+If the rest of the path is a T , T V W , X Y , Z CC then the path has an arc of equal radii.
+If the rest of the path is a T , T V W , X Y , Z then the path has an arc of equal radii.
+If the rest of the path is a T , U V W , X Y , Z CC and not T is the same as U then the path has an arc of two radii.
+If the rest of the path is a T , U V W , X Y , Z and not T is the same as U then the path has an arc of two radii.
+If the rest of the path is a T , U V W , X Y , Z CC then the rest of the path is CC.
+If the path is BB and N is the number of DD where the path has the point DD then the path has N points.
+If the rest of the path is m R , S l T , U CC then the path joins R , S And T , U.
+If the rest of the path is l R , S l T , U CC then the path joins R , S And T , U.
+If the rest of the path is l R , S l T , U then the path joins R , S And T , U.
+If the rest of the path is m R , S l T , U then the path joins R , S And T , U.
+If the path joins R , S And T , U then the path joins T , U And R , S.
+If the path joins R , S And T , U and the path joins R , S And V , W and not T is the same as V then R , S is a corner between T , U And V , W.
+If the path joins R , S And T , U and the path joins R , S And V , W and not U is the same as W then R , S is a corner between T , U And V , W.
+If R , S is a corner between T , U And V , W and T minus R is A and U minus S is B and V minus R is C and W minus S is D and A times C is E and B times D is F and E plus F is G and A times A is H and B times B is K and H plus K is L and C times C is M and D times D is N and M plus N is O and L times O is P and G times G is J then R , S is a corner with the right test P And J.
+If R , S is a corner with the right test P And J and J times 10000 is K and K is less than P then R , S is a right corner.
+If R , S is a corner between T , U And V , W and T minus R is A and U minus S is B and V minus R is C and W minus S is D and A times A is E and B times B is F and E plus F is G and C times C is H and D times D is K and H plus K is L and G minus L is M and M times M is N and G times G is O and N times 10000 is P and P is less than O then R , S is a corner of two equal sides.
+If the path has 4 points and not the path has an arc and R , S is a right corner and T , U is a right corner and the path joins R , S And T , U then the figure of the path is rectangle.
+If the path has 4 points and not the path has an arc and R , S is a corner of two equal sides and T , U is a corner of two equal sides and not R is the same as T then the figure of the path is kite.
+If the path has 4 points and not the path has an arc and R , S is a corner of two equal sides and T , U is a corner of two equal sides and not S is the same as U then the figure of the path is kite.
+If the path has 2 points and not the path has an arc then the figure of the path is line.
+If the path has 3 points and not the path has an arc then the figure of the path is triangle.
+If the path has 5 points and not the path has an arc then the figure of the path is pentagon.
+If the path has 6 points and not the path has an arc then the figure of the path is hexagon.
+If the path has 7 points and not the path has an arc then the figure of the path is heptagon.
+If the path has 8 points and not the path has an arc then the figure of the path is octagon.
+If the path has an arc and not the path has a line part and not the path has an arc of two radii then the figure of the path is circle.
+If the path has an arc and not the path has a line part and the path has an arc of two radii then the figure of the path is ellipse.
+If the path has an arc and the path has a line part then the figure of the path is sector.
+If AAA d = " BB " CCC then the path is BB.

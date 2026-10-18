@@ -9,10 +9,10 @@ members = [
 ]
 
 [workspace.package]
-version = "1.1.0"
+version = "2.0.0"
 edition = "2024"
 license = "Apache-2.0"
-rust-version = "1.90"
+rust-version = "1.97"
 readme = "README.md"
 repository = "https://github.com/Datamine-Crypto/ILM"
 homepage = "https://datamine.network"
@@ -30,3 +30,7 @@ inherits = "release"
 lto = "thin"
 codegen-units = 256
 incremental = true
+
+[profile.quick]
+inherits = "fast"
+lto = false

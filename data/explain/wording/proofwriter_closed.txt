@@ -1,0 +1,23 @@
+Note: The closed form of ProofWriter and RuleTaker: a statement that the story and its rules do not give is false (the closed world of the set). A rule that says "is not" or "does not" holds when the story does not give the thing.
+Builds on told_rules.
+Write A and E is not S then B as A and not E is S then B.
+Write A and E is not S and B as A and not E is S and B.
+Write A and E does not F G then B as A and not E Fs G then B.
+Write A and E does not F G and B as A and not E Fs G and B.
+Write if E is not S and not T then B as if E is a thing and not E is S and not E is T then B.
+Write if E is S and not T then B as if E is S and not E is T then B.
+Write if E is not S then B as if E is a thing and not E is S then B.
+Write if E is not S and B as if E is a thing and not E is S and B.
+Write if E does not F G then B as if not E Fs G then B.
+Write if E does not F G and B as if not E Fs G and B.
+If X is S then X is a thing.
+If the X is S then the X is a thing.
+If the X Y is S then the X Y is a thing.
+If X Fs the Y then the Y is a thing.
+If the X Fs the Y then the Y is a thing.
+If the X Fs the Y Z then the Y Z is a thing.
+If the X Y Fs the Z then the X Y is a thing.
+If the X Fs the Y then the X is a thing.
+To answer "A is not B.": False if A is B. True otherwise.
+To answer "A does not F B.": False if A Fs B. True otherwise.
+To answer "A.": True if A. False otherwise.

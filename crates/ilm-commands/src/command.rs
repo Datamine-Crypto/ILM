@@ -1,27 +1,21 @@
-use ilm_eval::measure::board::{board, final_part};
+use ilm_eval::measure::board::{board, compare_boards, earlier_lessons, final_part, grown_jobs, grown_ways, known_times};
 use ilm_core::cases::{Case, read_kind};
 use ilm_core::classes::{WordClasses, read_classes};
-use ilm_core::choice::{NO_LABELS, inner_parts, picked, picked_labels, take};
+use ilm_core::choice::{inner_parts, picked, picked_labels, take};
 use ilm_eval::measure::control::{changed_cases, control};
-use crate::ask::facts::{build_facts, held_answers, read_questions};
-use crate::ask::request::{Whole, build_router};
-use ilm_core::base::lines::one_line;
+use ilm_core::base::digest::Sha256;
 use ilm_core::base::lanes::{hardware_lanes, on_lanes};
-use ilm_core::base::shares::{PERCENT, share};
-use ilm_core::know::probe::{Numbers, Which, development, probe, references, whole};
-use ilm_core::know::questions::{Asking, Names, Questions, SortedNames, held_shares};
-use ilm_core::know::reader::Entry;
-use ilm_core::know::store::{Texts, read_facts};
-use ilm_core::know::sure::{Knowledge, OFTEN_NAMES, level_of};
-use ilm_core::tools::call::{Learner, Lessons, Tool};
-use ilm_eval::measure::kind::{ABOVE, Asked, Ground, LEARNED, Row, learned, line, measure, renamed, table_head};
+use ilm_core::tools::explain::story_disk::{close_story_disk, open_story_disk};
+use ilm_core::base::shares::PERCENT;
+use ilm_core::tools::call::{Learner, Lessons, Said, Tool};
+use ilm_eval::measure::kind::{ABOVE, Asked, Ground, LEARNED, Row, learned, line, measure, table_head};
 use ilm_data::sets::folder::{Source, file_sizes, load, load_file, new_words, read_source};
 use ilm_core::split::parts;
 use ilm_core::tools::{all_tools, named_tools, tool_names};
 use ilm_core::base::words::{answer_words, words};
 use patterns::{because, source};
-use std::collections::{HashMap, HashSet};
-use std::io::{BufRead, BufReader, Write};
+use std::collections::HashMap;
+use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
@@ -62,6 +56,14 @@ const TOOL_OPTION: &str = "tool";
 because!(TOOL_OPTION, LearnerCommand, "the option that names one tool to measure alone in place of the choice among all");
 
 const TOOLS_OPTION: &str = "tools";
+because!(TOPIC_OPTION, LearnerCommand, "the option that names the text of the library whose rules a learned wording uses");
+const TOPIC_OPTION: &str = "topic";
+
+const RULES_OPTION: &str = "rules";
+because!(RULES_OPTION, LearnerCommand, "the option that asks a learned wording to learn the rules of its concept first, from the facts of the stories and the facts that answer the lessons");
+
+const TOLD_OPTION: &str = "told";
+because!(TOLD_OPTION, LearnerCommand, "the option that asks a learned wording to learn the rules that read the told sentences too");
 because!(TOOLS_OPTION, LearnerCommand, "the option that names the tools of the choice, for a run with a part of them");
 
 const LANES_OPTION: &str = "lanes";
@@ -70,65 +72,65 @@ because!(LANES_OPTION, LearnerCommand, "the option with the number of threads of
 const OUT_OPTION: &str = "out";
 because!(OUT_OPTION, LearnerCommand, "the option with the file that the board is also written to");
 
+const JOBS_OPTION: &str = "jobs";
+because!(JOBS_OPTION, LearnerCommand, "the option with the file that the times of the jobs of the board are written to, to see which jobs hold the whole run");
+
+const GROWN_LINE: &str = "jobs whose ways grew against the order file: ";
+because!(GROWN_LINE, LearnerCommand, "the words before the jobs of a board whose ways of learning grew against the order file, printed after the board and not written into it, as the order file is a run of another day");
+
+const GROWN_BETWEEN: &str = "; ";
+because!(GROWN_BETWEEN, LearnerCommand, "the marks between the jobs whose ways grew, in the line after the board");
+
+const ORDER_OPTION: &str = "order";
+because!(ORDER_OPTION, LearnerCommand, "the option with a file of the times of the jobs that an earlier board wrote: the board starts the jobs that took longest there first, so that no long job starts near the end");
+
+const KEPT_OPTION: &str = "kept";
+because!(KEPT_OPTION, LearnerCommand, "the option with the folder of the store that lasts between runs: a board or a curriculum with it reads back the chains of an earlier run whose engine is the same, and what the learners discovered in an earlier run of the same core, and writes the new ones, so that nothing is made twice while nothing that it rests on changed; a board without it reads and writes no such file, as a timed run must");
+
+const BOARD_KEYS: &[&str] = &[FIT_OPTION, TOOLS_OPTION, TOOL_OPTION, CLASSES_OPTION, LANES_OPTION, OUT_OPTION, JOBS_OPTION, ORDER_OPTION, SEALED_OPTION, KEPT_OPTION, ENGINE_OPTION, COMPARE_OPTION];
+because!(BOARD_KEYS, LearnerCommand, "the options that the board reads itself; it refuses any other that is not an option of every command, so that a run never believes that an option it named was used");
+
+pub const COMMAND_WIDE_OPTIONS: &[&str] = &[PATHS_OPTION];
+because!(COMMAND_WIDE_OPTIONS, LearnerCommand, "the options that every command takes, read before the command runs: no command that refuses the options it does not read may refuse these");
+
+pub const REFUSING_COMMANDS: &[(&str, &[&str])] = &[(BOARD_COMMAND, BOARD_KEYS)];
+because!(REFUSING_COMMANDS, LearnerCommand, "the commands that refuse the options that they do not read, each with its own options");
+
+pub fn refused_options(command: &str, named: &[&str]) -> Vec<String> {
+    let Some((_, own)) = REFUSING_COMMANDS.iter().find(|(name, _)| *name == command) else { return Vec::new() };
+    named.iter().filter(|key| !own.contains(key) && !COMMAND_WIDE_OPTIONS.contains(key)).map(|key| key.to_string()).collect()
+}
+because!(refused_options, LearnerCommand, "the options of a run that its command refuses: for a command that refuses the options that it does not read, those that are neither its own nor options of every command; none for a command that refuses none");
+
+const BOARD_COMMAND: &str = "board";
+because!(BOARD_COMMAND, LearnerCommand, "the name of the command of the board, by which the program runs it and the check of its options finds its own options");
+
+const NOT_A_BOARD_KEY: &str = "the board does not use this option; its options are: ";
+because!(NOT_A_BOARD_KEY, LearnerCommand, "what the board says of an option that it does not read, before the options that it reads");
+
+const BETWEEN_KEYS: &str = ", ";
+because!(BETWEEN_KEYS, LearnerCommand, "the marks between the names of the options that the board reads");
+
+const COMPARE_OPTION: &str = "compare";
+because!(COMPARE_OPTION, LearnerCommand, "the option of the board that names a reference board file: after its table the board prints what changed from the reference");
+
+const ENGINE_OPTION: &str = "engine";
+because!(ENGINE_OPTION, LearnerCommand, "the option with the fingerprint of the code of the engine that a script hashed from the tree it built; the program finds the fingerprint of its own engine from the sources of its build and refuses the store when the two differ, so that a run never reads chains that another engine made");
+
 const ON: usize = 1;
 because!(ON, LearnerCommand, "the value that turns an option on: the least number that is not nothing");
-
-const SHOWN_DIFFERENT: usize = 5;
-because!(SHOWN_DIFFERENT, LearnerCommand, "the lesson cases that a check prints when its answers are not the answers of the file: enough to see the sort of the difference");
 
 const SECONDS_PLACES: usize = 2;
 because!(SECONDS_PLACES, LearnerCommand, "the places after the point of the seconds of a tool: a tool that needs a hundredth of a second is still told from one that needs none");
 
-const PART_OPTION: &str = "part";
-because!(PART_OPTION, LearnerCommand, "the option that names the part of the facts that is asked: the development part, or the asked facts of the probe");
-
-const PROBE_PART: &str = "probe";
-because!(PROBE_PART, LearnerCommand, "the value that asks the facts of the probe; without it the development part is asked, so that no run reads the probe by oversight");
-
-const TEXT_OPTION: &str = "text";
-because!(TEXT_OPTION, LearnerCommand, "the option that says how much of the store a run reads");
-
-const TEXT_ASKED: &str = "asked";
-because!(TEXT_ASKED, LearnerCommand, "the value for the articles that answer to a name of a lesson fact or of an asked fact: the same answers as with every article of the subjects, in less time");
-
-const TEXT_ALL: &str = "all";
-because!(TEXT_ALL, LearnerCommand, "the value for every article of the store: the run that counts for the size of the text");
-
 const CLASSES_OPTION: &str = "classes";
 because!(CLASSES_OPTION, LearnerCommand, "the option with the file of a table of word classes; the program reads it once and gives it to every tool with its lessons");
-
-const NAMES_OPTION: &str = "names";
-because!(NAMES_OPTION, LearnerCommand, "the option with a file of known names, one name on a line as its letters, in rising order");
-
-const HELD_PART: &str = "H";
-because!(HELD_PART, LearnerCommand, "the mark of a held question in a file of questions; every other line is a lesson");
-
-const QUESTION_FIELDS: usize = 4;
-because!(QUESTION_FIELDS, LearnerCommand, "the fields of a line of a file of questions that the reader of questions needs: the part, the question, the subject and the relation");
-
-const DUMP_OPTION: &str = "dump";
-because!(DUMP_OPTION, LearnerCommand, "the option with a folder that the tables of a model are written to as plain lines, so that two models can be compared line by line");
-
-const SHOWN_RELATIONS: usize = 6;
-because!(SHOWN_RELATIONS, LearnerCommand, "the relations with the lowest and with the highest share that a run of the probe names");
-
-const MILLION: f64 = 1e6;
-because!(MILLION, LearnerCommand, "the size of a text is printed in millions of signs");
 
 const MOST_OPTION: &str = "most";
 because!(MOST_OPTION, LearnerCommand, "the option with the most lessons that a control uses, in the order of its file");
 
 const WHOLE_OPTION: &str = "whole";
 because!(WHOLE_OPTION, LearnerCommand, "the option of a control whose changed cases were made from all lessons, for a model of all lessons as the board makes it");
-
-const TABLE_OPTION: &str = "table";
-because!(TABLE_OPTION, LearnerCommand, "the option with the folder that the table of the one command is written to");
-
-const TABLE_FOLDER: &str = "table";
-because!(TABLE_FOLDER, LearnerCommand, "the folder of the table of the one command inside the folder of the text store, when the run names no other");
-
-const MILLISECONDS: f64 = 1000.0;
-because!(MILLISECONDS, LearnerCommand, "the thousandths of a second in a second, to print the time of one answer");
 
 const RIGHT_COUNTS: &str = "right answers of the read part, by kind:";
 because!(RIGHT_COUNTS, LearnerCommand, "the words before the counts of right answers under the table of a measure: the table gives shares, and a report of a final read gives the counts");
@@ -142,7 +144,7 @@ because!(HELP_WORDS, LearnerCommand, "the words that ask for the forms of the co
 const VERSION_WORDS: &[&str] = &["version", "--version", "-V"];
 because!(VERSION_WORDS, LearnerCommand, "the words that ask for the version of the program: the plain word and the two forms that most programs take");
 
-pub const PROGRAM_VERSION: [u32; 3] = [1, 1, 0];
+pub const PROGRAM_VERSION: [u32; 3] = [2, 0, 0];
 because!(PROGRAM_VERSION, LearnerCommand, "the major, minor and patch numbers of this release; a test checks them against the version that the workspace gives");
 
 const VERSION_MARK: &str = ".";
@@ -158,19 +160,20 @@ because!(PROGRAM_NAME, LearnerCommand, "the name of the program in the line of i
 
 fn usage_lines() -> Vec<String> {
     let mut lines: Vec<String> = Vec::new();
-    lines.push(format!("usage: ilm board <folder of the sets> [set,set,...] [tools=<names>] [classes=<file>] [lanes=<n>] [out=<file>] [sealed={ON}]"));
-    lines.push(format!("   or: ilm measure <folder of a set, or a case file> [kind,kind,...] [tool=<name>] [tools=<names>] [classes=<file>] [fit=<n>] [held=<n>] [curve={ON}] [newwords={ON}] [show=<n>] [lanes=<n>] [small={ON}]"));
+    lines.push(format!("usage: ilm board <folder of the sets> [set,set,...] [tools=<names>] [classes=<file>] [lanes=<n>] [out=<file>] [jobs=<file>] [order=<file>] [sealed={ON}] [kept=<folder> [engine=<fingerprint>]] [compare=<reference board file>] [fit=<n>, for every set, the controls still from the set's lessons]"));
+    lines.push(format!("   or: ilm compare <reference board file> <board file>"));
+    lines.push(format!("   or: ilm measure <folder of a set, or a case file> [kind,kind,...] [tool=<name>] [tools=<names>] [classes=<file>] [fit=<n>] [held=<n>] [sealed={ON}] [curve={ON}] [newwords={ON}] [show=<n>] [lanes=<n>] [small={ON}]"));
     lines.push(format!("   or: ilm choice <case file> [tools=<names>] [classes=<file>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm check <case file> <tool> <file of answers for the last lessons> <file of answers for the read part> [classes=<file>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm check-all <folder of answers> <name of the files of answers> <tool> cases=<folder>,<folder> [sources=<set>,<set>] [write=1] [classes=<file>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm know <folder of the text store> <file of facts> [part={PROBE_PART}] [text={TEXT_ASKED}|{TEXT_ALL}] [fit=<n>] [classes=<file>] [lanes=<n>] [dump=<folder>]"));
-    lines.push(format!("   or: ilm questions <file of questions> [names=<file of known names>] [fit=<n>] [dump=<folder>]"));
-    lines.push(format!("   or: ilm ask build <folder of the text store> <file of facts> <file of questions> <file of known names> <folder of the sets> <board file> [classes=<file>] [table=<folder>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm ask measure <folder of the table> <file of questions> [dump=<file>]"));
-    lines.push(format!("   or: ilm ask kinds <folder of the table> <file of questions>"));
-    lines.push(format!("   or: ilm ask <folder of the table> \"<request>\" [classes=<file>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm ask <folder of the table> [classes=<file>] [lanes=<n>]   (a session: one request on each line of the input)"));
-    lines.push(format!("   or: ilm patterns <words|model|rules|answers> <case file> ..."));
+    lines.push(format!("   or: ilm prove \"<told sentences> <question>\" [cases=<case file>] [classes=<file>] [lanes=<n>]"));
+    lines.push(format!("   or: ilm places <text of the library, or a folder of them>..."));
+    lines.push(format!("   or: ilm concepts [<folder of the sets>] [classes=<file>] [lanes=<n>]"));
+    lines.push(format!("   or: ilm wording <case file> topic=<name of a text of the library> [told={ON}]"));
+    lines.push(format!("   or: ilm store-lines <case file> topic=<name of a text of the library> [classes=<file>]"));
+    lines.push(format!("   or: ilm facts <folder of a large text> topic=<name of a text of the library> kinds=<case file>[,<case file>] [out=<file>] [dump=<file>] [files=<n>] [classes=<file>] [fit=<n>] [lanes=<n>]"));
+    lines.push(format!("   or: ilm joining <case file> [fit=<n>] [held=<n>]"));
+    lines.push(format!("   or: ilm why <case file> [show=<n>] [all={ON}] [before=<case file>,...] [classes=<file>] [fit=<n>] [held=<n>] [lanes=<n>]"));
+    lines.push(format!("   or: ilm meanings <case file> [fit=<n>] [held=<n>]"));
+    lines.push(format!("   or: ilm explain-cost <case file> [show=<n>] [fit=<n>] [held=<n>] [lanes=<n>]"));
     lines.push(format!("   or: ilm control <case file of the kind> <file of changed cases> [tool=<name>] [whole={ON}] [most=<n>] [classes=<file>] [lanes=<n>]"));
     lines.push(format!("   or: ilm cases <case file>"));
     lines.push(format!("   or: ilm words <text>"));
@@ -179,20 +182,21 @@ fn usage_lines() -> Vec<String> {
     lines.push(format!("   or: ilm export <set> <description file> <folder of the case files>"));
     lines.push(format!("   or: ilm store <folder of the copy of the encyclopedia> <folder of the store> <description of the probe> <description of the questions> [others=<signs>] [lanes=<n>]"));
     lines.push(format!("   or: ilm classes <folder of the copy of the encyclopedia> <folder of the table> [files=<n>] [bytes=<n>] [classes=<n>] [lanes=<n>]"));
-    lines.push(format!("   or: ilm write <out|metric-files|measure|texts|traces|model> ...   (ilm write alone prints its forms)"));
     lines.push(format!("   or: ilm changes <control> <case file of a kind> [whole=1] [root=<folder>] [part=read] [support=<folder>] [forms=<description>] [about=<description>]   (ilm changes alone prints the controls)"));
-    lines.push(format!("   or: ilm made <folder> [families=<n>] [held=1]"));
     lines.push(format!("   or: ilm parquet <file> [column,column,...]"));
     lines.push(format!("   or: ilm shared-text <folder of data>[,<folder of data>] [run=<tokens>] [words=<tokens of letters>] [only=<part of a path>]"));
     lines.push(format!("   or: ilm --version"));
     lines.push(format!("board: every kind of every set through the choice among the tools, and the table of the tasks"));
+    lines.push(format!("compare: what changed from a reference board to a board: each changed field of a task, the tasks that are slower, the changed lines after the table"));
     lines.push(format!("measure: the kinds of one set with their controls; a model is made by the choice among the tools, or by one tool alone"));
     lines.push(format!("choice: the share of every tool on the lessons that it did not learn from, and the tool that is taken"));
-    lines.push(format!("check: the answers of one tool beside the answers of a file, for a model of the first lessons on the last ones and for a model of all lessons on the read part"));
-    lines.push(format!("know: facts read from the text of an encyclopedia and asked back: the model from the lesson facts, the text read into its table, the asked facts answered from the table"));
-    lines.push(format!("questions: the reader of questions that people wrote about facts: learned from the lesson questions of a file, read on its held questions (the subject, the relation, both)"));
-    lines.push(format!("ask: one command for a request (a told story with a question, a question about a fact, a request to a service), with a trace of every step; build makes its table, measure answers the held questions about facts, kinds measures where requests go"));
-    lines.push(format!("patterns: what the pattern learner counted for a kind, stage by stage: its words and kinds, its model, its rules, its answers"));
+    lines.push(format!("prove: the answer of the library to told sentences and a question (the last sentence), with its proof tree back to the told sentences; with a case file, the answer of the model that the explain tool learns from its lessons, with the rules that it discovered"));
+    lines.push(format!("places: each line of the texts of the library with the open places that the reader takes in it, for an audit of names read as places"));
+    lines.push(format!("concepts: the topics of the library of told logic, what each builds on and its number of sentences; with a folder of sets, the kinds where each topic answers most of its sample, with its share, and the tool that the choice takes there"));
+    lines.push(format!("explain-cost: the rules of the library that took the most time when the explain tool learns from a case file and reads its read part"));
+    lines.push(format!("facts: the facts of a text of the library found in a large text by shapes learned from seed facts, judged by the proofs of the lessons of the kinds, written as a learned text with the files and lines of their sentences"));
+    lines.push(format!("joining: the ways of joining of a language of commands learned from the lessons of a case file, written as lines of the library, and the shares of the engine's reading of them"));
+    lines.push(format!("why: for each lesson that a model of the explain tool answers wrong, the proof of the answer that it gave and the first step that the facts of the story miss for the wanted answer, then the most common missing steps"));
     lines.push(format!("control: a model reads changed forms of the lessons that it answers right; how often it gives the new true answer, where the truth turns and where it stays"));
     lines.push(format!("cases: the number of cases of a case file and the named values of its first line"));
     lines.push(format!("words: the words of a text as every learner counts them; answer-words: the words of an answer as the measure compares them"));
@@ -200,8 +204,7 @@ fn usage_lines() -> Vec<String> {
     lines.push(format!("export: the case files of a set from its raw files, as its description in data/sets names them"));
     lines.push(format!("store: the text store of the fact reader from a copy of an encyclopedia"));
     lines.push(format!("classes: the table of word classes from a copy of an encyclopedia"));
-    lines.push(format!("write: the writer from lists of facts to texts, and its measures"));
-    lines.push(format!("changes: the changed cases of a kind, for a control; made: the case files of the made families"));
+    lines.push(format!("changes: the changed cases of a kind, for a control"));
     lines.push(format!("parquet: the rows of a parquet file; shared-text: runs of tokens that a tracked file shares with a row of the data"));
     lines.push(format!("tools: {}", tool_names().join(", ")));
     lines
@@ -283,7 +286,10 @@ fn given(args: &[String]) -> Given {
 }
 because!(given, LearnerCommand, "the words of a run cut into plain words and options");
 
-const NUMBER_OPTIONS: &[&str] = &[FIT_OPTION, HELD_OPTION, CURVE_OPTION, WORDS_OPTION, SHOW_OPTION, SMALL_OPTION, SEALED_OPTION, LANES_OPTION, MOST_OPTION, WHOLE_OPTION, WRITE_OPTION, "families", "bytes", "files", "others", "run", "words"];
+const PATHS_OPTION: &str = "paths";
+because!(PATHS_OPTION, LearnerCommand, "the option that asks any command to say on the error output which branches of the search for a learned wording ran for each kind and how long each took");
+
+const NUMBER_OPTIONS: &[&str] = &[PATHS_OPTION, TOLD_OPTION, RULES_OPTION, FIT_OPTION, HELD_OPTION, CURVE_OPTION, WORDS_OPTION, SHOW_OPTION, SMALL_OPTION, SEALED_OPTION, LANES_OPTION, MOST_OPTION, WHOLE_OPTION, ALL_OPTION, "families", "bytes", "files", "others", "run", "words"];
 
 const TEXT_COMMANDS: &[&str] = &["words", "answer-words"];
 because!(TEXT_COMMANDS, LearnerCommand, "the commands whose words after the name are a text to show, which no option check reads");
@@ -350,9 +356,10 @@ fn asked_of(run: &Given, fit: usize, held: usize, tool: Option<usize>) -> Asked 
         tool,
         lanes: lanes_of(run),
         small: is_on(run, SMALL_OPTION),
+        control_fit: number(run, FIT_OPTION).filter(|asked| *asked != fit).map(|_| fit),
     }
 }
-because!(asked_of, LearnerCommand, "what a run asks of the measure: its options, and for what it does not name the values of the set");
+because!(asked_of, LearnerCommand, "what a run asks of the measure: its options, and for what it does not name the values of the set; a run that names another number of lessons than the set gives learns the controls from the lessons of the set");
 
 fn print_table(rows: &[Row], curve: bool) {
     println!("{}", table_head(curve));
@@ -374,9 +381,10 @@ fn measure_kind(from: &Source, kind: &str, tools: &[Tool], asked: &Asked, classe
     let Ok(loaded) = load(from, kind) else { return Row { kind: kind.to_string(), note: NO_FILE.to_string(), ..Row::default() } };
     let table = if asked.new_words { new_words(from, kind) } else { None };
     let last_part = if asked.sealed { Some(final_part(from, kind, asked.fit, asked.held)) } else { None };
-    measure(&Ground { name: kind, cases: &loaded.kind.cases, labels: &loaded.kind.labels, start: loaded.start, stories: loaded.stories, final_part: last_part.as_deref(), sealed: None, new_words: table.as_deref(), answerer: None, classes }, tools, asked)
+    let earlier = || earlier_lessons(from, kind, asked.fit, asked.held);
+    measure(&Ground { name: kind, cases: &loaded.kind.cases, labels: &loaded.kind.labels, start: loaded.start, stories: loaded.stories, final_part: last_part.as_deref(), sealed: None, new_words: table.as_deref(), answerer: None, classes, before: Some(&earlier), stored: true }, tools, asked)
 }
-because!(measure_kind, LearnerCommand, "one kind of a set through the measure, with its table of new words and its final part when the run asks for them");
+because!(measure_kind, LearnerCommand, "one kind of a set through the measure, with its table of new words and its final part when the run asks for them, and the lessons of the kinds before it in its set, as the board gives them");
 
 fn measure_set(folder: &Path, run: &Given) -> ExitCode {
     let from = match read_source(folder) {
@@ -417,7 +425,7 @@ fn measure_file(path: &Path, run: &Given) -> ExitCode {
     let (fit, held) = file_sizes(path).unwrap_or((None, None));
     let asked = Asked { sealed: false, new_words: false, ..asked_of(run, fit.unwrap_or(loaded.kind.cases.len()), held.unwrap_or(loaded.kind.cases.len()), tool) };
     let name = path.file_stem().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default();
-    let row = measure(&Ground { name: &name, cases: &loaded.kind.cases, labels: &loaded.kind.labels, start: loaded.start, stories: loaded.stories, final_part: None, sealed: None, new_words: None, answerer: None, classes: classes.as_ref() }, &tools, &asked);
+    let row = measure(&Ground { name: &name, cases: &loaded.kind.cases, labels: &loaded.kind.labels, start: loaded.start, stories: loaded.stories, final_part: None, sealed: None, new_words: None, answerer: None, classes: classes.as_ref(), before: None, stored: true }, &tools, &asked);
     print_table(&[row], asked.curve);
     ExitCode::SUCCESS
 }
@@ -464,18 +472,64 @@ fn boarded(run: &Given) -> ExitCode {
         Ok(classes) => classes,
         Err(code) => return code,
     };
-    let asked = Asked { new_words: true, curve: false, show: 0, ..asked_of(run, 0, 0, None) };
-    let made = board(&sources, &tools, &asked, classes.as_ref());
+    if let Some(unused) = refused_options(BOARD_COMMAND, &run.named.keys().map(String::as_str).collect::<Vec<&str>>()).first() {
+        return failed(unused, &format!("{NOT_A_BOARD_KEY}{}", BOARD_KEYS.iter().chain(COMMAND_WIDE_OPTIONS).copied().collect::<Vec<&str>>().join(BETWEEN_KEYS)));
+    }
+    let asked = Asked { new_words: true, curve: false, show: 0, control_fit: None, ..asked_of(run, 0, 0, None) };
+    let reference = match run.named.get(COMPARE_OPTION).map(|path| (path, std::fs::read_to_string(path))) {
+        Some((_, Ok(text))) => Some(text),
+        Some((path, Err(error))) => return failed(path, &error),
+        None => None,
+    };
+    let order = match run.named.get(ORDER_OPTION).map(|path| (path, std::fs::read_to_string(path))) {
+        Some((_, Ok(text))) => Some(text),
+        Some((path, Err(error))) => return failed(path, &error),
+        None => None,
+    };
+    let known = order.as_deref().map(known_times).unwrap_or_default();
+    if let Some(folder) = run.named.get(KEPT_OPTION)
+        && let Err(why) = open_story_disk(folder, run.named.get(ENGINE_OPTION).map(String::as_str))
+    {
+        return failed(folder, &why);
+    }
+    let made = board(&sources, &tools, &asked, classes.as_ref(), &known);
+    close_story_disk();
     println!("{}", made.text.join("\n"));
-    if let Some(out) = run.named.get(OUT_OPTION) {
-        let written = std::fs::File::create(out).and_then(|mut file| file.write_all((made.text.join("\n") + "\n").as_bytes()));
-        if let Err(error) = written {
-            return failed(out, &error);
+    let jobs = order.as_deref().map_or_else(|| made.jobs.clone(), |order| grown_ways(&made.jobs, order));
+    let grown = grown_jobs(&jobs);
+    if !grown.is_empty() {
+        println!("{GROWN_LINE}{}", grown.join(GROWN_BETWEEN));
+    }
+    for (option, lines) in [(OUT_OPTION, &made.text), (JOBS_OPTION, &jobs)] {
+        if let Some(out) = run.named.get(option) {
+            let written = std::fs::File::create(out).and_then(|mut file| file.write_all((lines.join("\n") + "\n").as_bytes()));
+            if let Err(error) = written {
+                return failed(out, &error);
+            }
         }
+    }
+    if let Some(reference) = reference {
+        println!("{}", compare_boards(&reference, &made.text.join("\n")).join("\n"));
     }
     ExitCode::SUCCESS
 }
-because!(boarded, LearnerCommand, "the board of all sets of a folder, or of the named ones in the order of their names; a folder that says nothing of a set is no set and is passed over");
+because!(boarded, LearnerCommand, "the board of all sets of a folder, or of the named ones in the order of their names; a folder that says nothing of a set is no set and is passed over; the board and the times of its jobs are also written to the files that the options name, and what changed from a reference board is printed after it");
+
+fn compared(run: &Given) -> ExitCode {
+    let [reference, board] = run.plain.as_slice() else { return usage() };
+    let reference_text = match std::fs::read_to_string(reference) {
+        Ok(text) => text,
+        Err(error) => return failed(reference, &error),
+    };
+    match std::fs::read_to_string(board) {
+        Ok(board_text) => {
+            println!("{}", compare_boards(&reference_text, &board_text).join("\n"));
+            ExitCode::SUCCESS
+        }
+        Err(error) => failed(board, &error),
+    }
+}
+because!(compared, LearnerCommand, "what changed from a reference board file to a board file, each read from its file");
 
 struct Opened {
     learn: Vec<Case>,
@@ -498,8 +552,637 @@ fn opened(place: &str, run: &Given) -> std::io::Result<Opened> {
 }
 because!(opened, LearnerCommand, "the parts of one case file with the sizes of the run, when it gives them");
 
-const NOT_TRIED: &str = "not tried: it reads texts for the learner of another tool, and that learner does not lead";
-because!(NOT_TRIED, LearnerCommand, "what the choice prints for a tool that the choice leaves out, because it runs the learner of another tool that another tool reads better");
+
+struct ConceptUse {
+    kind: String,
+    right: usize,
+    sample: usize,
+    taken: String,
+    taken_share: f64,
+}
+because!(ConceptUse, LearnerCommand, "one kind where a topic of the library answers most of its sample: the kind, the lessons that the topic answers right and the size of its sample, and the tool that the choice takes for the kind with its share on the lessons that it did not learn from");
+
+const NOTHING_NAMED: &str = "nothing";
+because!(NOTHING_NAMED, LearnerCommand, "what the list of concepts says for a topic that builds on no other topic");
+
+const CYCLE_CAUSE: &str = "cycle: ";
+because!(CYCLE_CAUSE, LearnerCommand, "the words before each wait of a cycle in the list of concepts");
+
+const KNOWLEDGE_CUT: &str = "; WHAT IT KNOWS BEFORE A STORY STOPPED AT A BOUND, so some of it is missing";
+because!(KNOWLEDGE_CUT, LearnerCommand, "what the list of concepts says for a topic whose knowledge a bound cut, so that a writer of the library sees why a kind falls");
+
+const NOT_CYCLE: &str = "; its rules with 'not' or a count wait for each other in a cycle, so they are read together";
+because!(NOT_CYCLE, LearnerCommand, "what the list of concepts says for a topic whose rules that read what is absent or how many have no order of strata");
+
+fn concepts(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::chain::{not_cycle_causes, not_strata};
+    use ilm_core::tools::explain::learn::{LIBRARY_FOLDER, library, topic_shares};
+    let library = match library() {
+        Ok(library) => library,
+        Err(fault) => return failed(LIBRARY_FOLDER, &fault),
+    };
+    let classes = match classes_of(run) {
+        Ok(classes) => classes,
+        Err(code) => return code,
+    };
+    let mut uses: Vec<Vec<ConceptUse>> = (0..library.topics.len()).map(|_| Vec::new()).collect();
+    if let Some(root) = run.plain.first() {
+        let mut folders: Vec<PathBuf> = match std::fs::read_dir(root) {
+            Ok(entries) => entries.filter_map(|entry| entry.ok().map(|entry| entry.path())).filter(|path| path.is_dir()).collect(),
+            Err(error) => return failed(root, &error),
+        };
+        folders.sort();
+        let tools = all_tools();
+        for folder in folders {
+            let Ok(from) = read_source(&folder) else { continue };
+            for kind in &from.kinds {
+                let Ok(loaded) = load(&from, kind) else { continue };
+                let cut = parts(&loaded.kind.cases, from.fit, from.held, loaded.start, loaded.stories);
+                let learn = picked(&loaded.kind.cases, &cut.learn);
+                let labels = picked_labels(&loaded.kind.labels, &cut.learn);
+                let lessons = Lessons { cases: &learn, labels: &labels, ask: None, classes: classes.as_ref(), before: None };
+                let shares = topic_shares(&library, &lessons, lanes_of(run));
+                if shares.iter().all(Option::is_none) {
+                    continue;
+                }
+                let (taken, taken_share) = match take(&tools, lessons, lanes_of(run), true) {
+                    Ok(taken) => (taken.named.clone(), taken.shares[taken.tool]),
+                    Err(fault) => (fault, f64::default()),
+                };
+                for (place, share) in shares.iter().enumerate() {
+                    if let Some((right, sample)) = share {
+                        uses[place].push(ConceptUse { kind: format!("{} ({})", kind, from.set), right: *right, sample: *sample, taken: taken.clone(), taken_share });
+                    }
+                }
+            }
+        }
+    }
+    println!("concepts of the library {LIBRARY_FOLDER}: {} topics", library.texts.len());
+    for (place, ((topic, built), used)) in library.texts.iter().zip(&library.topics).zip(&uses).enumerate() {
+        let base = if topic.builds_on.is_empty() { NOTHING_NAMED.to_string() } else { topic.builds_on.join(", ") };
+        let cycle = if not_strata(&built.rules).1 { NOT_CYCLE } else { "" };
+        let cut = if library.knowledge_stopped(place) { KNOWLEDGE_CUT } else { "" };
+        println!("{}: builds on {base}; sentences {} (rules {}, question forms {}, reply sentences {}, told facts {}){cycle}{cut}", topic.name, topic.lines, topic.rules.len(), topic.questions.len(), topic.reply_lines.len(), topic.facts.len());
+        if !cycle.is_empty() {
+            for cause in not_cycle_causes(&built.rules) {
+                println!("  {CYCLE_CAUSE}{cause}");
+            }
+        }
+        for one in used {
+            println!("  {}: answers {} of the {} lessons of its sample; the choice takes {} ({:.1}% of the last lessons)", one.kind, one.right, one.sample, one.taken, one.taken_share * PERCENT);
+        }
+    }
+    ExitCode::SUCCESS
+}
+because!(concepts, LearnerCommand, "the master list of the concepts that the library teaches: each topic with what it builds on and its number of sentences, and a mark when what it knows before a story stopped at a bound, and with a folder of sets, every kind where the topic answers most of its sample, with that share and the tool that the choice takes for the kind");
+
+fn inputs_line(run: &Given) -> Result<String, String> {
+    use ilm_core::tools::explain::learn::{LIBRARY_FOLDER, library};
+    let library = library()?;
+    let classes = match run.named.get(CLASSES_OPTION) {
+        Some(path) => files_print(&[path.as_str()])?,
+        None => NO_CLASSES.to_string(),
+    };
+    let cases = files_print(&run.plain.iter().map(String::as_str).collect::<Vec<&str>>())?;
+    Ok(format!("{INPUTS_HEAD}{} ({} texts of {LIBRARY_FOLDER}), case files {cases}, classes {classes}", library.print, library.texts.len()))
+}
+because!(inputs_line, LearnerCommand, "the first line of a learning command: the fingerprints of the library, of the case files and of the table of classes that the run read, so that two outputs that differ with other inputs are told from a fault of the program");
+
+fn files_print(paths: &[&str]) -> Result<String, String> {
+    let mut print = Sha256::new();
+    for path in paths {
+        let bytes = std::fs::read(path).map_err(|fault| format!("{path}: {fault}"))?;
+        print.add(&(bytes.len() as u64).to_le_bytes());
+        print.add(&bytes);
+    }
+    Ok(print.hex().chars().take(INPUT_PRINT_SIGNS).collect())
+}
+because!(files_print, LearnerCommand, "the fingerprint of some files in the order given, each by its length and its bytes, so that a file that changed between two runs shows");
+
+const INPUTS_HEAD: &str = "inputs: library ";
+because!(INPUTS_HEAD, LearnerCommand, "the start of the line of the fingerprints of the inputs of a learning command, a line that a person finds by its first word");
+
+const NO_CLASSES: &str = "none";
+because!(NO_CLASSES, LearnerCommand, "what the line of the inputs says for a run with no table of classes");
+
+const INPUT_PRINT_SIGNS: usize = 16;
+because!(INPUT_PRINT_SIGNS, LearnerCommand, "the signs of the fingerprint of the files of a run: as many as the fingerprint of the library, enough that files that differ never print the same");
+
+fn worded(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::wording::{form_line, learn_rule_wording, learn_wording, named_forms};
+    let (Some(place), Some(name)) = (run.plain.first(), run.named.get(TOPIC_OPTION)) else { return usage() };
+    match inputs_line(run) {
+        Ok(line) => println!("{line}"),
+        Err(fault) => return failed(place, &fault),
+    }
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    let (first, last) = inner_parts(&file.learn);
+    let fit: Vec<&Case> = first.iter().map(|at| &file.learn[*at]).collect();
+    let check: Vec<&Case> = last.iter().map(|at| &file.learn[*at]).collect();
+    let with_told = is_on(run, TOLD_OPTION);
+    let learned = if is_on(run, RULES_OPTION) { learn_rule_wording(name, &fit, &check) } else { learn_wording(name, &fit, &check, with_told) };
+    match learned {
+        Ok(report) => {
+            for line in &report.told {
+                println!("{line}");
+            }
+            println!("{} forms learned from {} lessons for the text {name}; on the {} last lessons the learned forms answer {} right, the written forms of the text {}", report.forms.len(), fit.len(), report.checked, report.learned_right, report.written_right);
+            let named = named_forms(&report.forms, &fit);
+            println!("{} of {} learned forms name a word that a learned form with fewer fixed words reads too{NAMED_MARK}", named.iter().filter(|named| **named).count(), report.forms.len());
+            for (form, named) in report.forms.iter().zip(&named) {
+                println!("{} ({} of {} lessons){}", form_line(form), form.right, form.lessons, if *named { NAMED_MARK } else { "" });
+            }
+            ExitCode::SUCCESS
+        }
+        Err(fault) => failed(name, &fault),
+    }
+}
+because!(worded, LearnerCommand, "the wording of a kind learned from its first lessons for one text of the library, written as lines of the library, and its share on the last lessons beside the written forms of the text; the forms that name a word that a form with fewer fixed words reads too are counted and marked");
+
+const NAMED_MARK: &str = " (named words)";
+because!(NAMED_MARK, LearnerCommand, "the mark of a learned form that names a word that a learned form with fewer fixed words reads too, and the words after the count of such forms, so that a person finds them by the same words");
+
+fn taught_in_turn(run: &Given) -> ExitCode {
+    use ilm_core::base::lanes::BUDGET_STOPPED;
+    use ilm_core::tools::explain::discovery::{BELOW_BAR_GAP, BELOW_BAR_HEAD};
+    use ilm_core::tools::explain::wording::{form_line, learn_curriculum};
+    let Some(name) = run.named.get(TOPIC_OPTION) else { return usage() };
+    match inputs_line(run) {
+        Ok(line) => println!("{line}"),
+        Err(fault) => return failed(name, &fault),
+    }
+    let mut files: Vec<(String, Vec<Case>, Vec<usize>, Vec<usize>)> = Vec::new();
+    for place in &run.plain {
+        let file = match opened(place, run) {
+            Ok(file) => file,
+            Err(error) => return failed(place, &error),
+        };
+        let (first, last) = inner_parts(&file.learn);
+        files.push((place.clone(), file.learn, first, last));
+    }
+    let picked: Vec<(Vec<&Case>, Vec<&Case>)> = files.iter().map(|(_, learn, first, last)| (first.iter().map(|at| &learn[*at]).collect(), last.iter().map(|at| &learn[*at]).collect())).collect();
+    let kinds: Vec<(&[&Case], &[&Case])> = picked.iter().map(|(fit, check)| (fit.as_slice(), check.as_slice())).collect();
+    if let Some(folder) = run.named.get(KEPT_OPTION)
+        && let Err(why) = open_story_disk(folder, run.named.get(ENGINE_OPTION).map(String::as_str))
+    {
+        return failed(folder, &why);
+    }
+    let taught = learn_curriculum(name, &kinds);
+    close_story_disk();
+    match taught {
+        Ok(reports) => {
+            for ((place, _, first, _), worked) in files.iter().zip(&reports) {
+                let report = &worked.value;
+                println!("{place}: {} rules learned on top of the kinds before it (seconds: rules {:.1}, readings {:.1}); {} forms learned from {} lessons; on the {} last lessons the learned forms answer {} right; work of the chains of the searches for rules and readings: {}", report.told.len(), report.seconds.0, report.seconds.1, report.forms.len(), first.len(), report.checked, report.learned_right, worked.work);
+                if worked.stopped {
+                    println!("  {BUDGET_STOPPED} {}: the searches stopped at their next step, and the rules below are those that they found before it", worked.work);
+                }
+                if !report.below_bar.is_empty() {
+                    println!("  {BELOW_BAR_HEAD}{}", report.below_bar.iter().map(|(form, count, of)| format!("{form} ({count} of {of})")).collect::<Vec<String>>().join(BELOW_BAR_GAP));
+                }
+                for line in &report.told {
+                    println!("  {line}");
+                }
+                for form in &report.forms {
+                    println!("  {} ({} of {} lessons)", form_line(form), form.right, form.lessons);
+                }
+            }
+            println!("rules of the concept {name} learned in turn:");
+            for report in &reports {
+                for line in &report.value.told {
+                    println!("{line}");
+                }
+            }
+            ExitCode::SUCCESS
+        }
+        Err(fault) => failed(name, &fault),
+    }
+}
+because!(taught_in_turn, LearnerCommand, "the rules of one text learned from the lessons of several case files in the order given, each on top of the rules that the files before it taught, with each file's new rules, its wording and its share on its last lessons, and at the end all the rules learned, as lines of the library; with a store between runs, the rules that an earlier run of the same code learned for a file are read back");
+
+fn kept_in_store(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::known_good::{STORE_FOLDER, store_text, stored_of};
+    use ilm_core::tools::explain::wording::store_discovery;
+    let (Some(place), Some(name)) = (run.plain.first(), run.named.get(TOPIC_OPTION)) else { return usage() };
+    match inputs_line(run) {
+        Ok(line) => println!("{line}"),
+        Err(fault) => return failed(place, &fault),
+    }
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    let (first, _) = inner_parts(&file.learn);
+    let fit: Vec<&Case> = first.iter().map(|at| &file.learn[*at]).collect();
+    let worked = match store_discovery(name, &fit) {
+        Ok(worked) => worked,
+        Err(fault) => return failed(name, &fault),
+    };
+    if worked.stopped {
+        return failed(name, &format!("{STORE_STOPPED}{}", worked.work));
+    }
+    let case_file = Path::new(place);
+    let named = |part: Option<&std::ffi::OsStr>| part.map_or_else(String::new, |part| part.to_string_lossy().into_owned());
+    let source = format!("{} ({}), {} lessons", named(case_file.file_stem()), named(case_file.parent().and_then(Path::file_name)), fit.len());
+    let out = Path::new(STORE_FOLDER).join(format!("{name}{STORE_FILE_END}"));
+    let known = std::fs::read_to_string(&out).map(|text| stored_of(&text)).unwrap_or_default();
+    let new = worked.value.iter().filter(|line| !known.iter().any(|stored| stored.line == **line)).count();
+    let again = worked.value.iter().filter(|line| known.iter().any(|stored| stored.line == **line) && !known.iter().any(|stored| stored.line == **line && stored.source == source)).count();
+    let written = std::fs::create_dir_all(STORE_FOLDER).and_then(|()| std::fs::write(&out, store_text(&known, &worked.value, &source)));
+    if let Err(error) = written {
+        return failed(&out.display().to_string(), &error);
+    }
+    println!("{} lines discovered for the text {name} on {source} (work of their chains {}); {new} new in {}, {again} stored again under this kind", worked.value.len(), worked.work, out.display());
+    ExitCode::SUCCESS
+}
+because!(kept_in_store, LearnerCommand, "the known-good store written by discovery and by nothing else: the lines that one kind's lessons teach a text, found with the store of the text set aside, added to the store file of the text after a note of their source (the kind, its set and the number of lessons); a line that the store holds already under another kind is stored again under this one, so that each kind's lines stay whole as one group, and a discovery cut by the bound of its work writes nothing");
+
+const STORE_STOPPED: &str = "the discovery stopped at the bound of its work, so nothing is stored: work ";
+because!(STORE_STOPPED, LearnerCommand, "why the store command writes nothing for a discovery cut by the bound of its work: its lines may be only a part of what the lessons teach");
+
+const STORE_FILE_END: &str = ".txt";
+because!(STORE_FILE_END, LearnerCommand, "the ending of the file of the store of a text, as its texts end in the library");
+
+fn discovered_why(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::discovery::discovery_report;
+    let Some(name) = run.named.get(TOPIC_OPTION) else { return usage() };
+    match inputs_line(run) {
+        Ok(line) => println!("{line}"),
+        Err(fault) => return failed(name, &fault),
+    }
+    let mut files: Vec<(String, Vec<Case>, Vec<usize>, Vec<usize>, Vec<Vec<String>>)> = Vec::new();
+    for place in &run.plain {
+        let file = match opened(place, run) {
+            Ok(file) => file,
+            Err(error) => return failed(place, &error),
+        };
+        let (first, last) = inner_parts(&file.learn);
+        files.push((place.clone(), file.learn, first, last, file.labels));
+    }
+    if files.is_empty() {
+        return usage();
+    }
+    let mut given: Vec<(String, String)> = Vec::new();
+    for path in run.named.get(GIVEN_OPTION).map(|paths| paths.split(BETWEEN_KINDS).collect::<Vec<&str>>()).unwrap_or_default() {
+        match std::fs::read_to_string(path) {
+            Ok(text) => given.push((Path::new(path).file_stem().map_or_else(|| path.to_string(), |stem| stem.to_string_lossy().into_owned()), text)),
+            Err(error) => return failed(path, &error.to_string()),
+        }
+    }
+    let kinds: Vec<(String, Vec<&Case>, Vec<&Case>)> = files.iter().map(|(place, learn, first, last, _)| (place.clone(), first.iter().map(|at| &learn[*at]).collect(), last.iter().map(|at| &learn[*at]).collect())).collect();
+    let library = match ilm_core::tools::explain::learn::library() {
+        Ok(library) => library,
+        Err(fault) => return failed(name, &fault),
+    };
+    let sources: Vec<Vec<String>> = files.iter().map(|(_, _, first, _, labels)| first.iter().map(|at| labels.get(*at).and_then(|marks| marks.iter().find_map(|mark| mark.strip_prefix(SOURCE_MARK))).unwrap_or_default().to_string()).collect()).collect();
+    match discovery_report(&library, name, &kinds, &given, (number(run, SHOW_OPTION).unwrap_or(DISCOVER_SHOWN), &sources)) {
+        Ok(lines) => {
+            for line in lines {
+                println!("{line}");
+            }
+            ExitCode::SUCCESS
+        }
+        Err(fault) => failed(name, &fault),
+    }
+}
+because!(discovered_why, LearnerCommand, "the report of the discovery of the rules of one text over the case files given, in turn, as a tree: for each kind the asked fact, each step of the search with the rules that it judged and why each lost, the rules discovered with what they build on and a proof under them, and with the given text of the concept, each given rule with whether it was discovered and why not, and a summary line for each");
+
+const SOURCE_MARK: &str = "K	";
+because!(SOURCE_MARK, LearnerCommand, "the mark of the label line of a case that names the kind it comes from, in a case file that pools the lessons of several kinds, so that the report of the discovery counts a rule's answers by source kind");
+
+const GIVEN_OPTION: &str = "given";
+because!(GIVEN_OPTION, LearnerCommand, "the option that names the files of the given texts of one or more concepts (from the whole library, between commas), whose rules the report of the discovery compares with the rules discovered");
+
+const DISCOVER_SHOWN: usize = 5;
+because!(DISCOVER_SHOWN, LearnerCommand, "the rules beaten at each step that the report of the discovery shows unless asked for more: the first few tell how close the search came");
+
+const CORPUS_FILES_OPTION: &str = "files";
+because!(CORPUS_FILES_OPTION, LearnerCommand, "the option with the number of the first files of the large text that the step that reads facts from it reads, in the order of their names, to see how the facts grow with the text");
+
+const DUMP_OPTION: &str = "dump";
+because!(DUMP_OPTION, LearnerCommand, "the option with the file that the step that reads facts from a large text writes the pairs of each round to, with their sentences and the answers that rest on them");
+
+const KINDS_OPTION: &str = "kinds";
+because!(KINDS_OPTION, LearnerCommand, "the option that names the case files of the kinds on whose lessons the step that reads facts from a large text judges them, between commas");
+
+fn text_facts(run: &Given) -> ExitCode {
+    use ilm_data::sets::knowledge::text_facts::{KindLessons, learn_text_facts, learned_text};
+    let (Some(corpus), Some(topic), Some(listed)) = (run.plain.first(), run.named.get(TOPIC_OPTION), run.named.get(KINDS_OPTION)) else { return usage() };
+    let mut files: Vec<(String, Opened)> = Vec::new();
+    for place in listed.split(BETWEEN_KINDS) {
+        match opened(place, run) {
+            Ok(file) => files.push((place.to_string(), file)),
+            Err(error) => return failed(place, &error),
+        }
+    }
+    let classes = match classes_of(run) {
+        Ok(classes) => classes,
+        Err(code) => return code,
+    };
+    let kinds: Vec<KindLessons> = files.iter().map(|(place, file)| KindLessons { name: place.clone(), cases: file.learn.iter().collect(), labels: file.labels.clone() }).collect();
+    match learn_text_facts((Path::new(corpus), number(run, CORPUS_FILES_OPTION).unwrap_or(usize::MAX)), topic, &kinds, (classes.as_ref(), lanes_of(run), run.named.get(DUMP_OPTION).map(Path::new))) {
+        Ok(report) => {
+            for line in &report.lines {
+                println!("{line}");
+            }
+            if let Some(out) = run.named.get(OUT_OPTION) {
+                let names: Vec<String> = files.iter().map(|(place, _)| Path::new(place).file_stem().map_or_else(|| place.clone(), |stem| stem.to_string_lossy().into_owned())).collect();
+                if let Err(error) = std::fs::write(out, learned_text(&report, topic, &names)) {
+                    return failed(out, &error);
+                }
+                println!("written: {out}");
+            }
+            ExitCode::SUCCESS
+        }
+        Err(fault) => failed(topic, &fault),
+    }
+}
+because!(text_facts, LearnerCommand, "the facts of one text of the library read from a large text: the kinds' lessons from their case files, the step's report, and the learned text written to a file when the run names one");
+
+fn costed_rules(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::EXPLAIN_TOOL;
+    use ilm_core::tools::explain::chain::{COSTING, rule_costs};
+    let Some(place) = run.plain.first() else { return usage() };
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    COSTING.store(true, std::sync::atomic::Ordering::Relaxed);
+    let model = match (EXPLAIN_TOOL.learn)(Lessons::of(&file.learn), lanes_of(run)) {
+        Ok(model) => model,
+        Err(fault) => return failed(place, &fault),
+    };
+    let right = on_lanes(file.read.len(), lanes_of(run), &|at| model.answer(&file.read[at].sentences, &file.read[at].question).words == answer_words(&file.read[at].answer)).into_iter().filter(|right| *right).count();
+    COSTING.store(false, std::sync::atomic::Ordering::Relaxed);
+    let costs = rule_costs();
+    let total: f64 = costs.iter().map(|cost| cost.seconds).sum();
+    println!("rules of the library by the time of their readings, learning from {} lessons and reading {} cases of {place} ({right} right); {total:.2} s of rule readings over all threads", file.learn.len(), file.read.len());
+    for cost in costs.iter().take(number(run, SHOW_OPTION).unwrap_or(COSTS_SHOWN)) {
+        println!("{:>8.2} s {:>6.1}% {:>12} facts read {:>9} readings | {}", cost.seconds, PERCENT * cost.seconds / total.max(f64::MIN_POSITIVE), cost.reads, cost.readings, cost.text);
+    }
+    ExitCode::SUCCESS
+}
+because!(costed_rules, LearnerCommand, "the profile of the explain tool on one case file: the tool learns from the lessons and reads the read part with the engine timing each rule and counting the facts that it reads, and the rules that took the most time are printed with their share, so that a writer of the library sees which rules to write in a cheaper order");
+
+const COSTS_SHOWN: usize = 25;
+because!(COSTS_SHOWN, LearnerCommand, "the rules that the profile prints when the command names no number: enough to hold the costly rules of a text, few enough to read");
+
+const BEFORE_OPTION: &str = "before";
+because!(BEFORE_OPTION, LearnerCommand, "the option of the why command with the case files of the kinds that come before the kind, whose learn parts the model may learn earlier lines from, as the board gives a kind the lessons of the kinds before it in its set");
+
+const ALL_OPTION: &str = "all";
+because!(ALL_OPTION, LearnerCommand, "the option of why that learns from all lessons and reads all of them again, in place of learning from the first two thirds of the lessons and reading the last third, as the choice judges a tool");
+
+const WHY_COUNTS_HEAD: &str = "the answers of the learned form that reads it, on the first lessons of the form (the lessons where each condition holds, by their answers):";
+because!(WHY_COUNTS_HEAD, LearnerCommand, "the words before the answers of the learned form of a wrong lesson with their counts by answer, in the report of why");
+
+const WHY_SHOWN: usize = 10;
+because!(WHY_SHOWN, LearnerCommand, "the wrong lessons that why prints in full when the run names no number: enough to see the sorts of faults, few enough to read");
+
+const WHY_COUNTED: usize = 10;
+because!(WHY_COUNTED, LearnerCommand, "the most common missing steps that the last lines of why count");
+
+const WHY_NONE: &str = "no answer of the model's texts that fits the question can give the wanted words";
+because!(WHY_NONE, LearnerCommand, "what why says of a wrong lesson for which no answer of the texts of the model can be diagnosed: no question form fits, or no answer can give the wanted words");
+
+fn whyed(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::EXPLAIN_TOOL;
+    use ilm_core::tools::explain::learn::reading_judgments;
+    use ilm_core::tools::explain::why::MISSING_AS_WRITTEN;
+    let [place] = run.plain.as_slice() else { return usage() };
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    let classes = match classes_of(run) {
+        Ok(classes) => classes,
+        Err(code) => return code,
+    };
+    let lanes = lanes_of(run);
+    let all = is_on(run, ALL_OPTION);
+    let (first, last) = if all { ((0..file.learn.len()).collect(), (0..file.learn.len()).collect()) } else { inner_parts(&file.learn) };
+    let (fit, labels, asked) = (picked(&file.learn, &first), picked_labels(&file.labels, &first), picked(&file.learn, &last));
+    let mut earlier: Vec<Vec<Case>> = Vec::new();
+    for path in run.named.get(BEFORE_OPTION).map(|paths| paths.split(BETWEEN_KINDS).collect::<Vec<&str>>()).unwrap_or_default() {
+        match opened(path, run) {
+            Ok(file) => earlier.push(file.learn),
+            Err(error) => return failed(path, &error),
+        }
+    }
+    let earlier_lessons = || earlier.clone();
+    let before: Option<&(dyn Fn() -> Vec<Vec<Case>> + Sync)> = if earlier.is_empty() { None } else { Some(&earlier_lessons) };
+    let model = match (EXPLAIN_TOOL.learn)(Lessons { cases: &fit, labels: &labels, ask: None, classes: classes.as_ref(), before }, lanes) {
+        Ok(model) => model,
+        Err(why) => return failed(place, &why),
+    };
+    let said: Vec<Said> = on_lanes(asked.len(), lanes, &|at| model.answer(&asked[at].sentences, &asked[at].question));
+    let wrong: Vec<usize> = (0..asked.len()).filter(|at| said[*at].words != answer_words(&asked[*at].answer)).collect();
+    let silent = wrong.iter().filter(|at| said[**at].words.is_empty()).count();
+    let missing: Vec<Vec<String>> = on_lanes(wrong.len(), lanes, &|at| model.missing(&asked[wrong[at]].sentences, &asked[wrong[at]].question, &answer_words(&asked[wrong[at]].answer)));
+    let read = if all { "the same lessons" } else { "the last third of the lessons, which it did not learn from" };
+    println!("why: a model of {place} learned from {} lessons reads {} lessons ({read}): {} wrong, {silent} of them with no answer", fit.len(), asked.len(), wrong.len());
+    if let Ok(table) = reading_judgments(&Lessons { cases: &fit, labels: &labels, ask: None, classes: classes.as_ref(), before }, lanes) {
+        table.iter().for_each(|line| println!("{line}"));
+    }
+    for (shown, at) in wrong.iter().enumerate().take(number(run, SHOW_OPTION).unwrap_or(WHY_SHOWN)) {
+        let case = &asked[*at];
+        println!();
+        println!("lesson {} of the lessons:", last[*at]);
+        for sentence in &case.sentences {
+            println!("  told: {sentence}");
+        }
+        println!("  question: {}", case.question);
+        println!("  wanted: {} | said: {} ({})", case.answer, said[*at].words.join(" "), said[*at].note);
+        if !said[*at].words.is_empty() {
+            model.proof(&case.sentences, &case.question).iter().for_each(|line| println!("  {line}"));
+        }
+        if missing[shown].is_empty() {
+            println!("  {WHY_NONE}");
+        }
+        missing[shown].iter().for_each(|line| println!("  {line}"));
+        let counts = model.answer_counts(&case.question, &fit);
+        if !counts.is_empty() {
+            println!("  {WHY_COUNTS_HEAD}");
+            counts.iter().for_each(|line| println!("    {line}"));
+        }
+    }
+    let mut counted: HashMap<String, usize> = HashMap::new();
+    for lines in &missing {
+        let key = lines.iter().find_map(|line| line.trim_start().strip_prefix(MISSING_AS_WRITTEN)).map_or(WHY_NONE, str::trim);
+        *counted.entry(key.to_string()).or_default() += 1;
+    }
+    let mut ranked: Vec<(String, usize)> = counted.into_iter().collect();
+    ranked.sort_by(|one, other| other.1.cmp(&one.1).then_with(|| one.0.cmp(&other.0)));
+    println!();
+    println!("the most common missing steps of the {} wrong lessons:", wrong.len());
+    ranked.iter().take(WHY_COUNTED).for_each(|(key, count)| println!("  {count} | {key}"));
+    ExitCode::SUCCESS
+}
+because!(whyed, LearnerCommand, "why a model of the explain tool answers lessons wrong: it learns from the first two thirds of the lessons of a case file (all lessons with the option all), with the lessons of the kinds before it when the run names their case files, as the board gives them, and reads the rest; for each wrong lesson, the story, the wanted and the given answer, the proof of the answer that it gave, and the first step that the facts of the story miss for the wanted answer; then the missing steps counted, the most common first, so that the writer of a text or a learner sees which step to add; only lessons are read, never the read part");
+
+fn joined(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::wording_joining::learn_joining;
+    let Some(place) = run.plain.first() else { return usage() };
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    let joining = match learn_joining(&file.learn) {
+        Ok(joining) => joining,
+        Err(fault) => return failed(place, &fault),
+    };
+    let right = |cases: &[Case]| cases.iter().filter(|case| joining.model.answer(&case.sentences, &case.question).words == answer_words(&case.answer)).count();
+    println!("{} lines learned from {} lessons; the search reads {} of them right; the engine reads the written lines {} of {} lessons right and {} of {} of the read part", joining.lines.len(), file.learn.len(), joining.proposed_right, right(&file.learn), file.learn.len(), right(&file.read), file.read.len());
+    for line in &joining.lines {
+        println!("{line}");
+    }
+    ExitCode::SUCCESS
+}
+because!(joined, LearnerCommand, "the ways of joining of a language of commands learned from the lessons of a case file, written as lines of the library, with the lessons that the search reads right and the shares of the engine's reading of the lines on the lessons and on the read part");
+
+fn meant(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::learn::{library, model_of};
+    use ilm_core::tools::explain::wording_meanings::{meanings_lines, meanings_topic};
+    let Some(place) = run.plain.first() else { return usage() };
+    let file = match opened(place, run) {
+        Ok(file) => file,
+        Err(error) => return failed(place, &error),
+    };
+    let library = match library() {
+        Ok(library) => library,
+        Err(fault) => return failed(place, &fault),
+    };
+    let lessons: Vec<&Case> = file.learn.iter().collect();
+    let (Some((_, lines)), Some(topic)) = (meanings_lines(&library.topics, &lessons), meanings_topic(&library.topics, &lessons)) else { return failed(place, &NO_MEANINGS) };
+    let model = model_of(vec![topic]);
+    let right = |cases: &[Case]| cases.iter().filter(|case| model.answer(&case.sentences, &case.question).words == answer_words(&case.answer)).count();
+    println!("meanings learned from {} lessons; the engine reads the learned lines {} of {} lessons right and {} of {} of the read part", file.learn.len(), right(&file.learn), file.learn.len(), right(&file.read), file.read.len());
+    println!("{lines}");
+    ExitCode::SUCCESS
+}
+because!(meant, LearnerCommand, "the meanings of the function words of a case file learned over the text of functions on lists of the library, written as lines of the library, with the shares of the engine's reading of them on the lessons and on the read part");
+
+const NO_MEANINGS: &str = "no meanings: the library has no text of functions on lists, the lessons tell sentences, no word of the questions is missing from the answers, or no word gains a meaning";
+because!(NO_MEANINGS, LearnerCommand, "what the command of meanings says when the lessons give no lines");
+
+const PROOF_INDENT: &str = "   ";
+because!(PROOF_INDENT, LearnerCommand, "the space before each line of a proof under the answer that it proves");
+
+const CASES_OPTION: &str = "cases";
+because!(CASES_OPTION, LearnerCommand, "the option of the command of a proof that names a case file: the model that the explain tool learns from its lessons answers, so a rule that was discovered and is in no text proves too");
+
+const NO_PROOF: &str = "no text of the library answers the question from the told sentences";
+because!(NO_PROOF, LearnerCommand, "what the command of a proof says when no topic answers the question from the told sentences, as an answer that holds otherwise proves nothing");
+
+fn proved(run: &Given) -> ExitCode {
+    use ilm_core::base::signs::sentences_of;
+    use ilm_core::tools::explain::learn::{LIBRARY_FOLDER, library, library_proof, marked_proof};
+    let sentences = sentences_of(&run.plain.join(BETWEEN_WORDS));
+    let Some((question, told)) = sentences.split_last() else { return usage() };
+    if let Some(place) = run.named.get(CASES_OPTION) {
+        use ilm_core::tools::explain::EXPLAIN_TOOL;
+        let file = match opened(place, run) {
+            Ok(file) => file,
+            Err(error) => return failed(place, &error),
+        };
+        let classes = match classes_of(run) {
+            Ok(classes) => classes,
+            Err(code) => return code,
+        };
+        let model = match (EXPLAIN_TOOL.learn)(Lessons { cases: &file.learn, labels: &file.labels, ask: None, classes: classes.as_ref(), before: None }, lanes_of(run)) {
+            Ok(model) => model,
+            Err(why) => return failed(place, &why),
+        };
+        let said = model.answer(told, question);
+        if said.words.is_empty() {
+            return failed(question, &NO_PROOF);
+        }
+        println!("{}", said.words.join(BETWEEN_WORDS));
+        let kind = Path::new(place).file_stem().map_or_else(|| place.clone(), |stem| stem.to_string_lossy().into_owned());
+        for line in marked_proof(&model.proof(told, question), &model.rules_used(told, question), &model.lines_from_lessons(), &kind) {
+            println!("{PROOF_INDENT}{line}");
+        }
+        return ExitCode::SUCCESS;
+    }
+    let library = match library() {
+        Ok(library) => library,
+        Err(why) => return failed(LIBRARY_FOLDER, &why),
+    };
+    match library_proof(&library, told, question) {
+        Some((words, proof)) => {
+            println!("{}", words.join(BETWEEN_WORDS));
+            for line in marked_proof(&proof, &[], &[], LIBRARY_FOLDER) {
+                println!("{PROOF_INDENT}{line}");
+            }
+            ExitCode::SUCCESS
+        }
+        None => failed(question, &NO_PROOF),
+    }
+}
+because!(proved, LearnerCommand, "the answer to told sentences and a question, the last sentence of the text, with its proof tree back to the told sentences, each rule marked as discovered on the kind or given, and each known fact that was learned marked as discovered: by the topics of the library alone, with no lessons, or by the model that the explain tool learns from the lessons of a case file");
+
+const TEXT_ENDING: &str = "txt";
+because!(TEXT_ENDING, LearnerCommand, "the ending of the files of the library that the command of places reads in a folder");
+
+const NOTE_START: &str = "Note:";
+because!(NOTE_START, LearnerCommand, "the start of a note line of a text of the library, which holds no places");
+
+const PLACE_BY_MARK: &str = "; a place stands before a point that a letter follows, as in a name with points";
+because!(PLACE_BY_MARK, LearnerCommand, "the words after a line whose places include a letter that a point follows with a letter right after it, the sign of a name read as places (Washington, D.C.); a point that ends an answer and a comma of a list of places are not flagged");
+
+const NOT_READ: &str = "the reader refuses this line";
+because!(NOT_READ, LearnerCommand, "what the command of places says of a line that the reader of the library refuses");
+
+fn placed(run: &Given) -> ExitCode {
+    use ilm_core::tools::explain::text::{place_letter, read_topic, topic_places};
+    let mut files: Vec<PathBuf> = Vec::new();
+    for place in &run.plain {
+        let path = Path::new(place);
+        if path.is_dir() {
+            let mut found: Vec<PathBuf> = match std::fs::read_dir(path) {
+                Ok(entries) => entries.filter_map(Result::ok).map(|entry| entry.path()).filter(|file| file.extension().is_some_and(|ending| ending == TEXT_ENDING)).collect(),
+                Err(error) => return failed(place, &error),
+            };
+            found.sort();
+            files.extend(found);
+        } else {
+            files.push(path.to_path_buf());
+        }
+    }
+    if files.is_empty() {
+        return usage();
+    }
+    for file in &files {
+        let shown = file.display().to_string();
+        let text = match std::fs::read_to_string(file) {
+            Ok(text) => text,
+            Err(error) => return failed(&shown, &error),
+        };
+        for (at, line) in text.lines().map(str::trim).enumerate() {
+            if line.is_empty() || line.starts_with(NOTE_START) {
+                continue;
+            }
+            let places = match read_topic(&shown, line) {
+                Ok(read) => topic_places(&read),
+                Err(_) => {
+                    println!("{shown}:{}: {NOT_READ} | {line}", at + 1);
+                    continue;
+                }
+            };
+            if places.is_empty() {
+                continue;
+            }
+            let letters: Vec<String> = places.iter().map(|place| place_letter(*place)).collect();
+            let by_mark = letters.iter().any(|letter| [format!(" {letter}."), format!(".{letter}.")].iter().any(|marked| line.match_indices(marked.as_str()).any(|(found, _)| line[found + marked.len()..].chars().next().is_some_and(char::is_alphanumeric))));
+            println!("{shown}:{}: places {}{} | {line}", at + 1, letters.join(BETWEEN_WORDS), if by_mark { PLACE_BY_MARK } else { "" });
+        }
+    }
+    ExitCode::SUCCESS
+}
+because!(placed, LearnerCommand, "each line of the texts of the library that holds open places, with the places that the reader takes in it, and a flag where a point with a letter right after it follows a place, the sign of a name read as places; a file, or every text of a folder");
 
 fn chosen(run: &Given) -> ExitCode {
     let Some(place) = run.plain.first() else { return usage() };
@@ -517,12 +1200,10 @@ fn chosen(run: &Given) -> ExitCode {
     };
     let (first, last) = inner_parts(&file.learn);
     println!("lessons {} first {} last {}", file.learn.len(), first.len(), last.len());
-    match take(&tools, Lessons { cases: &file.learn, labels: &file.labels, ask: None, classes: classes.as_ref() }, lanes_of(run), true) {
+    match take(&tools, Lessons { cases: &file.learn, labels: &file.labels, ask: None, classes: classes.as_ref(), before: None }, lanes_of(run), true) {
         Ok(taken) => {
             for (place, tool) in tools.iter().enumerate() {
-                if taken.said[place].is_empty() && taken.shares[place] < f64::default() {
-                    println!("tool {} {NOT_TRIED}", tool.name);
-                } else if taken.said[place].is_empty() {
+                if taken.said[place].is_empty() {
                     println!("tool {} right {} seconds {:.places$}", tool.name, (taken.shares[place] * (last.len().max(1) as f64)).round(), taken.seconds[place], places = SECONDS_PLACES);
                 } else {
                     println!("tool {} no model: {}", tool.name, taken.said[place]);
@@ -538,485 +1219,6 @@ fn chosen(run: &Given) -> ExitCode {
     }
 }
 because!(chosen, LearnerCommand, "the choice among the tools for one case file, in the open: what each tool reads right of the lessons that it did not learn from, what a tool said that gave no model, and the tool that is taken");
-
-fn file_lines(path: &str) -> std::io::Result<Vec<String>> {
-    BufReader::new(std::fs::File::open(path)?).lines().collect()
-}
-because!(file_lines, LearnerCommand, "the lines of a file of answers: one answer on a line, its words with one space between them, an empty line for no answer");
-
-fn same_answers(model: &dyn Learner, cases: &[Case], theirs: &[String], lanes: usize, show: usize) -> (usize, Vec<String>) {
-    let said: Vec<(String, String)> = on_lanes(cases.len(), lanes, &|place| {
-        let said = model.answer(&cases[place].sentences, &cases[place].question);
-        (said.words.join(BETWEEN_WORDS), said.note)
-    });
-    let mut same = 0usize;
-    let mut different: Vec<String> = Vec::new();
-    for (place, (mine, note)) in said.iter().enumerate() {
-        if theirs.get(place) == Some(mine) {
-            same += 1;
-        } else if different.len() < show {
-            let case = &cases[place];
-            different.push(format!("      DIFFERENT (lesson case {place}): {} | {} -> {}; the file says: {}; said: {mine} ({note})", case.sentences.join(" / "), case.question, case.answer, theirs.get(place).map_or("", String::as_str)));
-        }
-    }
-    (same, different)
-}
-because!(same_answers, LearnerCommand, "the answers of a model beside the answers of a file, case by case: how many are the same, and the first cases that differ when the run may print them, each with the note of the model that tells how it found its answer");
-
-fn beside(part: &str, model: &Result<Box<dyn Learner>, String>, cases: &[Case], file: &str, lanes: usize, show: usize) -> (bool, Vec<String>) {
-    match (model, file_lines(file)) {
-        (Ok(model), Ok(theirs)) => {
-            let (same, different) = same_answers(model.as_ref(), cases, &theirs, lanes, show);
-            let mut lines = vec![format!("{part}: the same answer in {same} of {} cases (the file holds {} answers)", cases.len(), theirs.len())];
-            lines.extend(different);
-            (same == cases.len() && theirs.len() == cases.len(), lines)
-        }
-        (Err(why), Ok(theirs)) => (false, vec![format!("{part}: no model ({why}); the file holds {} answers", theirs.len())]),
-        (Ok(_), Err(_)) => (false, vec![format!("{part}: a model, and no file of answers")]),
-        (Err(why), Err(_)) => (true, vec![format!("{part}: no model ({why}), and no file of answers")]),
-    }
-}
-because!(beside, LearnerCommand, "one model beside one file of answers, with the lines that say what was found; a tool that gives no model is the same as a file that is not there");
-
-struct AnswerFiles {
-    inner: String,
-    read: String,
-    new_inner: Option<String>,
-    new_read: Option<String>,
-    table: Option<Vec<(String, String)>>,
-}
-because!(AnswerFiles, LearnerCommand, "the files of answers that a tool is checked against for one kind: of the model of the first lessons on the last lessons, of the model of all lessons on the read part, the same two on the cases renamed with the new words of the kind when they are asked, and the table of new words of the kind");
-
-type ToolPart<'a> = (&'static str, &'a Result<Box<dyn Learner>, String>, Vec<Case>, Option<String>, usize);
-because!(ToolPart, LearnerCommand, "one part of the check of a tool on a kind: its name, the model that reads it, its cases, the file of answers that it is held against, and how many differing cases may be shown");
-
-fn tool_models(file: &Opened, tool: &Tool, classes: Option<&WordClasses>, lanes: usize) -> (Result<Box<dyn Learner>, String>, Result<Box<dyn Learner>, String>, Vec<Case>) {
-    let (first, last) = inner_parts(&file.learn);
-    let lessons = Lessons { cases: &file.learn, labels: &file.labels, ask: None, classes };
-    let first_cases = picked(&file.learn, &first);
-    let first_labels = picked_labels(&file.labels, &first);
-    let needs = tool.needs_labels && !lessons.labelled();
-    let inner = if needs { Err(NO_LABELS.to_string()) } else { (tool.learn)(lessons.part(&first_cases, &first_labels), lanes) };
-    let whole = if needs { Err(NO_LABELS.to_string()) } else { (tool.learn)(lessons, lanes) };
-    (inner, whole, picked(&file.learn, &last))
-}
-because!(tool_models, LearnerCommand, "the two models of the check of a tool on a kind: one of the first lessons, one of all lessons, with the last lessons that the first model reads");
-
-fn tool_parts<'a>(file: &Opened, models: &'a (Result<Box<dyn Learner>, String>, Result<Box<dyn Learner>, String>, Vec<Case>), answers: &AnswerFiles, show: usize) -> Vec<ToolPart<'a>> {
-    let (inner, whole, last_cases) = models;
-    let mut parts: Vec<ToolPart<'a>> = vec![("last lessons", inner, last_cases.clone(), Some(answers.inner.clone()), show), ("read part", whole, file.read.clone(), Some(answers.read.clone()), 0)];
-    for (part, model, cases, their_file, shown) in [("last lessons with new words", inner, last_cases, &answers.new_inner, show), ("read part with new words", whole, &file.read, &answers.new_read, 0)] {
-        if their_file.is_some() {
-            let renamed = answers.table.as_ref().map(|table| renamed_all(cases, table)).unwrap_or_default();
-            parts.push((part, model, renamed, their_file.clone().filter(|_| answers.table.is_some()), shown));
-        }
-    }
-    parts
-}
-because!(tool_parts, LearnerCommand, "the parts of the check of a tool on a kind in their order: the model of the first lessons on the last lessons, the model of all lessons on the read part, and the same two on the cases renamed with the new words of the kind when their files are named; a renamed part of a kind with no table of new words has no file");
-
-fn tool_beside(file: &Opened, tool: &Tool, classes: Option<&WordClasses>, answers: &AnswerFiles, lanes: usize, show: usize) -> (bool, Vec<String>) {
-    let models = tool_models(file, tool, classes, lanes);
-    let mut same = true;
-    let mut lines: Vec<String> = Vec::new();
-    for (part, model, cases, their_file, shown) in tool_parts(file, &models, answers, show) {
-        let (same_part, part_lines) = match their_file {
-            Some(their_file) => beside(part, model, &cases, &their_file, lanes, shown),
-            None => (false, vec![format!("{part}: the kind has no table of new words")]),
-        };
-        same &= same_part;
-        lines.extend(part_lines);
-    }
-    (same, lines)
-}
-because!(tool_beside, LearnerCommand, "the answers of one tool on one kind beside its files of answers: a model of the first lessons on the last lessons, a model of all lessons on the read part, and when they are asked the same two models on the cases renamed with the new words of the kind; differing cases are shown for the lessons only, because no case of a read part is shown to the one who designs a tool");
-
-fn tool_written(file: &Opened, tool: &Tool, classes: Option<&WordClasses>, answers: &AnswerFiles, lanes: usize) -> (bool, Vec<String>) {
-    let models = tool_models(file, tool, classes, lanes);
-    let mut lines: Vec<String> = Vec::new();
-    let mut done = true;
-    for (part, model, cases, their_file, _) in tool_parts(file, &models, answers, 0) {
-        let (Ok(model), Some(their_file)) = (model, their_file) else {
-            lines.push(format!("{part}: no model or no file, nothing written"));
-            continue;
-        };
-        let said: Vec<String> = on_lanes(cases.len(), lanes, &|place| model.answer(&cases[place].sentences, &cases[place].question).words.join(BETWEEN_WORDS));
-        let written = std::fs::write(&their_file, said.iter().map(|line| format!("{line}\n")).collect::<String>());
-        done &= written.is_ok();
-        lines.push(format!("{part}: {} answers written", said.len()));
-    }
-    (done, lines)
-}
-because!(tool_written, LearnerCommand, "the files of answers of one tool on one kind written by the present program, part by part as the check reads them, for a kind whose cases changed on purpose; a part with no model gets no file, as the check holds no model and no file the same");
-
-fn renamed_table(place: &Path) -> Option<Vec<(String, String)>> {
-    let from = read_source(place.parent()?).ok()?;
-    new_words(&from, &place.file_stem()?.to_string_lossy())
-}
-because!(renamed_table, LearnerCommand, "the table of new words of the kind of a case file, from the folder of its set; nothing when the kind has none");
-
-fn renamed_all(cases: &[Case], pairs: &[(String, String)]) -> Vec<Case> {
-    let table: HashMap<&str, &str> = pairs.iter().map(|(old, new)| (old.as_str(), new.as_str())).collect();
-    cases.iter().map(|case| Case { sentences: case.sentences.iter().map(|sentence| renamed(sentence, &table)).collect(), question: renamed(&case.question, &table), answer: renamed(&case.answer, &table) }).collect()
-}
-because!(renamed_all, LearnerCommand, "cases with every word of the table replaced by its new word in the story, the question and the answer, as the measure renames the read cases");
-
-fn checked(run: &Given) -> ExitCode {
-    let [place, name, inner_file, read_file] = run.plain.as_slice() else { return usage() };
-    let file = match opened(place, run) {
-        Ok(file) => file,
-        Err(error) => return failed(place, &error),
-    };
-    let tool = match named_tools(name) {
-        Ok(found) => found[0],
-        Err(why) => return failed(name, &why),
-    };
-    let classes = match classes_of(run) {
-        Ok(classes) => classes,
-        Err(code) => return code,
-    };
-    let new_inner = run.named.get(NEW_INNER_OPTION).cloned();
-    let new_read = run.named.get(NEW_READ_OPTION).cloned();
-    let table = if new_inner.is_some() || new_read.is_some() { renamed_table(Path::new(place)) } else { None };
-    let answers = AnswerFiles { inner: inner_file.clone(), read: read_file.clone(), new_inner, new_read, table };
-    let (same, lines) = tool_beside(&file, &tool, classes.as_ref(), &answers, lanes_of(run), number(run, SHOW_OPTION).unwrap_or(SHOWN_DIFFERENT));
-    lines.iter().for_each(|line| println!("{line}"));
-    if same {
-        println!("THE SAME");
-        ExitCode::SUCCESS
-    } else {
-        println!("NOT THE SAME");
-        ExitCode::FAILURE
-    }
-}
-because!(checked, LearnerCommand, "the answers of one tool on one case file beside two files of answers, with what was found and a last line that says whether all are the same");
-
-const ABOUT_KIND: &str = "about.txt";
-because!(ABOUT_KIND, LearnerCommand, "the file that marks a folder of a folder of answers as the answers of one kind");
-
-const INNER_END: &str = ".inner.txt";
-because!(INNER_END, LearnerCommand, "the end of the name of a file of the answers of a model of the first lessons on the last lessons");
-
-const READ_END: &str = ".read.txt";
-because!(READ_END, LearnerCommand, "the end of the name of a file of the answers of a model of all lessons on the read part");
-
-const NEW_INNER_OPTION: &str = "newinner";
-because!(NEW_INNER_OPTION, LearnerCommand, "the option of the check that names a file of answers of the model of the first lessons on the last lessons renamed with the new words of the kind, and the name of that part in a file of the parts with new words");
-
-const NEW_READ_OPTION: &str = "newread";
-because!(NEW_READ_OPTION, LearnerCommand, "the option of the check that names a file of answers of the model of all lessons on the read part renamed with the new words of the kind, and the name of that part in a file of the parts with new words");
-
-const NEW_INNER_END: &str = ".newinner.txt";
-because!(NEW_INNER_END, LearnerCommand, "the end of the name of a file of answers of the model of the first lessons on the last lessons renamed with new words");
-
-const NEW_READ_END: &str = ".newread.txt";
-because!(NEW_READ_END, LearnerCommand, "the end of the name of a file of answers of the model of all lessons on the read part renamed with new words");
-
-const NEW_WORDS_ABOUT: &str = "newwords.txt";
-because!(NEW_WORDS_ABOUT, LearnerCommand, "the file of a folder of answers of one kind that names the tools and parts whose answers with new words were written");
-
-const TOOL_LINE: &str = "tool";
-because!(TOOL_LINE, LearnerCommand, "the first field of a line of the file of parts with new words that names a tool and one of its parts");
-
-fn new_word_parts(folder: &Path, name: &str) -> HashSet<String> {
-    let Ok(text) = std::fs::read_to_string(folder.join(NEW_WORDS_ABOUT)) else { return HashSet::new() };
-    text.lines().filter_map(|line| match line.split(FIELD_MARK).collect::<Vec<&str>>().as_slice() {
-        [mark, tool, part, ..] if *mark == TOOL_LINE && *tool == name => Some(part.to_string()),
-        _ => None,
-    }).collect()
-}
-because!(new_word_parts, LearnerCommand, "the parts with new words whose answers were written for one tool and one kind: a part is checked only where its answers were written");
-
-const CASE_FILE_END: &str = ".txt";
-because!(CASE_FILE_END, LearnerCommand, "a case file is plain text named after its kind, so the folder of a set is searched for the kind with this end and no other file is taken for it");
-
-const CASES_OPTION: &str = "cases";
-because!(CASES_OPTION, LearnerCommand, "the option that names the folders of sets where the case files of the kinds lie; the first folder that holds the file of a kind is taken");
-
-const WRITE_OPTION: &str = "write";
-because!(WRITE_OPTION, LearnerCommand, "the option of check-all that writes the files of answers of the present program in place of comparing them, for the sets that the option sources names");
-
-const WRITTEN_WORD: &str = "WRITTEN";
-because!(WRITTEN_WORD, LearnerCommand, "the word of the count line of check-all when the files of answers were written");
-
-const SAME_WORD: &str = "THE SAME";
-because!(SAME_WORD, LearnerCommand, "the word of the count line of check-all when the answers of every part of a kind are the answers of its files");
-
-const SOURCES_OPTION: &str = "sources";
-because!(SOURCES_OPTION, LearnerCommand, "the option that names the sets whose kinds are checked; with none, every set of the folder of answers");
-
-fn folders_in(folder: &Path) -> std::io::Result<Vec<String>> {
-    let mut names: Vec<String> = std::fs::read_dir(folder)?.filter_map(Result::ok).filter(|entry| entry.path().is_dir()).map(|entry| entry.file_name().to_string_lossy().into_owned()).collect();
-    names.sort_unstable();
-    Ok(names)
-}
-because!(folders_in, LearnerCommand, "the names of the folders in a folder, in the order of their bytes, so that a run goes through them in one order on every machine");
-
-fn checked_all(run: &Given) -> ExitCode {
-    let [golden, name, tool_name] = run.plain.as_slice() else { return usage() };
-    let tool = match named_tools(tool_name) {
-        Ok(found) => found[0],
-        Err(why) => return failed(tool_name, &why),
-    };
-    let classes = match classes_of(run) {
-        Ok(classes) => classes,
-        Err(code) => return code,
-    };
-    let roots: Vec<PathBuf> = run.named.get(CASES_OPTION).map(|text| text.split(BETWEEN_KINDS).map(PathBuf::from).collect()).unwrap_or_default();
-    let wanted: Option<HashSet<&str>> = run.named.get(SOURCES_OPTION).map(|text| text.split(BETWEEN_KINDS).collect());
-    let write = is_on(run, WRITE_OPTION);
-    if write && wanted.is_none() {
-        return failed(WRITE_OPTION, &"the files of answers are written only for the sets that the option sources names");
-    }
-    let golden = Path::new(golden);
-    let sources = match folders_in(golden) {
-        Ok(sources) => sources,
-        Err(error) => return failed(&golden.to_string_lossy(), &error),
-    };
-    let mut items: Vec<(String, String)> = Vec::new();
-    for source in sources.into_iter().filter(|source| wanted.as_ref().is_none_or(|wanted| wanted.contains(source.as_str()))) {
-        let kinds = folders_in(&golden.join(&source)).unwrap_or_default();
-        items.extend(kinds.into_iter().filter(|kind| golden.join(&source).join(kind).join(ABOUT_KIND).exists()).map(|kind| (source.clone(), kind)));
-    }
-    let results: Vec<(bool, Vec<String>)> = on_lanes(items.len(), lanes_of(run), &|at| {
-        let (source, kind) = &items[at];
-        let Some(place) = roots.iter().map(|root| root.join(source).join(format!("{kind}{CASE_FILE_END}"))).find(|path| path.exists()) else {
-            return (false, vec![format!("no case file of {kind} in the folders of the option {CASES_OPTION}")]);
-        };
-        let folder = golden.join(source).join(kind);
-        let file_of = |end: &str| folder.join(format!("{name}{end}")).to_string_lossy().into_owned();
-        let parts = new_word_parts(&folder, name);
-        let (new_inner, new_read) = (parts.contains(NEW_INNER_OPTION).then(|| file_of(NEW_INNER_END)), parts.contains(NEW_READ_OPTION).then(|| file_of(NEW_READ_END)));
-        let table = if new_inner.is_some() || new_read.is_some() { renamed_table(&place) } else { None };
-        let answers = AnswerFiles { inner: file_of(INNER_END), read: file_of(READ_END), new_inner, new_read, table };
-        match cut_file(&place, None, None) {
-            Ok(file) if write => tool_written(&file, &tool, classes.as_ref(), &answers, 1),
-            Ok(file) => tool_beside(&file, &tool, classes.as_ref(), &answers, 1, SHOWN_DIFFERENT),
-            Err(error) => (false, vec![error.to_string()]),
-        }
-    });
-    let same = results.iter().filter(|(same, _)| *same).count();
-    println!("tool {name} as {}: {same} of {} kinds {}", tool.name, items.len(), if write { WRITTEN_WORD } else { SAME_WORD });
-    for ((source, kind), (_, lines)) in items.iter().zip(&results).filter(|(_, (same, _))| !*same) {
-        println!("  {source} {kind}");
-        lines.iter().take(SHOWN_DIFFERENT).for_each(|line| println!("      {line}"));
-    }
-    if same == items.len() { ExitCode::SUCCESS } else { ExitCode::FAILURE }
-}
-because!(checked_all, LearnerCommand, "the answers of one tool beside the files of answers of every kind of a folder of answers, the kinds side by side on the threads and each on one thread, with a line for the count of kinds that are the same and the first lines of each kind that is not");
-
-const FIELD_MARK: char = '\t';
-because!(FIELD_MARK, LearnerCommand, "the sign between the fields of a line of a file of plain lines");
-
-
-fn put_lines(folder: &Path, name: &str, mut lines: Vec<String>, sorted: bool) -> std::io::Result<()> {
-    if sorted {
-        lines.sort_unstable();
-    }
-    lines.push(String::new());
-    std::fs::write(folder.join(name), lines.join("\n"))
-}
-because!(put_lines, LearnerCommand, "some lines written to a file of a folder, in their order or sorted, so that the file does not depend on the order of a table in memory");
-
-fn entry_line(model: &Knowledge, title: &str, relation: u32, entry: &Entry) -> String {
-    format!("{}\t{}\t{}\t{:x}\t{}\t{}", one_line(title), model.frames.relations.name(relation), one_line(&entry.answer), entry.chance.to_bits(), model.frames.frame_text(&entry.frame), one_line(&entry.sentence))
-}
-because!(entry_line, LearnerCommand, "one entry of the table as a line: the title, the relation, the answer, the bits of the chance, the frame and the sentence");
-
-fn dump_model(folder: &Path, model: &Knowledge, asked: &[&ilm_core::know::store::Fact]) -> std::io::Result<()> {
-    std::fs::create_dir_all(folder)?;
-    put_lines(folder, "share.txt", model.frames.kept_lines(), true)?;
-    let sure = model.sure.iter().flat_map(|((word, step), rows)| rows.iter().map(|row| format!("{}\t{}\t{}\t{}\t{}\t{}", model.frames.words.name(*word), OFTEN_NAMES[*step as usize], model.frames.relations.name(row.relation), one_line(&row.object), row.hit, row.seen))).collect();
-    put_lines(folder, "sure.txt", sure, true)?;
-    let routes = model
-        .words_first
-        .iter()
-        .map(|(relation, first)| {
-            let listed = model.listed_first.get(relation).copied().unwrap_or(false);
-            let (after_sentence, after_words) = model.listed_counts.get(relation).copied().unwrap_or((0, 0));
-            format!("{relation}\t{}\t{}\t{}\t{}\t{after_sentence}\t{after_words}", u32::from(*first), model.route_counts[relation].0, model.route_counts[relation].1, u32::from(listed))
-        })
-        .collect();
-    put_lines(folder, "routes.txt", routes, true)?;
-    let levels = model.levels.iter().map(|(level, right, answers)| format!("{}\t{}\t{right}\t{answers}", if level.listed { "listed" } else if level.words { "words" } else { "read" }, level.level)).collect();
-    put_lines(folder, "levels.txt", levels, true)?;
-    let listed = model.listed.iter().flat_map(|(relation, objects)| objects.iter().map(move |object| format!("{}\t{}\t{}\t{}\t{}", model.frames.relations.name(*relation), one_line(&object.written), object.lessons, object.hit, object.seen))).collect();
-    put_lines(folder, "listed.txt", listed, true)?;
-    let table = model.by_title.iter().flat_map(|(title, entries)| entries.iter().map(|(relation, entry)| entry_line(model, title, *relation, entry))).collect();
-    put_lines(folder, "table.txt", table, true)?;
-    let answers = asked
-        .iter()
-        .map(|fact| {
-            let got = model.answer(&fact.relation, &fact.subject);
-            format!("{}\t{}\t{}\t{}", fact.relation, one_line(&fact.subject), got.map_or(String::new(), |(entry, _)| one_line(&entry.answer)), got.map_or(String::new(), |(_, title)| one_line(title)))
-        })
-        .collect();
-    put_lines(folder, "answers.txt", answers, false)?;
-    let numbers = level_of_all(model);
-    put_lines(folder, "entries.txt", vec![numbers], false)
-}
-because!(dump_model, LearnerCommand, "the tables of a model of knowledge as files of plain lines: the kept frames, the sure words, the choice of the routes, the levels of the chance, the table of what was read, and the answer of each asked fact");
-
-fn level_of_all(model: &Knowledge) -> String {
-    let entries: usize = model.by_title.values().map(Vec::len).sum();
-    let high = model.by_title.values().flatten().filter(|(_, entry)| level_of(entry).level > 0).count();
-    format!("{} articles, {entries} entries, {high} of them above the lowest level of the chance", model.by_title.len())
-}
-because!(level_of_all, LearnerCommand, "the size of the table of a model in one line");
-
-fn share_of(count: usize, of: usize) -> f64 {
-    share(count, of.max(1))
-}
-because!(share_of, LearnerCommand, "a count as hundredths of a whole, and nothing of an empty whole");
-
-fn print_numbers(numbers: &Numbers) {
-    println!("lesson facts | right, % of all asked facts | answered, % | answers with their source | forget | text read | entries | seconds: model, read, answers");
-    println!(
-        "{:>count$} | {:>part$.places$} | {:>part$.places$} | {} of {} | {} of {} | {} articles, {:.none$} M signs | {} | {:.places$}, {:.places$}, {:.places$}",
-        numbers.lessons,
-        share_of(numbers.right, numbers.asked),
-        share_of(numbers.answered, numbers.asked),
-        numbers.sourced,
-        numbers.answered,
-        numbers.gone,
-        numbers.forgotten,
-        numbers.articles,
-        (numbers.signs as f64) / MILLION,
-        numbers.entries,
-        numbers.model_seconds,
-        numbers.read_seconds,
-        numbers.answer_seconds,
-        count = KNOW_COUNT,
-        part = KNOW_SHARE,
-        places = 1,
-        none = 0
-    );
-    if numbers.inferred > 0 {
-        println!("    answers that no sentence states (given by sure words of the article): {}", numbers.inferred);
-    }
-    if numbers.guessed > 0 {
-        println!(
-            "    facts with no answer in the text, guessed from the subject's name: {}, right {}; right with the guesses, % of all asked facts: {:.places$}",
-            numbers.guessed,
-            numbers.guessed_right,
-            share_of(numbers.right + numbers.guessed_right, numbers.asked),
-            places = 1
-        );
-    }
-    let mut worst: Vec<&(String, usize, usize)> = numbers.by_relation.iter().collect();
-    worst.sort_by(|one, other| (one.1 as f64 / one.2.max(1) as f64).total_cmp(&(other.1 as f64 / other.2.max(1) as f64)));
-    let named = |rows: &[&(String, usize, usize)]| rows.iter().map(|(relation, right, of)| format!("{relation} {:.none$}", share_of(*right, *of), none = 0)).collect::<Vec<String>>().join(", ");
-    println!("    lowest relations: {} | highest: {}", named(&worst[..worst.len().min(SHOWN_RELATIONS)]), named(&worst[worst.len().saturating_sub(SHOWN_RELATIONS)..]));
-}
-because!(print_numbers, LearnerCommand, "the numbers of a run of the probe: the line of the shares, and the relations with the lowest and the highest share");
-
-const KNOW_COUNT: usize = 6;
-because!(KNOW_COUNT, LearnerCommand, "the signs of the column of the lesson facts in the line of a probe");
-
-const KNOW_SHARE: usize = 5;
-because!(KNOW_SHARE, LearnerCommand, "the signs of a column of a share in the line of a probe");
-
-fn known(run: &Given) -> ExitCode {
-    let [store, facts_file] = run.plain.as_slice() else { return usage() };
-    let store = Path::new(store);
-    let facts = match read_facts(Path::new(facts_file)) {
-        Ok(facts) => facts,
-        Err(error) => return failed(facts_file, &error),
-    };
-    let classes = match classes_of(run) {
-        Ok(classes) => classes.unwrap_or_default(),
-        Err(code) => return code,
-    };
-    let on_probe = run.named.get(PART_OPTION).is_some_and(|part| part == PROBE_PART);
-    let (lessons, asked) = if on_probe { whole(&facts) } else { development(&facts) };
-    let which = match run.named.get(TEXT_OPTION).map(String::as_str) {
-        Some(TEXT_ASKED) => Which::Asked,
-        Some(TEXT_ALL) => Which::All,
-        _ => Which::Subjects,
-    };
-    let texts = match Texts::read(store) {
-        Ok(texts) => texts,
-        Err(error) => return failed(&store.to_string_lossy(), &error),
-    };
-    let reference = references(&lessons, &asked, &texts);
-    let relations: std::collections::HashSet<&str> = lessons.iter().map(|fact| fact.relation.as_str()).collect();
-    println!(
-        "part {}: {} lesson facts, {} facts asked, {} relations; the subject of {:.places$}% of the asked facts has one article in the store (by its title, or the only one of its name)",
-        if on_probe { PROBE_PART } else { "development" },
-        lessons.len(),
-        asked.len(),
-        relations.len(),
-        reference.with_article,
-        places = 1
-    );
-    println!(
-        "reference points (share of all asked facts): one answer for a relation {:.places$} | the first word of the article that is an object of the relation {:.places$} | the object stands in the article {:.places$}",
-        reference.one_answer,
-        reference.first_word,
-        reference.in_article,
-        places = 1
-    );
-    let dump = run.named.get(DUMP_OPTION).map(Path::new);
-    let mut written: std::io::Result<()> = Ok(());
-    let mut look = |model: &Knowledge| {
-        if let Some(folder) = dump {
-            written = dump_model(folder, model, &asked);
-        }
-    };
-    match probe(&lessons, &asked, &texts, store, which, number(run, FIT_OPTION).unwrap_or(0), &classes, lanes_of(run), &mut look) {
-        Ok((_, numbers)) => {
-            print_numbers(&numbers);
-            match written {
-                Ok(()) => ExitCode::SUCCESS,
-                Err(error) => failed(DUMP_OPTION, &error),
-            }
-        }
-        Err(error) => failed(&store.to_string_lossy(), &error),
-    }
-}
-because!(known, LearnerCommand, "the probe of knowledge: the lesson facts and the asked facts of a file, the text of a store, one model, and the numbers of the run; the development part is asked unless the run names the probe");
-
-fn asked_questions(run: &Given) -> ExitCode {
-    let [file] = run.plain.as_slice() else { return usage() };
-    let text = match std::fs::read_to_string(file) {
-        Ok(text) => text,
-        Err(error) => return failed(file, &error),
-    };
-    let rows: Vec<Vec<&str>> = text.lines().map(|line| line.split(FIELD_MARK).collect::<Vec<&str>>()).filter(|fields| fields.len() >= QUESTION_FIELDS).collect();
-    let asking = |held: bool| rows.iter().filter(|fields| (fields[0] == HELD_PART) == held).map(|fields| Asking { question: fields[1], subject: fields[QUESTION_FIELDS - 1 - 1], relation: fields[QUESTION_FIELDS - 1] }).collect::<Vec<Asking>>();
-    let (mut lessons, held) = (asking(false), asking(true));
-    if let Some(fit) = number(run, FIT_OPTION).filter(|fit| *fit > 0 && *fit < lessons.len()) {
-        lessons.truncate(fit);
-    }
-    let known = match run.named.get(NAMES_OPTION).map(|path| SortedNames::read(Path::new(path))) {
-        Some(Ok(known)) => Some(known),
-        Some(Err(error)) => return failed(NAMES_OPTION, &error),
-        None => None,
-    };
-    let names: Option<&dyn Names> = known.as_ref().map(|known| known as &dyn Names);
-    let relations: std::collections::HashSet<&str> = lessons.iter().map(|lesson| lesson.relation).collect();
-    println!("{} lesson questions, {} held questions, {} relations{}", lessons.len(), held.len(), relations.len(), known.as_ref().map_or(String::new(), |known| format!("; {} known names", known.count)));
-    let model = Questions::learn(&lessons, names, true, lanes_of(run));
-    let shares = held_shares(&model, &held, names);
-    println!("lessons | lessons with the subject in the question | subject right, % | relation right, % | both right, %");
-    println!("{:>wide$} | {:>wide$} | {:>part$.places$} | {:>part$.places$} | {:>part$.places$}", lessons.len(), model.used, shares.subject, shares.relation, shares.both, wide = KNOW_COUNT + 1, part = KNOW_SHARE, places = 1);
-    if let Some(folder) = run.named.get(DUMP_OPTION).map(Path::new) {
-        let read = held
-            .iter()
-            .map(|case| match model.read(case.question, names) {
-                None => String::new(),
-                Some(got) => format!("{}\t{}\t{}\t{}\t{}", one_line(&got.subject), model.relation_of(&got).unwrap_or("None"), Questions::way_text(got.way), got.sure.0, got.sure.1),
-            })
-            .collect();
-        let ways = model.ways.iter().map(|(way, (right, all))| format!("{}\t{right}\t{all}", Questions::way_text(Some(*way)))).collect();
-        let written = std::fs::create_dir_all(folder).and_then(|()| put_lines(folder, "read.txt", read, false)).and_then(|()| put_lines(folder, "ways.txt", ways, true));
-        if let Err(error) = written {
-            return failed(DUMP_OPTION, &error);
-        }
-    }
-    ExitCode::SUCCESS
-}
-because!(asked_questions, LearnerCommand, "the reader of questions on the held questions of a file: learned from the lesson questions, with known names when a file of them is given");
 
 fn controlled(run: &Given) -> ExitCode {
     let [place, changes] = run.plain.as_slice() else { return usage() };
@@ -1051,165 +1253,6 @@ fn controlled(run: &Given) -> ExitCode {
 }
 because!(controlled, LearnerCommand, "one control of changed cases: the kind from its case file, the changed cases from theirs, a model by the choice among the tools or by one tool, and one line of the result");
 
-fn ask_build(run: &Given) -> ExitCode {
-    let [_, store, facts, questions, names, sets, board] = run.plain.as_slice() else { return usage() };
-    let classes = match classes_of(run) {
-        Ok(classes) => classes.unwrap_or_default(),
-        Err(code) => return code,
-    };
-    let folder = run.named.get(TABLE_OPTION).map_or_else(|| Path::new(store).join(TABLE_FOLDER), std::path::PathBuf::from);
-    let cases = match read_questions(Path::new(questions)) {
-        Ok(cases) => cases,
-        Err(error) => return failed(questions, &error),
-    };
-    let started = std::time::Instant::now();
-    let built = match build_facts(Path::new(store), Path::new(facts), &cases, Path::new(names), &classes, lanes_of(run), &folder) {
-        Ok(built) => built,
-        Err(error) => return failed(store, &error),
-    };
-    println!(
-        "the table of facts: {} lesson facts, {} articles read ({:.none$} M signs), {} articles with {} facts in the table; {:.none$} s",
-        built.numbers.lessons,
-        built.numbers.articles,
-        (built.numbers.signs as f64) / MILLION,
-        built.articles,
-        built.facts,
-        started.elapsed().as_secs_f64(),
-        none = 0
-    );
-    match build_router(Path::new(sets), Path::new(board), &cases, &folder) {
-        Ok((kinds, counted)) => {
-            println!("the router: {kinds} kinds, {counted} of them kinds of the counted tasks; written to {}", folder.to_string_lossy());
-            ExitCode::SUCCESS
-        }
-        Err(error) => failed(sets, &error),
-    }
-}
-because!(ask_build, LearnerCommand, "the table of the one command: the table of facts from the whole store, and the router from the counted kinds of a board, the lesson questions and the sets of requests");
-
-fn ask_measure(run: &Given) -> ExitCode {
-    let [_, folder, questions] = run.plain.as_slice() else { return usage() };
-    let cases = match read_questions(Path::new(questions)) {
-        Ok(cases) => cases,
-        Err(error) => return failed(questions, &error),
-    };
-    let whole = match Whole::open(Path::new(folder), None, lanes_of(run)) {
-        Ok(whole) => whole,
-        Err(error) => return failed(folder, &error),
-    };
-    let (counts, lines) = match held_answers(&whole.facts, &cases) {
-        Ok(found) => found,
-        Err(error) => return failed(folder, &error),
-    };
-    let rows = [
-        (counts.held, "held questions"),
-        (counts.read_right, "read right (subject and relation)"),
-        (counts.given, "an answer is given"),
-        (counts.right, "the answer is the answer of the set"),
-        (counts.one_word, "questions whose answer is one word"),
-        (counts.one_read_right, "of these: read right"),
-        (counts.one_given, "of these: an answer is given"),
-        (counts.one_right, "of these: the answer is right"),
-        (counts.one_both, "of these: read right and the answer is right"),
-    ];
-    println!("held questions about facts");
-    for (count, name) in rows {
-        println!("   {count:>wide$}  {name}", wide = KNOW_SHARE);
-    }
-    println!(
-        "answer right: {:.places$}% of all held questions; {:.places$}% of those with an answer of one word; {:.places$} ms for a question",
-        share_of(counts.right, counts.held),
-        share_of(counts.one_right, counts.one_word),
-        counts.seconds * MILLISECONDS / (counts.held.max(1) as f64),
-        places = 1
-    );
-    if let Some(out) = run.named.get(DUMP_OPTION) {
-        if let Err(error) = std::fs::write(out, lines.join("\n") + "\n") {
-            return failed(out, &error);
-        }
-    }
-    ExitCode::SUCCESS
-}
-because!(ask_measure, LearnerCommand, "the held questions about facts through the one command: how many are read right, how many get an answer, how many get the answer of the set; with dump, the answer of each question as a line");
-
-fn ask_kinds(run: &Given) -> ExitCode {
-    let [_, folder, questions] = run.plain.as_slice() else { return usage() };
-    let cases = match read_questions(Path::new(questions)) {
-        Ok(cases) => cases,
-        Err(error) => return failed(questions, &error),
-    };
-    let whole = match Whole::open(Path::new(folder), None, lanes_of(run)) {
-        Ok(whole) => whole,
-        Err(error) => return failed(folder, &error),
-    };
-    match whole.routes(&cases) {
-        Ok(lines) => {
-            println!("{}", lines.join("\n"));
-            ExitCode::SUCCESS
-        }
-        Err(error) => failed(folder, &error),
-    }
-}
-because!(ask_kinds, LearnerCommand, "where the requests of known kinds go: the held questions about facts, the read cases of the counted kinds, and the held requests of the sets of requests");
-
-fn answered(whole: &Whole, folder: &str, request: &str) -> Result<(), ExitCode> {
-    match whole.answer(request) {
-        Ok((said, trace)) => {
-            println!("{}", said.unwrap_or_else(|| "No answer: see the trace.".to_string()));
-            for line in trace {
-                println!("   {line}");
-            }
-            Ok(())
-        }
-        Err(error) => Err(failed(folder, &error)),
-    }
-}
-because!(answered, LearnerCommand, "one request through the one command: the answer, or the words that there is none, and the trace of every step");
-
-fn asked_once(run: &Given) -> ExitCode {
-    let (folder, request) = match run.plain.as_slice() {
-        [folder, request] => (folder, Some(request)),
-        [folder] => (folder, None),
-        _ => return usage(),
-    };
-    let classes = match classes_of(run) {
-        Ok(classes) => classes,
-        Err(code) => return code,
-    };
-    let whole = match Whole::open(Path::new(folder), classes, lanes_of(run)) {
-        Ok(whole) => whole,
-        Err(error) => return failed(folder, &error),
-    };
-    if let Some(request) = request {
-        return answered(&whole, folder, request).map_or_else(|code| code, |()| ExitCode::SUCCESS);
-    }
-    for line in std::io::stdin().lock().lines() {
-        let Ok(line) = line else { break };
-        if line.trim().is_empty() {
-            continue;
-        }
-        if let Err(code) = answered(&whole, folder, line.trim()) {
-            return code;
-        }
-        println!();
-        if std::io::stdout().flush().is_err() {
-            break;
-        }
-    }
-    ExitCode::SUCCESS
-}
-because!(asked_once, LearnerCommand, "the one command on its table: one request given with the command, or with no request a session that opens the table once and answers each line of the input, an empty line after each answer");
-
-fn asked(run: &Given) -> ExitCode {
-    match run.plain.first().map(String::as_str) {
-        Some("build") => ask_build(run),
-        Some("measure") => ask_measure(run),
-        Some("kinds") => ask_kinds(run),
-        _ => asked_once(run),
-    }
-}
-because!(asked, LearnerCommand, "the parts of the one command: the building of its table, its two measures, and one request");
-
 pub fn run_command() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
     let Some((part, rest)) = args.split_first() else { return usage() };
@@ -1218,20 +1261,28 @@ pub fn run_command() -> ExitCode {
         eprintln!("{fault}");
         return ExitCode::FAILURE;
     }
+    if is_on(&run, PATHS_OPTION) {
+        ilm_core::tools::explain::wording::SEARCH_PATHS.store(true, std::sync::atomic::Ordering::Relaxed);
+    }
     match part.as_str() {
-        "board" => boarded(&run),
+        BOARD_COMMAND => boarded(&run),
+        "compare" => compared(&run),
         "measure" => measured(&run),
         "choice" => chosen(&run),
-        "check" => checked(&run),
-        "check-all" => checked_all(&run),
-        "know" => known(&run),
-        "ask" => asked(&run),
+        "prove" => proved(&run),
+        "places" => placed(&run),
+        "concepts" => concepts(&run),
+        "wording" => worded(&run),
+        "curriculum" => taught_in_turn(&run),
+        "discover-why" => discovered_why(&run),
+        "store-lines" => kept_in_store(&run),
+        "facts" => text_facts(&run),
+        "joining" => joined(&run),
+        "why" => whyed(&run),
+        "meanings" => meant(&run),
+        "explain-cost" => costed_rules(&run),
         "control" => controlled(&run),
         "changes" => ilm_data::controls::command::changes_command(rest),
-        "made" => ilm_data::sets::made::files::made_command(rest),
-        "patterns" => ilm_core::tools::pattern::show::pattern_command(rest),
-        "write" => ilm_core::write::command::writer_command(&rest.iter().map(String::as_str).collect::<Vec<&str>>()),
-        "questions" => asked_questions(&run),
         "parquet" => ilm_data::sets::parquet::show::parquet_command(rest),
         "export" => ilm_data::sets::readers::export_command(rest),
         "fetch" => ilm_data::sets::fetch::fetch_command(rest),

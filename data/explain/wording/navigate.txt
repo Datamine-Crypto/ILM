@@ -1,0 +1,8 @@
+Note: Instructions to walk, told to the one who walks ("Take 3 steps left.", "Turn around."), and the question whether these steps lead back to the starting point. "Always face forward" tells that no step turns the walker.
+Builds on walking.
+If take R steps S then the walker takes R steps S.
+If take R step S then the walker takes R steps S.
+If take R steps then the walker takes R steps.
+If take R step then the walker takes R steps.
+If turn S then the walker turns S.
+To answer "If you R these instructions, do you S to the U point?": True if the walker is back at the start. False if the walker is away from the start.

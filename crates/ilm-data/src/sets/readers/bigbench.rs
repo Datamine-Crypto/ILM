@@ -1,4 +1,4 @@
-use ilm_core::know::signs::is_space;
+use ilm_core::base::signs::is_space;
 use ilm_core::cases::Case;
 use crate::sets::export::{Described, KindCases, NAMED_KEY, SETTING_KEY};
 use crate::sets::parquet::records::Value;
@@ -18,6 +18,12 @@ because!(SENTENCE_CUT, BenchTasks, "the white space after the end of a sentence,
 
 const LIST_MARK: &str = r"^\d+\.$";
 because!(LIST_MARK, BenchTasks, "a number with a point that opens an item of a list, which stays with the part after it");
+
+const INITIAL_END: &str = r"(?:^|\s)[a-z]\S*\s[A-Z]\.$";
+because!(INITIAL_END, BenchTasks, "the end of a part at one capital letter with a point after a word in small letters, as an initial writes it (a friend of K. Westfield SC): no end of a sentence, so the part goes on with the next one; after a name (Vitamin B. From this ...) the point ends a sentence");
+
+const NAME_NUMBER_END: &str = r"(?:^|\s)\d\.$";
+because!(NAME_NUMBER_END, BenchTasks, "the end of a part at one digit with a point after a space, which is no end of a sentence when the next part starts with two capital letters, as the number at the start of the name of a club writes it (a digit, a point, then FC Brook); a longer number with a point (a year at the end of a sentence) or a digit before a word (the end of the name of a lipstick, then Being ...) ends a sentence");
 
 const CLOSERS: &str = "\"'”’)";
 because!(CLOSERS, BenchTasks, "the quotes and the bracket that can stand after the end mark of a sentence");
@@ -78,14 +84,44 @@ pub struct BenchPatterns {
     mark: TextPattern,
     pub cut: TextPattern,
     list: TextPattern,
+    initial: TextPattern,
+    name_number: TextPattern,
 }
-because!(BenchPatterns, BenchTasks, "the patterns that cut the text of a row: the mark of a line, the cut after the end of a sentence, and the number of an item");
+because!(BenchPatterns, BenchTasks, "the patterns that cut the text of a row: the mark of a line, the cut after the end of a sentence, the number of an item, and the ends at an initial or at the number of a name, which are no ends of a sentence");
 
 impl BenchPatterns {
     pub fn new() -> Result<BenchPatterns, String> {
-        Ok(BenchPatterns { mark: TextPattern::new(QA_MARK)?, cut: TextPattern::new(SENTENCE_CUT)?, list: TextPattern::new(LIST_MARK)? })
+        Ok(BenchPatterns { mark: TextPattern::new(QA_MARK)?, cut: TextPattern::new(SENTENCE_CUT)?, list: TextPattern::new(LIST_MARK)?, initial: TextPattern::new(INITIAL_END)?, name_number: TextPattern::new(NAME_NUMBER_END)? })
     }
 }
+
+fn opens_with_capitals(part: &str) -> bool {
+    let mut letters = part.chars();
+    letters.next().is_some_and(char::is_uppercase) && letters.next().is_some_and(char::is_uppercase)
+}
+because!(opens_with_capitals, BenchTasks, "whether a part starts with two capital letters, as a short name of a club does (FC, FSV)");
+
+const POINT: char = '.';
+because!(POINT, BenchTasks, "the point that can end a sentence with no space after it");
+
+const SMALL_AFTER_POINT: usize = 2;
+because!(SMALL_AFTER_POINT, BenchTasks, "the small letters that must follow a point with no space for the point to end a sentence: a word, not one letter as a short form writes it");
+
+fn lost_space_cut(part: &str) -> Vec<String> {
+    let signs: Vec<char> = part.chars().collect();
+    let mut pieces: Vec<String> = Vec::new();
+    let mut start = 0;
+    for place in 1..signs.len() {
+        let after = &signs[place + 1..signs.len().min(place + 1 + SMALL_AFTER_POINT)];
+        if signs[place] == POINT && signs[place - 1].is_ascii_alphanumeric() && after.len() == SMALL_AFTER_POINT && after.iter().all(char::is_ascii_lowercase) {
+            pieces.push(signs[start..=place].iter().collect());
+            start = place + 1;
+        }
+    }
+    pieces.push(signs[start..].iter().collect());
+    pieces
+}
+because!(lost_space_cut, BenchTasks, "a part cut after each point that stands after a letter or a digit and before a word in small letters with no space, where a text lost the space between two sentences (a soap.moreover, being ...); a point before a capital (A.D Gloss) or a digit (a price with cents) stays");
 
 fn end_of(part: &str) -> PartEnd {
     let text = part.trim_end_matches(is_space).trim_end_matches(|sign: char| CLOSERS.contains(sign)).trim_end_matches(is_space);
@@ -116,7 +152,15 @@ pub fn split_text(text: &str, choices: Option<&[String]>, patterns: &BenchPatter
             let second = cut.remove(1);
             cut[0] = [cut[0].as_str(), second.as_str()].join(QUESTION_GAP);
         }
-        parts.extend(cut.into_iter().map(|piece| (end_of(&piece), piece)));
+        let cut: Vec<String> = cut.iter().flat_map(|piece| lost_space_cut(piece)).collect();
+        let mut joined: Vec<String> = Vec::new();
+        for piece in cut {
+            match joined.last_mut() {
+                Some(last) if patterns.initial.find(last, false).is_some() || (patterns.name_number.find(last, false).is_some() && opens_with_capitals(&piece)) => *last = [last.as_str(), piece.as_str()].join(QUESTION_GAP),
+                _ => joined.push(piece),
+            }
+        }
+        parts.extend(joined.into_iter().map(|piece| (end_of(&piece), piece)));
     }
     let plain: Vec<usize> = parts.iter().enumerate().filter(|(_, (end, _))| *end != PartEnd::Choice).map(|(place, _)| place).collect();
     let asked = plain.iter().copied().filter(|place| parts[*place].0 == PartEnd::Asked).last();

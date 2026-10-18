@@ -1,0 +1,7 @@
+Note: The wording of NLGraph: an edge is written (A,B), or "an edge from node A to node B with capacity C" in a network, a node is named with "node", and the answer is a sentence.
+Builds on links, flow.
+If (A,B) then A is linked to B.
+Q: Is there a path between node A and node B? The answer is yes if A is linked to B. The answer is no otherwise.
+If an edge from node A to node B with capacity C then A goes to B with capacity C.
+If an edge from node A to node B with capacity C , then A goes to B with capacity C.
+To answer "Q: What is the maximum flow from node A to node B?": The maximum flow from node A to node B is N if N is the flow from A to B where C goes to D with capacity E.

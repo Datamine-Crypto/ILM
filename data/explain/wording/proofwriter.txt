@@ -1,0 +1,9 @@
+Note: The open form of ProofWriter (its main form): a statement is true when the story and its rules give it, false when they give its opposite ("is not", "does not"), and unknown otherwise.
+Builds on told_rules.
+Write A and E is S and not T then B as A and E is S and E is not T then B.
+Write if E is not S and not T then B as if E is not S and E is not T then B.
+Write if E is S and not T then B as if E is S and E is not T then B.
+To answer "A is not B.": True if A is not B. False if A is B. Unknown otherwise.
+To answer "A does not F B.": True if A does not F B. False if A Fs B. Unknown otherwise.
+To answer "A is B.": True if A is B. False if A is not B. Unknown otherwise.
+To answer "A Fs B.": True if A Fs B. False if A does not F B. Unknown otherwise.

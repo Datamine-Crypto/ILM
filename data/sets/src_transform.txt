@@ -18,7 +18,6 @@ no_names	a sentence into a question
 no_names	a sentence into the passive
 no_names	a sentence into a question, a new build
 no_names	a sentence into the passive, a new build
-not_counted	a sentence into a question	the tool moves the first helping verb of a sentence, which is the helping verb of the main clause in every lesson; when the subject has a clause of its own it gives the right question in 0 of 146 changed lessons and for 0.0% of the generalization files
 all	quest_en_test
 all	quest_en_gen
 all	quest_de_test

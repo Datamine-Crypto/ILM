@@ -1,0 +1,18 @@
+Note: The told sentences of the group "temporal" of LoNLI. Its question forms are not written here: the explain tool learns them from the lessons. A time is told as "9 AM" or "9:30 AM", two people in one sentence with "whereas", and classes in their order with "then", "followed by" or "after".
+Builds on age, clock, time.
+If A was born in B And C was born in D then A was born in B.
+If A was born in B And C was born in D then C was born in D.
+If A at B : C D whereas E reached at F : G H then A arrived at B : C D.
+If A at B : C D whereas E reached at F : G H then E arrived at F : G H.
+If A at B C whereas E reached at F : G H then A arrived at B : 0 C.
+If A at B C whereas E reached at F : G H then E arrived at F : G H.
+If A at B : C D whereas E reached at F G then A arrived at B : C D.
+If A at B : C D whereas E reached at F G then E arrived at F : 0 G.
+If A at B C whereas E reached at F G then A arrived at B : 0 C.
+If A at B C whereas E reached at F G then E arrived at F : 0 G.
+If A reached B arrived at C : D E then A arrived at C : D E.
+If A has B class Then C class Then D class then B class is before C class.
+If A has B class Then C class Then D class then C class is before D class.
+If A has B class Then C class then B class is before C class.
+If A has B class followed by C class then B class is before C class.
+If A has B class after C class then C class is before B class.

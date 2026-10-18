@@ -1,0 +1,114 @@
+Note: Dates of a calendar: a told sentence gives the date of today, or a date and the days between it and today; a question asks for the date some days, weeks, a month or a year from today, in the form MM/DD/YYYY. A walk of some days goes on or back one day at a time: the next day of a month that is not its last, else the first day of the next month, else the first day of the next year. A year is a leap year when 4 divides it and 100 does not, or when 400 divides it; the rules count the years of each century from the centuries of 400.
+Builds on calendar, numbers.
+Write AA the last day of BB as AA the closing day of BB.
+Write AA the first day of BB as AA the opening day of BB.
+Write The first day of BB as The opening day of BB.
+If W is a spelling of X and X is the month R then W is the month R.
+1000 is a common century.
+1100 is a common century.
+1300 is a common century.
+1200 is a leap century.
+If C is a common century and C plus 400 is D and D is at most 3000 then D is a common century.
+If C is a common century then C is a century.
+If C is a common century then C is a common year.
+If C is a leap century and C plus 400 is D and D is at most 3000 then D is a leap century.
+If C is a leap century then C is a century.
+If C is a leap century then C is a leap year.
+4 is a step of four.
+If A is a step of four and A plus 4 is B and B is less than 100 then B is a step of four.
+1 is a step off four.
+If A is a step of four and A plus 1 is B then B is a step off four.
+2 is a step off four.
+If A is a step of four and A plus 2 is B then B is a step off four.
+3 is a step off four.
+If A is a step of four and A plus 3 is B then B is a step off four.
+If C is a century and A is a step of four and C plus A is Y then Y is a leap year.
+If C is a century and A is a step off four and C plus A is Y then Y is a common year.
+If Y is a leap year then February of Y has 29 days.
+If Y is a common year then February of Y has 28 days.
+If walk G goes K days on from R S T and R plus 0 is U and S plus 0 is V then walk G on day 0 of K is at U V T.
+If walk G on day J of K is at R S T and J is less than K and month R has L days and S is less than L and S plus 1 is U and J plus 1 is H then walk G on day H of K is at R U T.
+If walk G on day J of K is at 2 S T and J is less than K and February of T has L days and S is less than L and S plus 1 is U and J plus 1 is H then walk G on day H of K is at 2 U T.
+If walk G on day J of K is at R S T and J is less than K and month R has L days and S is at least L and R is less than 12 and R plus 1 is U and J plus 1 is H then walk G on day H of K is at U 1 T.
+If walk G on day J of K is at 2 S T and J is less than K and February of T has L days and S is at least L and J plus 1 is H then walk G on day H of K is at 3 1 T.
+If walk G on day J of K is at 12 31 T and J is less than K and T plus 1 is U and J plus 1 is H then walk G on day H of K is at 1 1 U.
+If walk G on day K of K is at R S T then walk G ends at R S T.
+If walk G goes K days back from R S T and R plus 0 is U and S plus 0 is V then walk G back day 0 of K is at U V T.
+If walk G back day J of K is at R S T and J is less than K and S is more than 1 and S minus 1 is U and J plus 1 is H then walk G back day H of K is at R U T.
+If walk G back day J of K is at R 1 T and J is less than K and R is more than 1 and R minus 1 is U and month U has L days and J plus 1 is H then walk G back day H of K is at U L T.
+If walk G back day J of K is at 3 1 T and J is less than K and February of T has L days and J plus 1 is H then walk G back day H of K is at 2 L T.
+If walk G back day J of K is at 1 1 T and J is less than K and T minus 1 is U and J plus 1 is H then walk G back day H of K is at 12 31 U.
+If walk G back day K of K is at R S T then walk G ends at R S T.
+If walk now ends at R S T then the day of now is R S T.
+If the day of now is R S T and R plus 0 is U and S plus 0 is V then today falls on U V T.
+If the last day of R in T is asked and month R has L days then the last day of R in T is L.
+If the last day of 2 in T is asked and February of T has L days then the last day of 2 in T is L.
+If Today is R / S / T then the day of now is R S T.
+If It is R / S / T today then the day of now is R S T.
+If Today , R / S / T , is AA then the day of now is R S T.
+If Today is W S , T and W is the month R then the day of now is R S T.
+If Yesterday was R / S / T then walk now goes 1 days on from R S T.
+If Yesterday was W S , T and W is the month R then walk now goes 1 days on from R S T.
+If Yesterday , W S , T , AA and W is the month R then walk now goes 1 days on from R S T.
+If The day before yesterday was R / S / T then walk now goes 2 days on from R S T.
+If Tomorrow is R / S / T then walk now goes 1 days back from R S T.
+If AA tomorrow ( W , R / S / T ) then walk now goes 1 days back from R S T.
+If AA tomorrow , R / S / T then walk now goes 1 days back from R S T.
+If AA tomorrow , W S , T and W is the month R then walk now goes 1 days back from R S T.
+If AA on R / S / T , but was delayed by W day to today and W is the number K then walk now goes K days on from R S T.
+If Today is the X day of the Y month of T and X is the ordinal of S and Y is the ordinal of R then the day of now is R S T.
+If This is the closing day of T then the last day of 12 in T is asked.
+If the last day of 12 in T is L and This is the closing day of T then the day of now is 12 L T.
+If Today is the closing day of the X quarter of T and the X quarter of a year ends with the month R then the last day of R in T is asked.
+If Today is the closing day of the X quarter of T and the X quarter of a year ends with the month R and the last day of R in T is L then the day of now is R L T.
+If AA the closing day of W T and W is the month R then the last day of R in T is asked.
+If AA the closing day of W T and W is the month R and the last day of R in T is L then the day of now is R L T.
+If Today is Christmas Eve of T and Christmas Eve is the day S of the month R then the day of now is R S T.
+If Today is the opening day of T then the day of now is 1 1 T.
+If AA on W S , T and K days have passed since Then and W is the month R then walk now goes K days on from R S T.
+If The opening day of T is a W , And today is the first V of T then the weekday of 1 1 T is W.
+If the weekday of 1 S T is W and S is less than 7 and S plus 1 is U and X is the weekday after W then the weekday of 1 U T is X.
+If The opening day of T is a W , And today is the first V of T and the weekday of 1 S T is V then the day of now is 1 S T.
+If AA born on the closing day of W in T and Today is her K - year-old birthday and W is the month R and T plus K is U then the last day of R in U is asked.
+If AA born on the closing day of W in T and Today is her K - year-old birthday and W is the month R and T plus K is U and the last day of R in U is L then the day of now is R L U.
+If AA thought today is R / S / T , but today is in fact W V , which is BB and W is the month U then the day of now is U V T.
+If AA married on W S , T and Today is their X wedding anniversary and a X wedding anniversary comes after K years and W is the month R and T plus K is U then the day of now is R S U.
+If X thinks today is R / S / T , but Y thinks today is U / V / W and X is correct then the day of now is R S T.
+If X thinks today is R / S / T , but Y thinks today is U / V / W and Y is correct then the day of now is U V W.
+If Today is R / S and AA watching NFL T then the day of now is R S T.
+If The deadline is W S , T , which is K days away from now and W is the month R then walk now goes K days back from R S T.
+If Today is R / S , And it is AA in the year T BB then the day of now is R S T.
+If AA got her job in T and Today is her K - year work anniversary and BB on W S , her second day at work , CC and W is the month R and T plus K is U then walk now goes 1 days back from R S U.
+If The current local time is AA of R / S / T then the day of now is R S T.
+If On W X , T AA bought K BB and CC ate one per day and Today DD ran out of BB and W is the month R and X is the ordinal of S then walk now goes K days on from R S T.
+If It was W and X , T a week ago and W is the month R and X is the ordinal of S then walk now goes 7 days on from R S T.
+If W S , T is like yesterday to AA , but that is actually Y years ago and Y is the number K and W is the month R and T plus K is U then the day of now is R S U.
+If In the UK , AA the day before the month BB and Therefore , today is S / R / T to them then the day of now is R S T.
+If AA on the X of each month BB the W of T and It is her Y visit to CC today and X is the ordinal of S and Y is the ordinal of K and W is the month R and K minus 1 is L and R plus L is M and M is at most 12 then the day of now is M S T.
+If AA on the X of each month BB the W of T and It is her Y visit to CC today and X is the ordinal of S and Y is the ordinal of K and W is the month R and K minus 1 is L and R plus L is M and M is more than 12 and M minus 12 is N and T plus 1 is U then the day of now is N S U.
+The word tomorrow names 1 days on.
+The word yesterday names 1 days back.
+The word today names 0 days on.
+The unit week is 7 days.
+The unit day is 1 days.
+The unit year is one year.
+The unit month is one month.
+24 hours make 1 days.
+48 hours make 2 days.
+72 hours make 3 days.
+If the question is What is the date W in AA and the word W names K days on and today falls on R S T then walk answer goes K days on from R S T.
+If the question is What is the date W in AA and the word W names K days back and today falls on R S T then walk answer goes K days back from R S T.
+If the question is What is the date one W from today in AA and the unit W is K days and today falls on R S T then walk answer goes K days on from R S T.
+If the question is What is the date one W ago from today in AA and the unit W is K days and today falls on R S T then walk answer goes K days back from R S T.
+If the question is What is the date a W ago in AA and the unit W is K days and today falls on R S T then walk answer goes K days back from R S T.
+If the question is What is the date K days ago in AA and today falls on R S T then walk answer goes K days back from R S T.
+If the question is What is the date K hours later in AA and K hours make L days and today falls on R S T then walk answer goes L days on from R S T.
+If walk answer ends at R S T then the asked day is R S T.
+If the question is What is the date one W ago from today in AA and the unit W is one year and today falls on R S T and T minus 1 is U then the last day of R in U is asked.
+If the question is What is the date one W ago from today in AA and the unit W is one year and today falls on R S T and T minus 1 is U and the last day of R in U is L and S is at most L then the asked day is R S U.
+If the question is What is the date one W ago from today in AA and the unit W is one year and today falls on R S T and T minus 1 is U and the last day of R in U is L and S is more than L then the asked day is R L U.
+If the question is What is the date a W ago in AA and the unit W is one month and today falls on R S T and R is more than 1 and R minus 1 is U then the last day of U in T is asked.
+If the question is What is the date a W ago in AA and the unit W is one month and today falls on R S T and R is more than 1 and R minus 1 is U and the last day of U in T is L and S is at most L then the asked day is U S T.
+If the question is What is the date a W ago in AA and the unit W is one month and today falls on R S T and R is more than 1 and R minus 1 is U and the last day of U in T is L and S is more than L then the asked day is U L T.
+If the question is What is the date a W ago in AA and the unit W is one month and today falls on 1 S T and T minus 1 is U then the asked day is 12 S U.
+To answer "What is the date AA?": E / F / T if the asked day is R S T and the two digits of R are E and the two digits of S are F.

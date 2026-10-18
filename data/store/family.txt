@@ -1,0 +1,47 @@
+Note: The known-good store of a text: each line below was discovered by the board's learner from the lessons of the kind that the note before it names, and is offered to later kinds as a candidate that each judges on its own lessons. Only the command store-lines writes this file.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D child then A is a parent of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D parent then B is a parent of A.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a E D then B is E.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D sibling then A is a sibling of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D spouse then A is a spouse of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D pibling then B is a pibling of A.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D grandparent then B is a grandparent of A.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A C B and C means a D grandchild then A is a grandparent of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a grandparent of B and C is a parent of B then A is a parent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and B is a sibling of C then A is a parent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and C is a sibling of B then A is a parent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and C is a spouse of A then C is a parent of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and C is a pibling of B then A is a sibling of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a sibling of B and B is a sibling of C then A is a sibling of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and A is a parent of C then B is a sibling of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and C is a sibling of A then C is a pibling of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and A is a sibling of C then C is a pibling of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and C is a spouse of B then A is a parent-in-law of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and B is a parent of C then A is a grandparent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a grandparent of B and C is a spouse of A then C is a grandparent of B.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a grandparent of B and B is a sibling of C then A is a grandparent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a grandparent of B and C is a sibling of B then A is a grandparent of C.
+Note: discovered on clutrrg_k2 (src_clutrr_graph), 668 lessons
+If A is a parent of B and B is a spouse of C then C is a child-in-law of A.

@@ -1,0 +1,11 @@
+Note: The wording of the group "conditional" of LoNLI, read as the set reads it: "if A comes, B won't come" with "A came" gives "B didn't come"; "B will come if A comes" with "A came" gives "B came"; "if A passes all the subjects, A will get the scholarship" is read as "only if"; a thing that one person bought was not bought by the person who would buy it if no one else did.
+Note: These rules follow the four sentence forms of one set. A general reader of told conditions waits for the engine (marks inside open places, and tenses).
+If If A comes to the B, C won't come and A came to the B then C didn't come to the B.
+If C will come to the B if A comes and A came to the B then C came to the B.
+If If A passes all the subjects, D will get the scholarship and A failed C then A did not get the scholarship.
+If If no one buys the B, A will buy it and C bought the B then A did not buy the B.
+To answer "A didn't come to the B": entailment if A didn't come to the B. contradiction if A came to the B. neutral otherwise.
+To answer "A came to the B": entailment if A came to the B. contradiction if A didn't come to the B. neutral otherwise.
+To answer "A did not get the scholarship": entailment if A did not get the scholarship. contradiction if A got the scholarship. neutral otherwise.
+To answer "A got the scholarship": entailment if A got the scholarship. contradiction if A did not get the scholarship. neutral otherwise.
+To answer "A bought the B": entailment if A bought the B. contradiction if A did not buy the B. neutral otherwise.

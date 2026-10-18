@@ -1,0 +1,19 @@
+Note: Things in a row from the first place to the last: books on a shelf from left to right, cars from the oldest to the newest, fruits from the cheapest to the most expensive, golfers from the first to the last. Told conditions say that one thing comes before another, or that a thing stands at a place counted from the start or from the end. The row is found by placing the things one at a time from the first place: a thing goes to the next place when no condition keeps it out, so that a thing told to stand at a place stands there and at no other, and a thing told to come before another is placed before it. Each place of a thing in the row found is then known from the start and from the end.
+The first 0 places hold start.
+If the row holds Z things then Z is a place of the row.
+If Y is a place of the row and Y is more than 1 and Y minus 1 is X then X is a place of the row.
+If B comes before C and thing R of the row is B and thing S of the row is C then R must come before S.
+If B stands at place X from the start and thing R of the row is B then R must stand at X.
+If B stands at place X from the end and thing R of the row is B and the row holds Z things and Z plus 1 is V and V minus X is Y then R must stand at Y.
+If R must stand at X and Y is a place of the row and not Y is the same as X then R is kept from Y.
+If S must stand at Y and thing R of the row is B and not R is the same as S then R is kept from Y.
+If S must come before R and the first X places hold AA and not AA holds the word S then R waits after AA.
+If R must come before S and the first X places hold AA and AA holds the word S then R waits after AA.
+If the first X places hold AA and thing R of the row is B and not AA holds the word R and X plus 1 is Y and not R is kept from Y and not R waits after AA then the first Y places hold AA R.
+If the first X places hold AA and the row holds X things then the row is AA.
+If the row is start BB then the rest of the row after 0 is BB.
+If the rest of the row after X is R CC and X plus 1 is Y then R stands at Y.
+If the rest of the row after X is R CC and X plus 1 is Y then the rest of the row after Y is CC.
+If the rest of the row after X is R and X plus 1 is Y then R stands at Y.
+If R stands at Y and thing R of the row is B then B is at place Y from the start.
+If R stands at Y and the row holds Z things and Z plus 1 is V and V minus Y is X and thing R of the row is B then B is at place X from the end.

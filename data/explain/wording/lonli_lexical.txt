@@ -1,0 +1,13 @@
+Note: The wording of the group "lexical" of LoNLI: statements to judge as entailment, contradiction or neutral. A statement about another side of a person (a job, a home, a trait) than the told one is neutral.
+Note: Three word pairs that the lessons give are not true in English (irrepressible for irresistible, stranger for unknown, sycophant as the opposite of unmannerly); they are faults of the set and are not taught.
+Builds on meaning.
+To answer "that animal is a B": entailment if that animal is a B. contradiction if that animal is a C. contradiction if that animal is an C. neutral otherwise.
+To answer "that animal is an B": entailment if that animal is an B. contradiction if that animal is a C. contradiction if that animal is an C. neutral otherwise.
+To answer "A is B in colour": entailment if A is B in colour. contradiction if A is C in colour. neutral otherwise.
+To answer "A is born in B": entailment if A was born in B. contradiction if A was born in C. neutral otherwise.
+To answer "A is eating a B": entailment if A is eating a B. contradiction if A is eating a C. contradiction if A is eating an C. neutral otherwise.
+To answer "A is eating an B": entailment if A is eating an B. contradiction if A is eating a C. contradiction if A is eating an C. neutral otherwise.
+To answer "A lives in B": entailment if A lives in B. neutral otherwise.
+To answer "A is a B": entailment if A is a B. neutral otherwise.
+To answer "A is an B": entailment if A is an B. neutral otherwise.
+To answer "A is B": entailment if A is B. entailment if A can be called B. contradiction if A cannot be called B. neutral otherwise.

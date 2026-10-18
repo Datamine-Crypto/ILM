@@ -1,0 +1,7 @@
+Note: The wording of the group "taxonomic" of LoNLI: a statement about a member of a kind after a statement about all or some of the kind, judged as entailment, contradiction or neutral.
+Note: The set writes "apple are healthy" and "apple don't are healthy" for "an apple is healthy" and "an apple is not healthy", and "bat don't give birth" for "a bat does not give birth".
+Builds on classes, kinds.
+To answer "C don't are B": contradiction if a C is B. contradiction if an C is B. contradiction if C is B. neutral otherwise.
+To answer "C don't give B": contradiction if a C does give B. contradiction if an C does give B. contradiction if C does give B. neutral otherwise.
+To answer "C are B": entailment if a C is B. entailment if an C is B. entailment if C is B. neutral otherwise.
+To answer "C give B": entailment if a C does give B. entailment if an C does give B. entailment if C does give B. neutral otherwise.

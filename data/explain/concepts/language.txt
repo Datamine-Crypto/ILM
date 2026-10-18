@@ -1,0 +1,32 @@
+Note: Ways of saying things. Short forms repeat a told part: "and so is", "too", "but not", "instead of". "Tried but wasn't able to" says that the trying happened.
+Note: A verb with -s or -es says that someone does a thing ("Ann calls" means Ann does call); "No." after the question "Does Ann call?" says that Ann does not call.
+Note: Made sentences start with the name in brackets, "(A) does B C", so that the rule that reads a verb with an ending does not read them again.
+If A is C And so is B then A is C.
+If A is C And so is B then B is C.
+If A is a C And B is too then A is a C.
+If A is a C And B is too then B is a C.
+If A is an C And B is too then A is an C.
+If A is an C And B is too then B is an C.
+If A is C but B is not then A is C.
+If A is C but B is not then B is not C.
+If A but not B is C then A is C.
+If A but not B is C then B is not C.
+If Instead of B A is C then A is C.
+If Instead of B A is C then A is not B.
+If A tried but wasn't able to B then A tried to B.
+If A tried but wasn't able to B then A was not able to B.
+If A Bs C then (A) does B C.
+If A Bes C then (A) does B C.
+If Does A B C and No then (A) does not B C.
+If Do A B C and No then (A) does not B C.
+Is A not B? yes if A is not B. no if A is B.
+Reply to "Is A not B?" with yes: Yes, A is not B.
+Reply to "Is A not B?" with no: No, A is B.
+Is A B? yes if A is B. no if A is not B.
+Reply to "Is A B?" with yes: Yes, A is B.
+Reply to "Is A B?" with no: No, A is not B.
+Does A B C? yes if (A) does B C. no if (A) does not B C.
+Reply to "Does A B C?" with yes: Yes, A does B C.
+Reply to "Does A B C?" with no: No, A does not B C.
+Did A try to B? yes if A tried to B.
+Reply to "Did A try to B?" with yes: Yes, A tried to B.

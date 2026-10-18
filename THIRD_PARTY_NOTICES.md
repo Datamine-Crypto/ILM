@@ -123,7 +123,7 @@ SOFTWARE.
 
 ## Unicode Character Database
 
-The tables of the kinds of signs, of decimal digits and of the decompositions of letters in crates/ilm-core/src/know/letters.rs, crates/ilm-core/src/know/signs.rs, crates/ilm-core/src/write/signs.rs and crates/ilm-data/src/sets/textmatch.rs come from the Unicode Character Database.
+The tables of the kinds of signs, of decimal digits and of the decompositions of letters in crates/ilm-core/src/base/signs.rs, crates/ilm-data/src/sets/knowledge/letters.rs and crates/ilm-data/src/sets/textmatch.rs come from the Unicode Character Database.
 
 ```
 UNICODE LICENSE V3
@@ -165,4 +165,42 @@ Except as contained in this notice, the name of a copyright holder shall
 not be used in advertising or otherwise to promote the sale, use or other
 dealings in these Data Files or Software without prior written
 authorization of the copyright holder.
+```
+
+## WordNet 3.0
+
+The repository also holds data of others that the program reads from a clone and does not hold: the pairs of words in data/explain/knowledge/antonyms.txt below its note on WordNet come from WordNet 3.0 (Princeton University). The license is also in data/explain/knowledge/WORDNET_LICENSE.
+
+```
+WordNet Release 3.0
+
+This software and database is being provided to you, the LICENSEE, by
+Princeton University under the following license.  By obtaining, using
+and/or copying this software and database, you agree that you have
+read, understood, and will comply with these terms and conditions.:
+
+Permission to use, copy, modify and distribute this software and
+database and its documentation for any purpose and without fee or
+royalty is hereby granted, provided that you agree to comply with
+the following copyright notice and statements, including the disclaimer,
+and that the same appear on ALL copies of the software, database and
+documentation, including modifications that you make for internal
+use or for distribution.
+
+WordNet 3.0 Copyright 2006 by Princeton University.  All rights reserved.
+
+THIS SOFTWARE AND DATABASE IS PROVIDED "AS IS" AND PRINCETON
+UNIVERSITY MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, PRINCETON
+UNIVERSITY MAKES NO REPRESENTATIONS OR WARRANTIES OF MERCHANT-
+ABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE
+OF THE LICENSED SOFTWARE, DATABASE OR DOCUMENTATION WILL NOT
+INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR
+OTHER RIGHTS.
+
+The name of Princeton University or Princeton may not be used in
+advertising or publicity pertaining to distribution of the software
+and/or database.  Title to copyright in this software, database and
+any associated documentation shall at all times remain with
+Princeton University and LICENSEE agrees to preserve same.
 ```

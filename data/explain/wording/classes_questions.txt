@@ -1,0 +1,4 @@
+Note: The question forms of the concept classes that the learned wording does not yet read as well as the written forms: which of two classes a thing belongs to (ProsQA) and what an animal is afraid of (bAbI 15).
+Builds on classes.
+Is A a B or C? A is a B if A is a B. A is a C if A is a C.
+What is A afraid of? D if A is afraid of B and B is the plural of D. D if A is afraid of Ds. D if A is afraid of a D.

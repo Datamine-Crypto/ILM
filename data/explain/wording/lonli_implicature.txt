@@ -1,0 +1,22 @@
+Note: The statements of the group "implicature" of LoNLI and their labels.
+Builds on implicature, verb_forms.
+If A And B lie on table then A And B are on offer.
+If A is meeting a B today then A is meeting a B.
+To answer "Not all of A are B.": entailment if only some of A are B.
+To answer "Some of A are B.": entailment if only some of A are B. contradiction if all of A are B.
+To answer "All of A are B.": contradiction if only some of A are B. entailment if all of A are B.
+To answer "A has no more than B C.": entailment if A has exactly D C and D is at most B.
+To answer "A will B.": contradiction if it is not sure that A will B.
+To answer "A did not have B dollars.": entailment if A did not have B dollars.
+To answer "A had B dollars.": contradiction if A did not have B dollars.
+To answer "A has higher chances of convincing B for C dollars.": entailment if A asked B for D dollars and B refused and C is less than D. contradiction if A asked B for D dollars and B refused and D is less than C.
+To answer "A did not ask for B.": entailment if A did not ask for B.
+To answer "A also asked for B.": contradiction if A did not ask for B.
+To answer "The B is not A's C.": entailment if the B is not A's C.
+To answer "The B is A's C.": contradiction if the B is not A's C.
+To answer "It is not A's B.": entailment if it is not A's B.
+To answer "It is A's B.": contradiction if it is not A's B.
+To answer "A was among the least likely to B the C.": entailment if that A Bed a C was a surprise. entailment if that A D a C was a surprise and D is the past of B.
+To answer "A was among the most likely to B the C.": contradiction if that A Bed a C was a surprise. contradiction if that A D a C was a surprise and D is the past of B.
+To answer "A was among the least likely to B C.": entailment if that A Bed C was a surprise. entailment if that A D C was a surprise and D is the past of B.
+To answer "A was among the most likely to B C.": contradiction if that A Bed C was a surprise. contradiction if that A D C was a surprise and D is the past of B.

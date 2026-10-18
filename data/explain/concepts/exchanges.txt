@@ -1,0 +1,4 @@
+Note: Things that people hold and swap in pairs: when two people swap, each holds what the other held just before, and the latest swap that a person takes part in gives what the person holds at the end. The name of a thing may hold marks (Catch-22).
+If R And S swap and before that time S holds CC then R holds CC.
+If R And S swap and before that time R holds BB then S holds BB.
+If R holds BB and latest R holds CC then R ends with CC.

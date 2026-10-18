@@ -132,7 +132,7 @@ pub fn control(loaded: &Loaded, fit: usize, held: usize, changed: &[Changed], to
     let taught: Vec<usize> = if whole { (0..learn.len()).collect() } else { first };
     let lessons = picked(&learn, &taught);
     let lesson_labels = picked_labels(&labels, &taught);
-    let given = Lessons { cases: &lessons, labels: &lesson_labels, ask: None, classes };
+    let given = Lessons { cases: &lessons, labels: &lesson_labels, ask: None, classes, before: None };
     let (model, name): (Box<dyn Learner>, String) = match tool {
         Some(place) => ((tools[place].learn)(given, lanes)?, tools[place].name.to_string()),
         None => {

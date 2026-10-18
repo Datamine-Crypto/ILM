@@ -1,5 +1,6 @@
 use ilm_core::base::lanes::{hardware_lanes, on_lanes};
 use ilm_core::class_count::{COUNTED_WORDS, CONTEXT_WORDS, MOST_RUNS, all_rows, count_tokens, frequent_words, neighbour_classes, row_width, word_codes};
+use ilm_core::base::cheap::CheapMap;
 use crate::sets::knowledge::store::dump_files;
 use crate::sets::parquet::open;
 use crate::sets::parquet::records::Value;
@@ -77,14 +78,14 @@ fn file_texts(place: &Path, most: usize, each: &mut dyn FnMut(&str)) -> Result<(
 }
 because!(file_texts, ClassesFromText, "the plain text of the articles of one file of the copy, in the order of the file, whole articles until the bytes of text read reach the most that the run asks for");
 
-fn file_counts(place: &Path, most: usize) -> Result<HashMap<String, u64>, String> {
-    let mut counts: HashMap<String, u64> = HashMap::new();
+fn file_counts(place: &Path, most: usize) -> Result<CheapMap<String, u64>, String> {
+    let mut counts: CheapMap<String, u64> = CheapMap::default();
     file_texts(place, most, &mut |text| count_tokens(text, &mut counts))?;
     Ok(counts)
 }
 because!(file_counts, ClassesFromText, "the count of each token of the text of one file");
 
-fn file_codes(place: &Path, most: usize, numbers: &HashMap<String, u32>) -> Result<Vec<u32>, String> {
+fn file_codes(place: &Path, most: usize, numbers: &CheapMap<String, u32>) -> Result<Vec<u32>, String> {
     let mut codes: Vec<u32> = Vec::new();
     file_texts(place, most, &mut |text| word_codes(text, numbers, &mut codes))?;
     Ok(codes)
@@ -135,8 +136,8 @@ pub fn make_classes(copy: &Path, folder: &Path, files: usize, most: usize, class
     let started = Instant::now();
     let mut places = dump_files(copy)?;
     places.truncate(files);
-    let counted: Vec<Result<HashMap<String, u64>, String>> = on_lanes(places.len(), lanes, &|file| file_counts(&places[file], most));
-    let mut all: HashMap<String, u64> = HashMap::new();
+    let counted: Vec<Result<CheapMap<String, u64>, String>> = on_lanes(places.len(), lanes, &|file| file_counts(&places[file], most));
+    let mut all: CheapMap<String, u64> = CheapMap::default();
     for counts in counted {
         for (word, count) in counts? {
             *all.entry(word).or_default() += count;
@@ -145,7 +146,7 @@ pub fn make_classes(copy: &Path, folder: &Path, files: usize, most: usize, class
     let tokens: u64 = all.values().sum();
     let different = all.len();
     let words = frequent_words(all, COUNTED_WORDS);
-    let numbers: HashMap<String, u32> = words.iter().enumerate().filter_map(|(at, (word, _))| u32::try_from(at).ok().map(|at| (word.clone(), at))).collect();
+    let numbers: CheapMap<String, u32> = words.iter().enumerate().filter_map(|(at, (word, _))| u32::try_from(at).ok().map(|at| (word.clone(), at))).collect();
     let counted_at = started.elapsed().as_secs_f64();
     let coded: Vec<Result<Vec<u32>, String>> = on_lanes(places.len(), lanes, &|file| file_codes(&places[file], most, &numbers));
     let streams: Vec<Vec<u32>> = coded.into_iter().collect::<Result<Vec<Vec<u32>>, String>>()?;

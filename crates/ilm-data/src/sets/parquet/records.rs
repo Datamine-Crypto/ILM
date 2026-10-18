@@ -105,25 +105,25 @@ struct Triple {
 }
 because!(Triple, RecordAssembly, "one entry of a leaf column: its two levels and the place of its value among the values that are there, or none for a value that is missing");
 
-fn leaf_value(leaf: &Leaf, element: &Element) -> Result<Value, String> {
+fn leaf_value(leaf: &mut Leaf, element: &Element) -> Result<Value, String> {
     Ok(match leaf {
         Leaf::Bool(truth) => Value::Bool(*truth),
         Leaf::Int(number) => Value::Int(*number),
         Leaf::Double(number) => Value::Double(*number),
-        Leaf::Bytes(bytes) if is_text(element) => Value::Text(String::from_utf8(bytes.clone()).map_err(|_| format!("a value of the text column {} is no text", element.name))?),
-        Leaf::Bytes(bytes) => Value::Bytes(bytes.clone()),
+        Leaf::Bytes(bytes) if is_text(element) => Value::Text(String::from_utf8(std::mem::take(bytes)).map_err(|_| format!("a value of the text column {} is no text", element.name))?),
+        Leaf::Bytes(bytes) => Value::Bytes(std::mem::take(bytes)),
     })
 }
-because!(leaf_value, RecordAssembly, "the value of one leaf: bytes that the schema calls a text become a text, other bytes stay bytes");
+because!(leaf_value, RecordAssembly, "the value of one leaf: bytes that the schema calls a text become a text, other bytes stay bytes; the bytes are moved out of the leaf, because each value of a column belongs to one record");
 
 struct Builder<'a> {
     steps: &'a [PathStep],
-    values: &'a [Leaf],
+    values: &'a mut [Leaf],
 }
 because!(Builder, RecordAssembly, "the steps of one leaf and its values, from which the records of that leaf are built one by one");
 
 impl Builder<'_> {
-    fn build(&self, at: usize, triples: &[Triple]) -> Result<Value, String> {
+    fn build(&mut self, at: usize, triples: &[Triple]) -> Result<Value, String> {
         let step = &self.steps[at];
         let first = triples.first().ok_or("a record of a column has no entry")?;
         if step.element.repetition == REPEATED {
@@ -146,14 +146,15 @@ impl Builder<'_> {
         self.contents(at, triples)
     }
 
-    fn contents(&self, at: usize, triples: &[Triple]) -> Result<Value, String> {
+    fn contents(&mut self, at: usize, triples: &[Triple]) -> Result<Value, String> {
         let step = &self.steps[at];
         if at + 1 == self.steps.len() {
             if is_null_type(&step.element) {
                 return Ok(Value::Null);
             }
             let place = triples.first().and_then(|triple| triple.value).ok_or("a defined leaf has no value")?;
-            return leaf_value(&self.values[place], &step.element);
+            let element = &self.steps[at].element;
+            return leaf_value(&mut self.values[place], element);
         }
         let child = self.build(at + 1, triples)?;
         if step.transparent {
@@ -190,7 +191,7 @@ fn merge(one: Value, other: Value) -> Result<Value, String> {
 }
 because!(merge, RecordAssembly, "the values of one field from two of its leaves as one value: named values joined in the order of the schema, lists element by element, nothing where both are nothing");
 
-pub fn assemble(steps: &[PathStep], data: &ColumnData, rows: usize) -> Result<Vec<Value>, String> {
+pub fn assemble(steps: &[PathStep], data: &mut ColumnData, rows: usize) -> Result<Vec<Value>, String> {
     let most = steps.last().map_or(0, |step| step.definition);
     let mut triples: Vec<Triple> = Vec::with_capacity(data.definitions.len());
     let mut next = 0usize;
@@ -201,7 +202,7 @@ pub fn assemble(steps: &[PathStep], data: &ColumnData, rows: usize) -> Result<Ve
         });
         triples.push(Triple { repetition: *repetition, definition: *definition, value });
     }
-    let builder = Builder { steps, values: &data.values };
+    let mut builder = Builder { steps, values: &mut data.values };
     let mut out: Vec<Value> = Vec::with_capacity(rows);
     let mut start = 0usize;
     for place in 1..=triples.len() {

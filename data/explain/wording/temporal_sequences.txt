@@ -1,0 +1,6 @@
+Note: When a person could have gone to a place (BIG-bench temporal_sequences): the story tells when the person woke up, who saw the person busy from one hour to another, and when the place closed; the choices are spans of hours, and the answer is the span that is free for the visit. The set tells every time that the person was seen ("We know that"), so a span that meets none of them is free; this rests on the set.
+Builds on busy_times.
+If S saw R AA from T to U then R is busy from T to U.
+If the question is between what times could R have gone to the B ? choice : T to U BB then the span T to U is asked for R at the B.
+If the question is between what times could R have gone to the B ? AA choice : T to U BB then the span T to U is asked for R at the B.
+To answer "Between what times could R have gone to the B? AAA": T to U if the span T to U is free for R at the B.

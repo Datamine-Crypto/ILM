@@ -2,6 +2,7 @@ use crate::base::lanes::{on_lanes, shards};
 use patterns::{because, source};
 use std::collections::HashMap;
 use std::fmt::Write;
+use std::hash::BuildHasher;
 use std::ops::Range;
 
 pub struct NeighbourClasses;
@@ -80,7 +81,7 @@ pub fn each_token(line: &str, token: &mut String, seen: &mut dyn FnMut(&str)) {
 }
 because!(each_token, NeighbourClasses, "the tokens of a line, one at a time: a run of letters of the Latin alphabet in small letters, with one more run after an apostrophe inside it, or a run of digits as the number token; every other sign parts tokens");
 
-pub fn count_tokens(text: &str, counts: &mut HashMap<String, u64>) {
+pub fn count_tokens<S: BuildHasher>(text: &str, counts: &mut HashMap<String, u64, S>) {
     let mut token = String::new();
     each_token(text, &mut token, &mut |word| match counts.get_mut(word) {
         Some(count) => *count += 1,
@@ -91,7 +92,7 @@ pub fn count_tokens(text: &str, counts: &mut HashMap<String, u64>) {
 }
 because!(count_tokens, NeighbourClasses, "the count of each token of a text added to a table of counts");
 
-pub fn frequent_words(counts: HashMap<String, u64>, most: usize) -> Vec<(String, u64)> {
+pub fn frequent_words<S: BuildHasher>(counts: HashMap<String, u64, S>, most: usize) -> Vec<(String, u64)> {
     let mut words: Vec<(String, u64)> = counts.into_iter().collect();
     words.sort_unstable_by(|left, right| right.1.cmp(&left.1).then_with(|| left.0.cmp(&right.0)));
     words.truncate(most);
@@ -99,7 +100,7 @@ pub fn frequent_words(counts: HashMap<String, u64>, most: usize) -> Vec<(String,
 }
 because!(frequent_words, NeighbourClasses, "the most frequent words with their counts, the most frequent first and words of equal count in the order of their signs, so that the list is the same in every run");
 
-pub fn word_codes(text: &str, numbers: &HashMap<String, u32>, codes: &mut Vec<u32>) {
+pub fn word_codes<S: BuildHasher>(text: &str, numbers: &HashMap<String, u32, S>, codes: &mut Vec<u32>) {
     let mut token = String::new();
     for line in text.split(LINE_BREAK) {
         each_token(line, &mut token, &mut |word| codes.push(numbers.get(word).copied().unwrap_or(NOT_COUNTED)));
@@ -170,22 +171,34 @@ fn comparable_rows(rows: &[u32], width: usize) -> (Vec<usize>, Vec<SparseRow>) {
 }
 because!(comparable_rows, NeighbourClasses, "the rows of the words that stood beside enough words, each made comparable: the square root of each count, divided by the length of the row, which is the square root of the sum of the counts");
 
-fn nearest_centre(row: &SparseRow, columns: &[f64], classes: usize, sums: &mut Vec<f64>) -> usize {
-    sums.clear();
-    sums.resize(classes, NO_SUM);
-    for (place, value) in row {
+fn nearest_centres(rows: &[SparseRow], columns: &[f64], classes: usize, width: usize, out: &mut Vec<usize>) {
+    let mut sums = vec![NO_SUM; rows.len() * classes];
+    let mut cursors = vec![0usize; rows.len()];
+    for place in 0..width {
         let column = &columns[place * classes..(place + 1) * classes];
-        sums.iter_mut().zip(column).for_each(|(sum, centre)| *sum += value * centre);
-    }
-    let mut best = 0usize;
-    for (centre, sum) in sums.iter().enumerate() {
-        if *sum > sums[best] {
-            best = centre;
+        for (at, row) in rows.iter().enumerate() {
+            let Some((held, value)) = row.get(cursors[at]) else { continue };
+            if *held != place {
+                continue;
+            }
+            cursors[at] += 1;
+            sums[at * classes..(at + 1) * classes].iter_mut().zip(column).for_each(|(sum, centre)| *sum += value * centre);
         }
     }
-    best
+    for found in sums.chunks(classes) {
+        let mut best = 0usize;
+        for (centre, sum) in found.iter().enumerate() {
+            if *sum > found[best] {
+                best = centre;
+            }
+        }
+        out.push(best);
+    }
 }
-because!(nearest_centre, NeighbourClasses, "the centre with the largest dot product with a row, the first of equals; the centres are held place by place, so that each value of the row meets all centres in one run of memory");
+because!(nearest_centres, NeighbourClasses, "for each row of a batch the centre with the largest dot product, the first of equals; the batch walks the places in their order and each place meets the rows of the batch that have a value there, so that the values of the centres at a place are read from memory once for the whole batch; each sum still adds the products of its row in the order of its places, so every sum is the sum of the row alone");
+
+const NEAREST_BATCH: usize = 32;
+because!(NEAREST_BATCH, NeighbourClasses, "the rows that share one walk over the places: their sums stay in the second cache of a core while the values of the centres at each place are read once for all of them");
 
 fn centre_columns(centres: &[Vec<f64>], width: usize) -> Vec<f64> {
     let classes = centres.len();
@@ -238,8 +251,11 @@ pub fn neighbour_classes(rows: &[u32], width: usize, classes: usize, most_runs: 
     for _ in 0..most_runs {
         let columns = centre_columns(&centres, width);
         nearest = on_lanes(parts.len(), lanes, &|part| {
-            let mut sums = Vec::new();
-            parts[part].clone().map(|row| nearest_centre(&made[row], &columns, classes, &mut sums)).collect::<Vec<usize>>()
+            let mut found: Vec<usize> = Vec::with_capacity(parts[part].len());
+            for batch in made[parts[part].clone()].chunks(NEAREST_BATCH) {
+                nearest_centres(batch, &columns, classes, width, &mut found);
+            }
+            found
         })
         .concat();
         classing.runs += 1;

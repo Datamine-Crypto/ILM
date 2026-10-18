@@ -1,0 +1,10 @@
+Note: Cycles in a graph of joins. A graph whose joins are more than its things with joins less its parts (sets of things linked together) has a cycle: a graph with no cycle is a set of trees, and a tree has one join less than its things.
+Builds on links.
+If A is joined to B then B is joined to A.
+If A is joined to B then A is linked to B.
+If A is linked to B and B is less than A then A has a smaller link.
+If A is joined to B and not A has a smaller link then A is the least of its part.
+If C is the number of A where A is the least of its part and D is the number of A where A is joined to B and E is the number of F where the join F is told and D minus C is G and E is more than G then there is a cycle.
+Is there a cycle? yes if there is a cycle. no otherwise.
+Reply to "Is there a cycle?" with yes: Yes, there is a cycle.
+Reply to "Is there a cycle?" with no: No, there is no cycle.

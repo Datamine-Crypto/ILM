@@ -34,7 +34,7 @@ jobs:
           "$ilm" export src_babi data/sets/final/src_babi.txt cases/final/src_babi
           right=$("$ilm" measure cases/final/src_babi | grep "right answers of the read part" | grep -oE "[0-9]+ of [0-9]+" | awk '{ r += $1; n += $3 } END { print r " of " n }')
           echo "bAbI: $right"
-          test "$right" = "19356 of 19399"
+          test "$right" = "18903 of 19399"
 
   premise:
     runs-on: ubuntu-22.04

@@ -1,0 +1,144 @@
+Note: The calendar: the months of a year with their numbers, short names and lengths, the ordinals of the days of a month in digits and in words, the two digits of a day or a month in the form MM/DD/YYYY, the days of a week in their order, and the quarters of a year. February has 29 days in a leap year and 28 days in other years. Source: general knowledge. Feburary is a common misspelling of February.
+January is the month 1.
+Jan is the month 1.
+February is the month 2.
+Feb is the month 2.
+March is the month 3.
+Mar is the month 3.
+April is the month 4.
+Apr is the month 4.
+May is the month 5.
+June is the month 6.
+Jun is the month 6.
+July is the month 7.
+Jul is the month 7.
+August is the month 8.
+Aug is the month 8.
+September is the month 9.
+Sep is the month 9.
+Sept is the month 9.
+October is the month 10.
+Oct is the month 10.
+November is the month 11.
+Nov is the month 11.
+December is the month 12.
+Dec is the month 12.
+Feburary is a spelling of February.
+Month 1 has 31 days.
+Month 3 has 31 days.
+Month 4 has 30 days.
+Month 5 has 31 days.
+Month 6 has 30 days.
+Month 7 has 31 days.
+Month 8 has 31 days.
+Month 9 has 30 days.
+Month 10 has 31 days.
+Month 11 has 30 days.
+Month 12 has 31 days.
+1st is the ordinal of 1.
+First is the ordinal of 1.
+The two digits of 1 are 01.
+2nd is the ordinal of 2.
+Second is the ordinal of 2.
+The two digits of 2 are 02.
+3rd is the ordinal of 3.
+Third is the ordinal of 3.
+The two digits of 3 are 03.
+4th is the ordinal of 4.
+Fourth is the ordinal of 4.
+The two digits of 4 are 04.
+5th is the ordinal of 5.
+Fifth is the ordinal of 5.
+The two digits of 5 are 05.
+6th is the ordinal of 6.
+Sixth is the ordinal of 6.
+The two digits of 6 are 06.
+7th is the ordinal of 7.
+Seventh is the ordinal of 7.
+The two digits of 7 are 07.
+8th is the ordinal of 8.
+Eighth is the ordinal of 8.
+The two digits of 8 are 08.
+9th is the ordinal of 9.
+Ninth is the ordinal of 9.
+The two digits of 9 are 09.
+10th is the ordinal of 10.
+Tenth is the ordinal of 10.
+The two digits of 10 are 10.
+11th is the ordinal of 11.
+Eleventh is the ordinal of 11.
+The two digits of 11 are 11.
+12th is the ordinal of 12.
+Twelfth is the ordinal of 12.
+The two digits of 12 are 12.
+13th is the ordinal of 13.
+Thirteenth is the ordinal of 13.
+The two digits of 13 are 13.
+14th is the ordinal of 14.
+Fourteenth is the ordinal of 14.
+The two digits of 14 are 14.
+15th is the ordinal of 15.
+Fifteenth is the ordinal of 15.
+The two digits of 15 are 15.
+16th is the ordinal of 16.
+Sixteenth is the ordinal of 16.
+The two digits of 16 are 16.
+17th is the ordinal of 17.
+Seventeenth is the ordinal of 17.
+The two digits of 17 are 17.
+18th is the ordinal of 18.
+Eighteenth is the ordinal of 18.
+The two digits of 18 are 18.
+19th is the ordinal of 19.
+Nineteenth is the ordinal of 19.
+The two digits of 19 are 19.
+20th is the ordinal of 20.
+Twentieth is the ordinal of 20.
+The two digits of 20 are 20.
+21st is the ordinal of 21.
+Twenty-first is the ordinal of 21.
+The two digits of 21 are 21.
+22nd is the ordinal of 22.
+Twenty-second is the ordinal of 22.
+The two digits of 22 are 22.
+23rd is the ordinal of 23.
+Twenty-third is the ordinal of 23.
+The two digits of 23 are 23.
+24th is the ordinal of 24.
+Twenty-fourth is the ordinal of 24.
+The two digits of 24 are 24.
+25th is the ordinal of 25.
+Twenty-fifth is the ordinal of 25.
+The two digits of 25 are 25.
+26th is the ordinal of 26.
+Twenty-sixth is the ordinal of 26.
+The two digits of 26 are 26.
+27th is the ordinal of 27.
+Twenty-seventh is the ordinal of 27.
+The two digits of 27 are 27.
+28th is the ordinal of 28.
+Twenty-eighth is the ordinal of 28.
+The two digits of 28 are 28.
+29th is the ordinal of 29.
+Twenty-ninth is the ordinal of 29.
+The two digits of 29 are 29.
+30th is the ordinal of 30.
+Thirtieth is the ordinal of 30.
+The two digits of 30 are 30.
+31st is the ordinal of 31.
+Thirty-first is the ordinal of 31.
+The two digits of 31 are 31.
+Tuesday is the weekday after Monday.
+Wednesday is the weekday after Tuesday.
+Thursday is the weekday after Wednesday.
+Friday is the weekday after Thursday.
+Saturday is the weekday after Friday.
+Sunday is the weekday after Saturday.
+Monday is the weekday after Sunday.
+The first quarter of a year ends with the month 3.
+The second quarter of a year ends with the month 6.
+The third quarter of a year ends with the month 9.
+The fourth quarter of a year ends with the month 12.
+Christmas Eve is the day 24 of the month 12.
+A golden wedding anniversary comes after 50 years.
+A silver wedding anniversary comes after 25 years.

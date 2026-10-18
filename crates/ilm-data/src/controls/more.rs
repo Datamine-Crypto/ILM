@@ -3,9 +3,9 @@ use ilm_core::base::words::answer_words;
 use crate::controls::arith::{ARITH_ADD, ARITH_MUL, ARITH_SUB, arithmetic_result};
 use crate::controls::expression::{TRUTH_CLOSE, TRUTH_FALSE, TRUTH_OPEN, TRUTH_TRUE, TRUTH_WORDS, number_value, truth_value};
 use crate::controls::file::ChangedCase;
-use crate::controls::text::{number_runs, with_numbers};
+use crate::controls::text::{number_runs, whole_numbers, with_numbers};
 use crate::sets::readers::common::{python_words, stripped};
-use ilm_core::know::signs::{is_space, is_word_sign};
+use ilm_core::base::signs::{is_space, is_word_sign};
 use ilm_core::choice::inner_parts;
 use ilm_core::cases::Case;
 use patterns::{because, source};
@@ -224,11 +224,6 @@ fn partition(text: &str, mark: char) -> (&str, &str, &str) {
     }
 }
 because!(partition, MoreChanges, "the text before the first mark, the mark, and the text after it; the whole text and nothing more when the mark is not there");
-
-fn whole_numbers(text: &str, signed: bool) -> Option<Vec<i128>> {
-    number_runs(text, signed).iter().map(|(start, end)| text[*start..*end].parse::<i128>().ok()).collect()
-}
-because!(whole_numbers, MoreChanges, "the numbers of a text in their order, or nothing when one is too large to hold");
 
 fn digit_runs(text: &str) -> Vec<&str> {
     number_runs(text, false).iter().map(|(start, end)| &text[*start..*end]).collect()

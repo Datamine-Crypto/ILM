@@ -156,8 +156,8 @@ impl ParquetTable {
             self.file.read_exact(&mut bytes).map_err(|error| error.to_string())?;
             let last = place.last().ok_or("a leaf with no place")?;
             let length = usize::try_from(last.element.length).unwrap_or_default();
-            let data = read_chunk(&bytes, chunk, length, last.definition, last.repetition)?;
-            by_leaf.push(assemble(place, &data, group.rows as usize)?);
+            let mut data = read_chunk(&bytes, chunk, length, last.definition, last.repetition)?;
+            by_leaf.push(assemble(place, &mut data, group.rows as usize)?);
         }
         let mut out: Vec<Vec<Value>> = Vec::with_capacity(names.len());
         for leaves in &wanted {

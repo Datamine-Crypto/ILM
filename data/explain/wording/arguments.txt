@@ -1,0 +1,357 @@
+Note: Arguments in plain English: premises and a conclusion, each read into a formula of the clause block part by part ("say" opens a group whose words are still English; xnot, xall and xexists stand for "it is false that", "for any thing x ," and "for some thing x ," until no English is left). An argument is valid when its premises prove its conclusion, and invalid otherwise.
+Note: The forms of a rule about everyone: every, each, whoever, everyone who, everything that, being A is sufficient for being B, being A is necessary for being B, to be A is necessary for being B, no A is B, nobody is A, if someone is A then that person is B; of a thing that there is: someone is A, some A is B, there is an A who is B; and the words of discourse that mark a premise (first, second, moreover, finally, ...) or a conclusion (therefore, hence, so, it follows that, we may conclude, ...).
+The clause block takes things from the sentences.
+Write AAA ( BBB ) CCC as AAA BBB CCC if not AAA holds the word holds and not AAA holds the word concluded and not AAA holds the word say.
+Write AAA ( BBB ) as AAA BBB if not AAA holds the word holds and not AAA holds the word concluded and not AAA holds the word say.
+Write AAA . " as AAA.
+Write AAA " BBB as AAA BBB.
+Write " BBB as BBB.
+Write AAA " as AAA.
+Write AAA not both : BBB as AAA not both BBB.
+Write AAA is at least one of W : BBB as AAA is BBB.
+Write AAA none of this : BBB or CCC , is DDD as AAA neither BBB nor CCC is DDD.
+Write AAA none of this : BBB , CCC or DDD , is EEE as AAA neither BBB nor CCC nor DDD is EEE.
+Write AAA From this follows : BBB as conclusion BBB.
+Write From this follows : BBB as conclusion BBB.
+Write AAA We may conclude : BBB as conclusion BBB.
+Write We may conclude : BBB as conclusion BBB.
+Write AAA It follows : BBB as conclusion BBB.
+Write It follows : BBB as conclusion BBB.
+Write AAA Hence : BBB as conclusion BBB.
+Write Hence : BBB as conclusion BBB.
+Write AAA Therefore : BBB as conclusion BBB.
+Write Therefore : BBB as conclusion BBB.
+Write AAA Thus : BBB as conclusion BBB.
+Write Thus : BBB as conclusion BBB.
+Write AAA So : BBB as conclusion BBB.
+Write So : BBB as conclusion BBB.
+Write AAA Consequently : BBB as conclusion BBB.
+Write Consequently : BBB as conclusion BBB.
+Write AAA In consequence : BBB as conclusion BBB.
+Write In consequence : BBB as conclusion BBB.
+Write AAA All this entails : BBB as conclusion BBB.
+Write All this entails : BBB as conclusion BBB.
+Write premise AAA : BBB as premise BBB.
+Write AAA : BBB as premise BBB.
+Write premise First premise BBB as premise BBB.
+Write premise Second premise BBB as premise BBB.
+Write premise Third premise BBB as premise BBB.
+Write premise Fourth premise BBB as premise BBB.
+Write premise Therefore , BBB as conclusion BBB.
+Write premise Therefore BBB as conclusion BBB.
+Write Therefore , BBB as conclusion BBB.
+Write Therefore BBB as conclusion BBB.
+Write premise Hence , BBB as conclusion BBB.
+Write premise Hence BBB as conclusion BBB.
+Write Hence , BBB as conclusion BBB.
+Write Hence BBB as conclusion BBB.
+Write premise Thus , BBB as conclusion BBB.
+Write premise Thus BBB as conclusion BBB.
+Write Thus , BBB as conclusion BBB.
+Write Thus BBB as conclusion BBB.
+Write premise So , BBB as conclusion BBB.
+Write premise So BBB as conclusion BBB.
+Write So , BBB as conclusion BBB.
+Write So BBB as conclusion BBB.
+Write premise Consequently , BBB as conclusion BBB.
+Write premise Consequently BBB as conclusion BBB.
+Write Consequently , BBB as conclusion BBB.
+Write Consequently BBB as conclusion BBB.
+Write premise In consequence , BBB as conclusion BBB.
+Write premise In consequence BBB as conclusion BBB.
+Write In consequence , BBB as conclusion BBB.
+Write In consequence BBB as conclusion BBB.
+Write premise All this entails that , BBB as conclusion BBB.
+Write premise All this entails that BBB as conclusion BBB.
+Write All this entails that , BBB as conclusion BBB.
+Write All this entails that BBB as conclusion BBB.
+Write premise We may conclude that , BBB as conclusion BBB.
+Write premise We may conclude that BBB as conclusion BBB.
+Write We may conclude that , BBB as conclusion BBB.
+Write We may conclude that BBB as conclusion BBB.
+Write premise It follows that , BBB as conclusion BBB.
+Write premise It follows that BBB as conclusion BBB.
+Write It follows that , BBB as conclusion BBB.
+Write It follows that BBB as conclusion BBB.
+Write premise From this follows that , BBB as conclusion BBB.
+Write premise From this follows that BBB as conclusion BBB.
+Write From this follows that , BBB as conclusion BBB.
+Write From this follows that BBB as conclusion BBB.
+Write premise We may conclude , BBB as conclusion BBB.
+Write premise We may conclude BBB as conclusion BBB.
+Write We may conclude , BBB as conclusion BBB.
+Write We may conclude BBB as conclusion BBB.
+Write premise It is therefore , BBB as conclusion BBB.
+Write premise It is therefore BBB as conclusion BBB.
+Write It is therefore , BBB as conclusion BBB.
+Write It is therefore BBB as conclusion BBB.
+Write premise From this follows , BBB as conclusion BBB.
+Write premise From this follows BBB as conclusion BBB.
+Write From this follows , BBB as conclusion BBB.
+Write From this follows BBB as conclusion BBB.
+Write premise First of all , BBB as premise BBB.
+Write First of all , BBB as premise BBB.
+Write premise To begin with , BBB as premise BBB.
+Write To begin with , BBB as premise BBB.
+Write premise To start with , BBB as premise BBB.
+Write To start with , BBB as premise BBB.
+Write premise First , BBB as premise BBB.
+Write First , BBB as premise BBB.
+Write premise Second , BBB as premise BBB.
+Write Second , BBB as premise BBB.
+Write premise Third , BBB as premise BBB.
+Write Third , BBB as premise BBB.
+Write premise Fourth , BBB as premise BBB.
+Write Fourth , BBB as premise BBB.
+Write premise Moreover , BBB as premise BBB.
+Write Moreover , BBB as premise BBB.
+Write premise Furthermore , BBB as premise BBB.
+Write Furthermore , BBB as premise BBB.
+Write premise Plus , BBB as premise BBB.
+Write Plus , BBB as premise BBB.
+Write premise Next , BBB as premise BBB.
+Write Next , BBB as premise BBB.
+Write premise Finally , BBB as premise BBB.
+Write Finally , BBB as premise BBB.
+Write premise Besides , BBB as premise BBB.
+Write Besides , BBB as premise BBB.
+Write premise Also , BBB as premise BBB.
+Write Also , BBB as premise BBB.
+Write premise Now , BBB as premise BBB.
+Write Now , BBB as premise BBB.
+Write premise Above all , BBB as premise BBB.
+Write Above all , BBB as premise BBB.
+Write premise In addition , BBB as premise BBB.
+Write In addition , BBB as premise BBB.
+Write premise Additionally , BBB as premise BBB.
+Write Additionally , BBB as premise BBB.
+Write premise What is more , BBB as premise BBB.
+Write What is more , BBB as premise BBB.
+Write premise BBB as it holds that ( say BBB ) if not BBB holds the word than.
+Write BBB as it holds that ( say BBB ) if not BBB holds the word holds and not BBB holds the word concluded and not BBB holds the word conclusion and not BBB holds the word than and not BBB holds the word above.
+Write premise BBB as BBB if BBB holds the word than.
+Write conclusion BBB as the concluded formula is ( say BBB ).
+Write inside say AAA an BBB as say AAA a BBB.
+Write inside say an BBB as say a BBB.
+Write inside say AAA an as say AAA a.
+Write inside say AAA everybody BBB as say AAA everyone BBB.
+Write inside say everybody BBB as say everyone BBB.
+Write inside say AAA everybody as say AAA everyone.
+Write inside say AAA somebody BBB as say AAA someone BBB.
+Write inside say somebody BBB as say someone BBB.
+Write inside say AAA somebody as say AAA someone.
+Write inside say AAA whoever BBB as say AAA everyone who BBB.
+Write inside say whoever BBB as say everyone who BBB.
+Write inside say AAA whoever as say AAA everyone who.
+Write inside say AAA whatever BBB as say AAA everything that BBB.
+Write inside say whatever BBB as say everything that BBB.
+Write inside say AAA whatever as say AAA everything that.
+Write inside say AAA everything that BBB as say AAA everyone who BBB.
+Write inside say everything that BBB as say everyone who BBB.
+Write inside say AAA everything that as say AAA everyone who.
+Write inside say AAA every BBB as say AAA each BBB.
+Write inside say every BBB as say each BBB.
+Write inside say AAA every as say AAA each.
+Write inside say AAA nothing BBB as say AAA nobody BBB.
+Write inside say nothing BBB as say nobody BBB.
+Write inside say AAA nothing as say AAA nobody.
+Write inside say AAA it is false that BBB as say AAA it is xcase BBB.
+Write inside say it is false that BBB as say it is xcase BBB.
+Write inside say AAA it is false that as say AAA it is xcase.
+Write inside say AAA not the case that BBB as say AAA xcase BBB.
+Write inside say not the case that BBB as say xcase BBB.
+Write inside say AAA not the case that as say AAA xcase.
+Write inside say AAA , too BBB as say AAA BBB.
+Write inside say , too BBB as say BBB.
+Write inside say AAA , too as say AAA.
+Write inside say AAA necessarily , BBB as say AAA BBB.
+Write inside say necessarily , BBB as say BBB.
+Write inside say AAA necessarily , as say AAA.
+Write inside say AAA necessarily BBB as say AAA BBB.
+Write inside say necessarily BBB as say BBB.
+Write inside say AAA necessarily as say AAA.
+Write inside say AAA is also BBB as say AAA is BBB.
+Write inside say is also BBB as say is BBB.
+Write inside say AAA is also as say AAA is.
+Write inside say AAA that is BBB as say AAA who is BBB.
+Write inside say that is BBB as say who is BBB.
+Write inside say AAA that is as say AAA who is.
+Write inside say AAA however BBB as say AAA BBB.
+Write inside say however BBB as say BBB.
+Write inside say AAA however as say AAA.
+Write inside say AAA or , otherwise , BBB as say AAA or BBB.
+Write inside say something is AAA and , in addition , BBB as xexists ( ( say x is AAA ) and ( say x is BBB ) ).
+Write inside say someone is AAA and , in addition , BBB as xexists ( ( say x is AAA ) and ( say x is BBB ) ).
+Write inside say S is AAA and , in addition , BBB as ( say S is AAA ) and ( say S is BBB ).
+Write inside say AAA and , in addition , BBB as say AAA and BBB.
+Write inside say S is AAA and , in the same time , BBB as ( say S is AAA ) and ( say S is BBB ).
+Write inside say AAA and , in the same time , BBB as say AAA and BBB.
+Write inside say AAA while BBB as say AAA and BBB.
+Write inside say there is someone who is AAA and who is BBB as xexists ( ( say x is AAA ) and ( say x is BBB ) ).
+Write inside say S is AAA and who is BBB as ( say S is AAA ) and ( say S is BBB ).
+Write inside say S is AAA or who is BBB as ( say S is AAA ) or ( say S is BBB ).
+Write inside say AAA but BBB as say AAA and BBB.
+Write inside say AAA , a BBB , and a CCC as say AAA and a BBB and a CCC.
+Write inside say AAA , a BBB or a CCC as say AAA or a BBB or a CCC.
+Write inside say AAA , as say AAA.
+Write inside say AAA , or both BBB as say AAA BBB.
+Write inside say , or both BBB as say BBB.
+Write inside say AAA , or both as say AAA.
+Write inside say AAA either BBB as say AAA BBB.
+Write inside say either BBB as say BBB.
+Write inside say AAA either as say AAA.
+Write inside say AAA , in the same time , BBB as say AAA BBB.
+Write inside say , in the same time , BBB as say BBB.
+Write inside say AAA , in the same time , as say AAA.
+Write inside say AAA , at the same time , BBB as say AAA BBB.
+Write inside say , at the same time , BBB as say BBB.
+Write inside say AAA , at the same time , as say AAA.
+Write inside say AAA in the same time BBB as say AAA BBB.
+Write inside say in the same time BBB as say BBB.
+Write inside say AAA in the same time as say AAA.
+Write inside say AAA at the same time BBB as say AAA BBB.
+Write inside say at the same time BBB as say BBB.
+Write inside say AAA at the same time as say AAA.
+Write inside say AAA yet BBB as say AAA and BBB.
+Write inside say yet BBB as say and BBB.
+Write inside say AAA yet as say AAA and.
+Write inside say AAA , either BBB as say AAA BBB.
+Write inside say , either BBB as say BBB.
+Write inside say AAA , either as say AAA.
+Write inside say AAA there exists BBB as say AAA there is BBB.
+Write inside say there exists BBB as say there is BBB.
+Write inside say AAA there exists as say AAA there is.
+Write inside say if someone is AAA , then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then that person are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then they are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then he or she are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then it are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA , then that thing are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if someone is AAA then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then that person are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then they are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then he or she are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then it are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA , then that thing are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if somebody is AAA then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then that person are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then they are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then he or she are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then it are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA , then that thing are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if a person is AAA then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then that person are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA then that person is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then they are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA then they is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then he or she are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA then he or she is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then it are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA then it is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA , then that thing are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say if something is AAA then that thing is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say everyone who is AAA is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say being AAA is sufficient for being BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say being AAA is sufficient for not being BBB as xall ( If ( say x is AAA ) then ( say x is not BBB ) ).
+Write inside say not being AAA is sufficient for being BBB as xall ( If ( say x is not AAA ) then ( say x is BBB ) ).
+Write inside say not being AAA is sufficient for not being BBB as xall ( If ( say x is not AAA ) then ( say x is not BBB ) ).
+Write inside say being AAA is necessary for being BBB as xall ( If ( say x is BBB ) then ( say x is AAA ) ).
+Write inside say being AAA is necessary for not being BBB as xall ( If ( say x is not BBB ) then ( say x is AAA ) ).
+Write inside say not being AAA is necessary for being BBB as xall ( If ( say x is BBB ) then ( say x is not AAA ) ).
+Write inside say not being AAA is necessary for not being BBB as xall ( If ( say x is not BBB ) then ( say x is not AAA ) ).
+Write inside say to be AAA is necessary for being BBB as xall ( If ( say x is BBB ) then ( say x is AAA ) ).
+Write inside say to be AAA is necessary for not being BBB as xall ( If ( say x is not BBB ) then ( say x is AAA ) ).
+Write inside say not to be AAA is necessary for being BBB as xall ( If ( say x is BBB ) then ( say x is not AAA ) ).
+Write inside say not to be AAA is necessary for not being BBB as xall ( If ( say x is not BBB ) then ( say x is not AAA ) ).
+Write inside say to be AAA is sufficient for being BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say someone who is AAA is BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say each AAA and each BBB is CCC as xall ( If ( ( say x is a AAA ) or ( say x is a BBB ) ) then ( say x is CCC ) ).
+Write inside say each AAA who is BBB is CCC as xall ( If ( ( say x is a AAA ) and ( say x is BBB ) ) then ( say x is CCC ) ).
+Write inside say each AAA is CCC as xall ( If ( say x is a AAA ) then ( say x is CCC ) ).
+Write inside say no AAA who is BBB is CCC as xall ( If ( ( say x is a AAA ) and ( say x is BBB ) ) then ( xnot ( say x is CCC ) ) ).
+Write inside say no AAA is CCC as xall ( If ( say x is a AAA ) then ( xnot ( say x is CCC ) ) ).
+Write inside say there is no AAA who is BBB as xnot ( xexists ( ( say x is a AAA ) and ( say x is BBB ) ) ).
+Write inside say there is a AAA who is BBB as xexists ( ( say x is a AAA ) and ( say x is BBB ) ).
+Write inside say all AAA are BBB as xall ( If ( say x is AAA ) then ( say x is BBB ) ).
+Write inside say some AAA are not BBB as xexists ( ( say x is AAA ) and ( xnot ( say x is BBB ) ) ).
+Write inside say some AAA are BBB as xexists ( ( say x is AAA ) and ( say x is BBB ) ).
+Write inside say no AAA are BBB as xall ( If ( say x is AAA ) then ( xnot ( say x is BBB ) ) ).
+Write inside say S is more AAA than T as S is above T in AAA.
+Write inside say S is less AAA than T as T is above S in AAA.
+Write inside say S is D than T as S is above T in C if D is the comparative of C.
+Write inside say nobody is AAA as xall ( xnot ( say x is AAA ) ).
+Write inside say someone is AAA as xexists ( say x is AAA ).
+Write inside say something is AAA as xexists ( say x is AAA ).
+Write inside say there is something that is AAA as xexists ( say x is AAA ).
+Write inside say there is something who is AAA as xexists ( say x is AAA ).
+Write inside say there is someone that is AAA as xexists ( say x is AAA ).
+Write inside say some AAA is BBB as xexists ( ( say x is a AAA ) and ( say x is BBB ) ).
+Write inside say there is someone who is AAA as xexists ( say x is AAA ).
+Write inside say it is xcase AAA as xnot ( say AAA ).
+Write inside say not each AAA as xnot ( say each AAA ).
+Write inside say not everyone AAA as xnot ( say everyone AAA ).
+Write inside say S is not both AAA and BBB as xnot ( ( say S is AAA ) and ( say S is BBB ) ).
+Write inside say S is neither AAA nor BBB nor CCC as ( say S is not AAA ) and ( ( say S is not BBB ) and ( say S is not CCC ) ).
+Write inside say S is neither AAA nor BBB as ( say S is not AAA ) and ( say S is not BBB ).
+Write inside say S is AAA , BBB or CCC as ( say S is AAA ) or ( ( say S is BBB ) or ( say S is CCC ) ).
+Write inside say S is AAA , BBB and CCC as ( say S is AAA ) and ( ( say S is BBB ) and ( say S is CCC ) ).
+Write inside say S is both AAA and BBB as ( say S is AAA ) and ( say S is BBB ).
+Write inside say S is AAA or not BBB as ( say S is AAA ) or ( say S is not BBB ).
+Write inside say S is AAA or BBB as ( say S is AAA ) or ( say S is BBB ).
+Write inside say S is AAA and not BBB as ( say S is AAA ) and ( say S is not BBB ).
+Write inside say S is AAA and BBB as ( say S is AAA ) and ( say S is BBB ).
+Write inside say S is not AAA as xnot ( say S is AAA ).
+Write inside say S is a AAA as say S is AAA.
+Write inside say S is AAA as S is AAA.
+Write inside say A is not both AAA and BBB as xnot ( ( say A is AAA ) and ( say A is BBB ) ).
+Write inside say A is neither AAA nor BBB nor CCC as ( say A is not AAA ) and ( ( say A is not BBB ) and ( say A is not CCC ) ).
+Write inside say A is neither AAA nor BBB as ( say A is not AAA ) and ( say A is not BBB ).
+Write inside say A is AAA , BBB or CCC as ( say A is AAA ) or ( ( say A is BBB ) or ( say A is CCC ) ).
+Write inside say A is both AAA and BBB as ( say A is AAA ) and ( say A is BBB ).
+Write inside say A is AAA or not BBB as ( say A is AAA ) or ( say A is not BBB ).
+Write inside say A is AAA or BBB as ( say A is AAA ) or ( say A is BBB ).
+Write inside say A is AAA and not BBB as ( say A is AAA ) and ( say A is not BBB ).
+Write inside say A is AAA and BBB as ( say A is AAA ) and ( say A is BBB ).
+Write inside say A is not AAA as xnot ( say A is AAA ).
+Write inside say A is a AAA as say A is AAA.
+Write inside say A is AAA as A is AAA.
+Write inside AAA xnot BBB as AAA it is false that BBB if not AAA holds the word say and not BBB holds the word say.
+Write inside xnot BBB as it is false that BBB if not BBB holds the word say.
+Write inside AAA xall BBB as AAA for any thing x , BBB if not AAA holds the word say and not BBB holds the word say.
+Write inside xall BBB as for any thing x , BBB if not BBB holds the word say.
+Write inside AAA xexists BBB as AAA for some thing x , BBB if not AAA holds the word say and not BBB holds the word say.
+Write inside xexists BBB as for some thing x , BBB if not BBB holds the word say.
+Builds on order.
+To answer "AA": valid if the concluded formula is ( BBB ) and it is proved that BBB. invalid otherwise.
+To answer "": valid if the concluded formula is ( BBB ) and it is proved that BBB. invalid otherwise.

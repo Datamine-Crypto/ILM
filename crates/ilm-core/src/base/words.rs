@@ -3,6 +3,9 @@ use patterns::{because, source};
 pub struct WordCut;
 source!(WordCut, "the cut of a text into words as every learner here counts them: the text in small letters, a word is a run of the letters a to z and of digits, or one sign of arithmetic or one bracket; every other mark parts words and is no word");
 
+pub struct SentenceStart;
+source!(SentenceStart, "a written sentence of English starts with a capital letter");
+
 pub struct PathAnswer;
 source!(PathAnswer, "the path task of the twenty tasks of Weston and others writes an answer as letters with commas, the first letters of the four directions; an answer of this form is read as the words of the directions");
 
@@ -70,3 +73,12 @@ pub fn answer_words(answer: &str) -> Vec<String> {
     }
 }
 because!(answer_words, WordCut, "the words of an answer as the measure compares them: a path written in letters as the words of its directions, every other answer as its words");
+
+pub fn first_capital(text: &str) -> String {
+    let mut signs = text.chars();
+    match signs.next() {
+        Some(first) => first.to_uppercase().chain(signs).collect(),
+        None => String::new(),
+    }
+}
+because!(first_capital, SentenceStart, "the text with its first sign as a capital letter, as a written sentence starts");

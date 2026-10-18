@@ -1,0 +1,14 @@
+Note: The logic of "and", "or" and lists. What a sentence says of a list it says of each one in it, and what it says with "and" it says each. "A or B" tells that one of them is so, but not which one. "Both" tells each, and "but not both" tells that not each is so.
+If A And B are C then A is C.
+If A And B are C then B is C.
+If A, B And C are D then A is D.
+If A, B And C are D then B is D.
+If A, B And C are D then C is D.
+If A is B And C then A is B.
+If A is B And C then A is C.
+If A is B, C And D then A is B.
+If A is B, C And D then A is C.
+If A is B, C And D then A is D.
+If A is both B And C then A is B.
+If A is both B And C then A is C.
+If A is B or C but not both then it is false that A is both B And C.

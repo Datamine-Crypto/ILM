@@ -1,0 +1,22 @@
+Note: Meanings of words. A word with the same meaning describes the same person; a word with the opposite meaning cannot describe a person that the first word describes.
+Note: A thing has one kind of animal, one colour and one place of birth, and a person eats one thing at a time: a statement that names another one is false.
+Note: "Can be called" is a made sentence that no rule reads, so a word gives the words that the list gives for it and no more.
+Builds on antonyms.
+If B means C then C means B.
+If A is B and B means C then A can be called C.
+If A is B and B is the opposite of C then A cannot be called C.
+Is A B in colour? yes if A is B in colour. no if A is C in colour.
+Reply to "Is A B in colour?" with yes: Yes, A is B in colour.
+Reply to "Is A B in colour?" with no: No, A is not B in colour.
+Was A born in B? yes if A was born in B. no if A was born in C.
+Reply to "Was A born in B?" with yes: Yes, A was born in B.
+Reply to "Was A born in B?" with no: No, A was not born in B.
+Is A eating a B? yes if A is eating a B. no if A is eating a C. no if A is eating an C.
+Reply to "Is A eating a B?" with yes: Yes, A is eating a B.
+Reply to "Is A eating a B?" with no: No, A is not eating a B.
+Is that animal a B? yes if that animal is a B. no if that animal is a C. no if that animal is an C.
+Reply to "Is that animal a B?" with yes: Yes, that animal is a B.
+Reply to "Is that animal a B?" with no: No, that animal is not a B.
+Is A B? yes if A is B. yes if A can be called B. no if A cannot be called B.
+Reply to "Is A B?" with yes: Yes, A is B.
+Reply to "Is A B?" with no: No, A is not B.

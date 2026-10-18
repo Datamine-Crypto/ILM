@@ -1,0 +1,10 @@
+Note: A count told by what is left when the things are divided among groups of three sizes (the sizes share no divisor, and the most things is their product, so one count fits). A sieve finds it: from what is left by the first size, it adds the first size until what is left by the second size fits, then it adds the product of the first two sizes until what is left by the third size fits. What is left of N by M is N minus M times the whole part of N divided by M.
+Builds on numbers.
+If If we W them X among R AA , we have S left ; If we W them X among T BB , we have U left ; If we W them X among V CC , we have Y left then try S for T And U with step R.
+If try N for T And U with step R and N divided by T is A and the whole part of A is B and B times T is C and N minus C is D and D is less than U and N plus R is E then try E for T And U with step R.
+If try N for T And U with step R and N divided by T is A and the whole part of A is B and B times T is C and N minus C is D and D is more than U and N plus R is E then try E for T And U with step R.
+If try N for T And U with step R and N divided by T is A and the whole part of A is B and B times T is C and N minus C is D and D is at least U and D is at most U then the first two sizes give N.
+If If we W them X among R AA , we have S left ; If we W them X among T BB , we have U left ; If we W them X among V CC , we have Y left and the first two sizes give N and R times T is M then test N for V And Y with step M.
+If test N for V And Y with step M and N divided by V is A and the whole part of A is B and B times V is C and N minus C is D and D is less than Y and N plus M is E then test E for V And Y with step M.
+If test N for V And Y with step M and N divided by V is A and the whole part of A is B and B times V is C and N minus C is D and D is more than Y and N plus M is E then test E for V And Y with step M.
+If test N for V And Y with step M and N divided by V is A and the whole part of A is B and B times V is C and N minus C is D and D is at least Y and D is at most Y then the count is N.

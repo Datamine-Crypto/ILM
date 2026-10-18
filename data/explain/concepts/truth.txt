@@ -1,0 +1,5 @@
+Note: People who tell the truth and people who lie. A person who tells the truth says only what is true, and a person who lies says only what is false. So what one person says of another tells about both: one who says that a truthful person tells the truth, or that a liar lies, tells the truth; one who says that a truthful person lies, or that a liar tells the truth, lies.
+If S says R tells the truth and R tells the truth then S tells the truth.
+If S says R tells the truth and R lies then S lies.
+If S says R lies and R lies then S tells the truth.
+If S says R lies and R tells the truth then S lies.

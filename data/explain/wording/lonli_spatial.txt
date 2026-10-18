@@ -1,0 +1,2 @@
+Note: The group "spatial" of LoNLI: statements about left and right, in between, nearer and farther, and the way a person faces after turns. Its question forms are not written here: the explain tool learns them from the lessons.
+Builds on lines, distance, directions.

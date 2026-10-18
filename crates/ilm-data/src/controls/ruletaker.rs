@@ -1,6 +1,6 @@
 use crate::controls::deduction::{FormalFact, FormalItem, FormalUnit, deduction_exact};
 use crate::controls::file::ChangedCase;
-use ilm_core::know::signs::is_space;
+use ilm_core::base::signs::is_space;
 use ilm_core::choice::inner_parts;
 use ilm_core::cases::Case;
 use crate::sets::export::Described;

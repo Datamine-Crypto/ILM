@@ -1,0 +1,12 @@
+Note: The directions of a compass: the four main directions and the four between them, each as a step across and a step up; the opposite of each; which way a right turn from each faces. Source: general knowledge.
+Builds on opposites.
+North is a direction.
+South is a direction.
+East is a direction.
+West is a direction.
+North is the opposite of south.
+East is the opposite of west.
+A right turn from north faces east.
+A right turn from east faces south.
+A right turn from south faces west.
+A right turn from west faces north.

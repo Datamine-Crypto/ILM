@@ -1,0 +1,2 @@
+Note: Geography. A person who lives in a capital lives in its country.
+Builds on location, capitals, capital_rules.

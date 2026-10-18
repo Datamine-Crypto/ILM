@@ -1,0 +1,7 @@
+Note: Written by hand, not learned: the numbers of a told story in their order, sentence by sentence and then the question, as facts "number K of the story is N", for a learned choice of the reckoning that answers a word problem.
+If AA is told and AA holds the word X and X plus 0 is X then X stands in AA.
+If X stands in AA and Y stands in AA and Y comes after X in AA then X stands before Y.
+If Y stands in BB and before that time X stands in AA then X stands before Y.
+If X stands before Y and Y stands before Z then X stands before Z.
+If X stands in AA and N is the number of D where D stands before X and N plus 1 is K then number K of the story is X.
+If the question is AA then the question is told.

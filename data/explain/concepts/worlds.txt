@@ -1,0 +1,15 @@
+Note: What people know of each other. Each person may see some facts of the others; a statement that is publicly announced is heard by everyone and leaves only the ways the world can be in which it holds; a person knows a statement when it holds in every way the world can be that the person cannot tell apart by what the person sees. The engine keeps these ways of the world (possible worlds). "Knows whether" a statement is to know that it holds or to know that it does not hold; "can now know" after the announcements is to know.
+Write it is publicly announced that A as it is announced that A.
+Write A whether or not B as A whether B.
+Write A can now know B as A knows B.
+Write A can know B as A knows B.
+Write there are two persons as the number of persons is 2.
+Write there are three persons as the number of persons is 3.
+Write there are four persons as the number of persons is 4.
+Write there are five persons as the number of persons is 5.
+Write there are six persons as the number of persons is 6.
+If A R holds and not R is the same as person then R is a person.
+If A R does not hold then R is a person.
+If A R knows B then R is a person.
+If A R does not know B then R is a person.
+If the question is A then the question asks A.

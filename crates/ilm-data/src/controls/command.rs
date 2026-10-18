@@ -7,7 +7,6 @@ use crate::controls::held::{held_changes, held_from_all};
 use crate::controls::list::list_changes;
 use crate::controls::loops::loop_changes;
 use crate::controls::lonli::lonli_changes;
-use crate::controls::made::made_changes;
 use crate::controls::more::more_changes;
 use crate::controls::numbers::number_changes;
 use crate::controls::parts::parts_changes;
@@ -17,7 +16,7 @@ use crate::controls::ruletaker::ruletaker_changes;
 use crate::controls::support::support_changes;
 use crate::controls::swaps::swap_changes;
 use crate::controls::things::thing_changes;
-use crate::controls::tomi::tomi_changes;
+use crate::controls::tomi::{tomi_changes, tomqa_changes};
 use crate::controls::walk::walk_changes;
 use ilm_core::choice::{picked, picked_labels};
 use ilm_core::split::parts;
@@ -34,8 +33,6 @@ source!(ChangeCommand, "one part of the program for every control of changed cas
 const CONTROL_REQUESTS: &str = "requests_control";
 because!(CONTROL_REQUESTS, ChangeCommand, "the name of the control of changed requests, in the command and in the name of its files");
 
-const CONTROL_MADE: &str = "made_control";
-because!(CONTROL_MADE, ChangeCommand, "the name of the control of changed texts of a family that a program makes, in the command and in the name of its files");
 
 const CONTROL_SWAPS: &str = "swaps_control";
 because!(CONTROL_SWAPS, ChangeCommand, "the name of the control of changed stories of swaps");
@@ -82,6 +79,8 @@ because!(CONTROL_CHAIN, ChangeCommand, "the name of the control of stories of a 
 const CONTROL_DEDUCTION: &str = "deduction_control";
 because!(CONTROL_DEDUCTION, ChangeCommand, "the name of the control of theories of told facts and rules with a needed unit taken out");
 
+const CONTROL_TOMQA: &str = "tomqa_control";
+because!(CONTROL_TOMQA, ChangeCommand, "the name of the control of changed stories of the belief set, where a person who did not see the move now sees it");
 const CONTROL_HELD: &str = "held_control";
 because!(CONTROL_HELD, ChangeCommand, "the name of the control of changed texts of the tables used one after the other, whose changes are always made from all lessons, since the tables stand whole only there");
 
@@ -106,7 +105,7 @@ because!(OPTION_FORMS, ChangeCommand, "the option that names the description of 
 const OPTION_ABOUT: &str = "about=";
 because!(OPTION_ABOUT, ChangeCommand, "the option that names the description of the set of a kind, whose raw files a control reads beside the case file");
 
-const CONTROL_NAMES: &[&str] = &[CONTROL_REQUESTS, CONTROL_MADE, CONTROL_SWAPS, CONTROL_ARITH, CONTROL_WALK, CONTROL_LIST, CONTROL_MORE, CONTROL_PARTS, CONTROL_NUMBERS, CONTROL_LONLI, CONTROL_TOMI, CONTROL_SUPPORT, CONTROL_CHAIN, CONTROL_DEDUCTION, CONTROL_HELD, CONTROL_RULETAKER, CONTROL_THINGS, CONTROL_LOOPS, CONTROL_FLOWS, CONTROL_PIECES];
+const CONTROL_NAMES: &[&str] = &[CONTROL_REQUESTS, CONTROL_SWAPS, CONTROL_ARITH, CONTROL_WALK, CONTROL_LIST, CONTROL_MORE, CONTROL_PARTS, CONTROL_NUMBERS, CONTROL_LONLI, CONTROL_TOMI, CONTROL_TOMQA, CONTROL_SUPPORT, CONTROL_CHAIN, CONTROL_DEDUCTION, CONTROL_HELD, CONTROL_RULETAKER, CONTROL_THINGS, CONTROL_LOOPS, CONTROL_FLOWS, CONTROL_PIECES];
 because!(CONTROL_NAMES, ChangeCommand, "the controls that the part knows, for the line that says how it is used");
 
 const CONTROL_BETWEEN: &str = "|";
@@ -190,7 +189,6 @@ pub fn changes_command(args: &[String]) -> ExitCode {
     };
     let made: Result<Vec<ChangedCase>, String> = match control.as_str() {
         CONTROL_REQUESTS => Ok(request_changes(&lessons, whole, &change_words(path))),
-        CONTROL_MADE => made_changes(&lessons, whole, &kind),
         CONTROL_SWAPS => Ok(swap_changes(&lessons, whole)),
         CONTROL_ARITH => Ok(arithmetic_changes(&lessons, whole, &kind)),
         CONTROL_WALK => walk_changes(&lessons, whole),
@@ -200,6 +198,7 @@ pub fn changes_command(args: &[String]) -> ExitCode {
         CONTROL_NUMBERS => Ok(number_changes(&lessons, whole)),
         CONTROL_LONLI => Ok(lonli_changes(&lessons, &read, read_part)),
         CONTROL_TOMI => Ok(tomi_changes(&lessons, whole, &kind)),
+        CONTROL_TOMQA => Ok(tomqa_changes(&lessons, whole)),
         CONTROL_CHAIN => Ok(chain_changes(&lessons, &set)),
         CONTROL_DEDUCTION => Ok(deduction_changes(&lessons, &labels, whole)),
         CONTROL_HELD => held_changes(&lessons, &set, &kind, option(OPTION_ABOUT).map(Path::new)),

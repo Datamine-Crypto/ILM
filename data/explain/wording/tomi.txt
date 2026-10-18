@@ -1,0 +1,13 @@
+Note: The wording of ToMi: statements to judge as entailment or not_entailment. A statement joins the words of a container with "_" (green_suitcase).
+Note: Some told lines of the set are two or three sentences run together, a fault of the copy: "Oliver dislikes the kitchen Carter entered the porch." holds the sentence "Carter entered the porch.", and "Ella likes the crawlspace The peas is in the green cupboard." holds "The peas is in the green cupboard."
+Note: In the world of the set, as in ToM-QA, a person who comes into a room sees where the things in the room are.
+Builds on location, beliefs.
+If D entered the C and at that time the A is in B in the room C then D saw the A in the B in the room C.
+If A Es the B The C is in the D then the C is in the D.
+If R Fs the T U entered the C then U entered the C.
+If R Fs the T U exited the C then U exited the C.
+If R Fs the T U moved the A to the B then U moved the A to the B.
+To answer "the A really is in the B": entailment if latest the place of the A is B. not_entailment otherwise.
+To answer "the A at the beginning was in the B": entailment if the A is in the B. not_entailment otherwise.
+To answer "A look for the B to the C": entailment if latest A thinks the B to be in C. not_entailment otherwise.
+To answer "A think that D searches for the B in the C": entailment if latest A thinks that D thinks the B to be in C. not_entailment otherwise.

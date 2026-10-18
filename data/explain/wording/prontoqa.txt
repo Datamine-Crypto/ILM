@@ -1,0 +1,6 @@
+Note: The wording of PrOntoQA: a statement about one thing, to judge as true or false.
+Builds on classes.
+To answer "Is the following statement true or false? C is not B.": True if C is not B. False if C is B.
+To answer "Is the following statement true or false? C is B.": True if C is B. False if C is not B.
+To answer "True or false: C is not B.": True if C is not B. False if C is B.
+To answer "True or false: C is B.": True if C is B. False if C is not B.

@@ -1,0 +1,2 @@
+Note: A capital whose name holds a comma or a full stop (Washington, D.C.) cannot fill an open place of a fact, so a rule stands in place of its fact; the rule writes d.c. in small letters, as a capital letter alone is an open place. The facts of the other capitals are in learned/capitals.txt, which the step that reads facts from a large text wrote (ilm facts).
+If A lives in Washington, d.c. then A lives in United States of America.

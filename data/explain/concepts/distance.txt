@@ -1,0 +1,8 @@
+Note: Distance. A thing between two others is nearer to each of them than they are to each other. Of two distances in miles, the smaller one is the nearer.
+If A is located between B And C then B is nearer to A than B is to C.
+If A is located between B And C then C is nearer to A than C is to B.
+If A is D miles from B And E miles from C and D is less than E then A is nearer to B than A is to C.
+If A is D miles from B And E miles from C and E is less than D then A is nearer to C than A is to B.
+Is A nearer to B than to C? yes if A is nearer to B than A is to C. no if A is nearer to C than A is to B.
+Reply to "Is A nearer to B than to C?" with yes: Yes, A is nearer to B than to C.
+Reply to "Is A nearer to B than to C?" with no: No, A is nearer to C than to B.

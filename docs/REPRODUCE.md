@@ -4,10 +4,9 @@ This page gives the commands for each number of [RESULTS.md](RESULTS.md). Run al
 
 ## What you need
 
-- Rust 1.90 or later and a C compiler (the memory allocator mimalloc needs one). A release build takes about 4 minutes.
+- Rust 1.97 or later and a C compiler (the memory allocator mimalloc needs one). A release build takes about 4 minutes.
 - `curl`, which `ilm fetch` uses to get the public data files.
-- Disk space: less than 1 GB for each benchmark, and 13 GB for LAMA (the Wikipedia copy and its text store).
-- For E2E only: Python 3 and the official E2E metrics; for all five of its metrics also Java 1.8.
+- Disk space: less than 1 GB for each benchmark.
 
 Build the program:
 
@@ -21,7 +20,9 @@ The program is `target/release/ilm` (`target\release\ilm.exe` on Windows). The c
 
 `data/sources.txt` names every raw file that ILM reads: its host, repository, revision, path and SHA-256. `ilm fetch` gets the files of the sets that you name into `data/raw`, and it keeps a file only when its SHA-256 is right. Run it again to check the files: a file with the right hash is not fetched again.
 
-`ilm export` reads the raw files of a set, as its description in `data/sets` names them, and writes one case file for each kind. The descriptions in `data/sets/final` read the official test splits.
+`ilm export` reads the raw files of a set, as its description in `data/sets` names them, and writes one case file for each kind. A description in `data/sets/final` reads the official test split where the description of the board does not read it alone: for bAbI the board reads only the train and validation questions, and for CLUTRR in the graph form and ToM-QA it also reads the validation split.
+
+`ilm measure` learns each kind from its lessons and reads its read part. `held=` sets the most read cases of a kind: a number above the size of the test split reads all of it. A list of kinds after the folder measures those kinds only. `small=1` reads a kind however few cases it has. `sealed=1` reads the sealed part of each kind in place of its read part. The last line of the output gives the right answers of each kind.
 
 ## bAbI, 20 tasks
 
@@ -31,7 +32,7 @@ ilm export src_babi data/sets/final/src_babi.txt cases/final/src_babi
 ilm measure cases/final/src_babi
 ```
 
-The last line gives the right answers of each task. The sum is 19,356 of 19,399: task 3 has 989 of 1000, task 5 998 of 1000, task 17 958 of 968, task 18 980 of 1000, and every other task has all its questions right.
+The lessons are the 1,000 train and validation questions of each task, and the read part is its test questions. Expected: babi01 998 of 998, babi02 1000 of 1000, babi03 1000 of 1000, babi04 560 of 560, babi05 998 of 1000, babi06 998 of 998, babi07 997 of 999, babi08 994 of 1000, babi09 1000 of 1000, babi10 997 of 997, babi11 1000 of 1000, babi12 1000 of 1000, babi13 998 of 998, babi14 519 of 1000, babi15 1000 of 1000, babi16 995 of 1000, babi17 968 of 968, babi18 1000 of 1000, babi19 1000 of 1000, babi20 881 of 881; 18,903 of 19,399 in all.
 
 ## SCAN
 
@@ -48,10 +49,10 @@ Expected: scan_simple 4182 of 4182, scan_length 3920 of 3920, scan_addprim_jump 
 ```
 ilm fetch data/sources.txt sets=src_proofwriter
 ilm export src_proofwriter data/sets/src_proofwriter.txt cases/src_proofwriter
-ilm measure cases/src_proofwriter held=100000
+ilm measure cases/src_proofwriter pw_open_d0,pw_open_d1,pw_open_d2,pw_open_d3,pw_open_d4,pw_open_d5,pw_closed_d0,pw_closed_d1,pw_closed_d2,pw_closed_d3,pw_closed_d4,pw_closed_d5 held=100000
 ```
 
-Expected: every kind pw_open_d0 to pw_open_d5 and pw_closed_d0 to pw_closed_d5 has all its read cases right, 40,063 in all (open form 20,020, closed form 20,043). For pw_closed_d5 the measure marks STRONGER LESSONS: its lessons also have the formal forms that the set gives.
+The list names the twelve kinds of one depth of proof each; the set has more kinds for the board. Expected: pw_open_d0 6194 of 6194, pw_open_d1 4518 of 4527, pw_open_d2 2866 of 2879, pw_open_d3 2348 of 2364, pw_open_d4 2073 of 2097, pw_open_d5 1888 of 1959, pw_closed_d0 6125 of 6125, pw_closed_d1 4290 of 4315, pw_closed_d2 2884 of 2897, pw_closed_d3 2457 of 2467, pw_closed_d4 2184 of 2192, pw_closed_d5 2043 of 2047; 39,870 of 40,063 in all (open form 19,887 of 20,020, closed form 19,983 of 20,043).
 
 ## LoNLI
 
@@ -61,96 +62,62 @@ ilm export src_lonli data/sets/src_lonli.txt cases/src_lonli
 ilm measure cases/src_lonli sealed=1
 ```
 
-`sealed=1` reads the sealed part of each group in place of its read part. Expected: lonli_boolean 991 of 1000, lonli_causal 1000 of 1000, lonli_comparative 581 of 1000, lonli_conditional 1000 of 1000, lonli_coreference 992 of 1000, lonli_implicature 992 of 995, lonli_lexical 880 of 997, lonli_negation 994 of 994, lonli_numerical 898 of 1000, lonli_presupposition 1000 of 1000, lonli_quantifier 966 of 1000, lonli_relational 1000 of 1000, lonli_spatial 973 of 1000, lonli_syntactic 1000 of 1000, lonli_taxonomic 1000 of 1000 (copies of lessons, not in the total), lonli_temporal 955 of 1000; 14,222 of 14,986 over the 15 groups with unseen cases.
+`sealed=1` reads the sealed part of each group in place of its read part. Expected: lonli_boolean 1000 of 1000, lonli_causal 1000 of 1000, lonli_comparative 999 of 1000, lonli_conditional 1000 of 1000, lonli_coreference 999 of 1000, lonli_implicature 995 of 995, lonli_lexical 831 of 997, lonli_negation 994 of 994, lonli_numerical 1000 of 1000, lonli_presupposition 994 of 1000, lonli_quantifier 997 of 1000, lonli_relational 905 of 1000, lonli_spatial 1000 of 1000, lonli_syntactic 1000 of 1000, lonli_taxonomic 937 of 1000, lonli_temporal 1000 of 1000; 14,714 of 14,986 over the 15 groups with unseen cases (lonli_taxonomic reads copies of lessons and is not in the total; lonli_world has no sealed part).
 
-## CLUTRR
-
-```
-ilm fetch data/sources.txt sets=src_clutrr
-ilm export src_clutrr data/sets/final/src_clutrr.txt cases/final/src_clutrr
-ilm measure cases/final/src_clutrr clutrr_k2,clutrr_k3,clutrr_k4,clutrr_k5,clutrr_k6,clutrr_k7,clutrr_k8,clutrr_k9,clutrr_k10 small=1
-```
-
-The option `small=1` reads every kind of the test split, also a kind with fewer than 100 test stories. Expected: clutrr_k2 26 of 38, clutrr_k3 86 of 107, clutrr_k4 59 of 77, clutrr_k5 142 of 185, clutrr_k6 78 of 105, clutrr_k7 110 of 155, clutrr_k8 86 of 135, clutrr_k9 87 of 124, clutrr_k10 84 of 122; 758 of 1,048 in all.
-
-## LAMA T-REx
-
-The fact reader reads the English Wikipedia of March 2022 (41 parquet files, 11 GB). `store=` names the folder for these files.
+## CLUTRR, graph form
 
 ```
-ilm fetch data/sources.txt sets=src_lama,src_questions,store store=data/raw/wikipedia
-ilm export src_lama data/sets/src_lama.txt cases/src_lama
-ilm store data/raw/wikipedia cases/store data/sets/src_lama.txt data/sets/src_questions.txt
-ilm classes data/raw/wikipedia cases/classes
-ilm know cases/store cases/src_lama/facts.txt part=probe text=all classes=cases/classes/classes_1000.txt
+ilm fetch data/sources.txt sets=src_clutrr_graph
+ilm export src_clutrr_graph data/sets/final/src_clutrr_graph.txt cases/final/src_clutrr_graph
+ilm measure cases/final/src_clutrr_graph clutrrg_k2,clutrrg_k3,clutrrg_k4,clutrrg_k5,clutrrg_k6,clutrrg_k7,clutrrg_k8,clutrrg_k9,clutrrg_k10 small=1
 ```
 
-`ilm store` writes the text store: the articles of the subjects of the facts and of the questions, and other articles up to 1,000 million signs. `ilm classes` counts the table of word classes from 100 MB of text of each file of the copy; it takes about 40 s on 24 threads and 5 GB of memory. The board uses the same table.
+`small=1` reads every kind of the test split, also a kind with fewer than 100 test graphs. Expected: clutrrg_k2 35 of 35, clutrrg_k3 102 of 107, clutrrg_k4 73 of 77, clutrrg_k5 185 of 185, clutrrg_k6 105 of 105, clutrrg_k7 155 of 155, clutrrg_k8 135 of 135, clutrrg_k9 124 of 124, clutrrg_k10 122 of 122; 1,036 of 1,045 in all.
 
-Expected: `part probe: 6791 lesson facts, 27248 facts asked, 41 relations`, then 61.7% right from the text alone (16,817), and the line of the guesses: `facts with no answer in the text, guessed from the subject's name: 1927, right 622; right with the guesses, % of all asked facts: 64.0`.
-
-## SVAMP, standard setting
+## Sentence transformations
 
 ```
-ilm fetch data/sources.txt sets=src_wordproblems
-ilm export src_wordproblems data/sets/final/src_wordproblems.txt cases/final/src_wordproblems
-ilm measure cases/final/src_wordproblems svamp_standard
+ilm fetch data/sources.txt sets=src_transform
+ilm export src_transform data/sets/src_transform.txt cases/src_transform
+ilm measure cases/src_transform held=10000
 ```
 
-Expected: svamp_standard 115 of 300. The kind svamp_standard_dev reads the 700 problems of the development part.
+Each kind whose name ends in `_test` reads the whole test file of its part, and each kind whose name ends in `_gen` the whole generalization file. Expected: each of the 8 kinds 10000 of 10000; 80,000 of 80,000 in all.
 
-## E2E NLG
-
-```
-ilm fetch data/sources.txt sets=src_e2e
-ilm export src_e2e data/sets/final/src_e2e.txt cases/final/src_e2e
-ilm write out cases/final/src_e2e/train.txt cases/final/src_e2e/test.txt 42061 runs/e2e/written.txt all
-ilm write metric-files cases/final/src_e2e/test.txt runs/e2e/written.txt runs/e2e/references.txt runs/e2e/texts.txt
-```
-
-`write out` learns from all 42,061 train rows and writes a text for each of the 630 test inputs. `write metric-files` writes the two files that the official metrics read. Get the official E2E metrics (GitHub tuetschek/e2e-metrics, commit 1b9c4d87fd0bbb171ea966741cdc012588581ed4). With Java 1.8 and its Python requirements installed, its script gives all five metrics:
+## PCFG SET
 
 ```
-python <folder of e2e-metrics>/measure_scores.py -p runs/e2e/references.txt runs/e2e/texts.txt
+ilm fetch data/sources.txt sets=src_pcfg
+ilm export src_pcfg data/sets/src_pcfg.txt cases/src_pcfg
+ilm measure cases/src_pcfg held=12000
 ```
 
-Without Java, the script stops before it prints BLEU. BLEU and NIST alone come from the same code of the package (metrics/pymteval.py), which needs only the Python package `future` (`pip install future`). Save these lines as `score.py` and run `python score.py <folder of e2e-metrics>`:
+Expected: pcfg_plain 9721 of 9721, pcfg_longer 11333 of 11333, pcfg_new 10175 of 10175.
+
+## ToM-QA
 
 ```
-import sys
-sys.path.insert(0, sys.argv[1])
-from metrics.pymteval import BLEUScore, NISTScore
-references, group = [], []
-for line in open("runs/e2e/references.txt", encoding="utf-8"):
-    line = line.strip()
-    if line:
-        group.append(line)
-    elif group:
-        references.append(group)
-        group = []
-if group:
-    references.append(group)
-texts = [line.strip() for line in open("runs/e2e/texts.txt", encoding="utf-8")]
-assert len(texts) == len(references), "the texts and the groups of references differ in number"
-bleu, nist = BLEUScore(), NISTScore()
-for text, group in zip(texts, references):
-    bleu.append(text, group)
-    nist.append(text, group)
-print(f"BLEU {bleu.score():.4f}, NIST {nist.score():.4f}")
+ilm fetch data/sources.txt sets=src_tomqa
+ilm export src_tomqa data/sets/final/src_tomqa.txt cases/final/src_tomqa
+ilm measure cases/final/src_tomqa
 ```
 
-Expected: BLEU 0.6537 and NIST 8.2896. RESULTS.md gives BLEU and NIST only.
+Expected: tomqa_easy_real 167 of 167, tomqa_easy_begin 157 of 157, tomqa_easy_look 171 of 171, tomqa_easy_think 155 of 155, tomqa_noise_real 156 of 156, tomqa_noise_begin 171 of 171, tomqa_noise_look 166 of 166, tomqa_noise_think 157 of 157, tomqa_hard_real 167 of 167, tomqa_hard_begin 158 of 158, tomqa_hard_look 170 of 170, tomqa_hard_think 155 of 155; 1,950 of 1,950 in all.
 
 ## The board
 
-The board reads the read parts of all kinds of 25 sets, with the table of word classes of the LAMA step:
+The board reads the read parts of all kinds of 25 sets:
 
 ```
 for set in src_atis src_babi src_bigbench src_boardgame src_clutrr src_clutrr_graph src_fld src_lonli src_mindgames src_nlgraph src_pararules src_pcfg src_prontoqa src_proofwriter src_prosqa src_regex src_ruletaker src_scan_step src_snips src_spartqa src_stepgame src_tomi src_tomqa src_transform src_wordproblems; do
   ilm fetch data/sources.txt sets=$set
   ilm export $set data/sets/$set.txt cases/board/$set
 done
-ilm board cases/board classes=cases/classes/classes_1000.txt
+ilm board cases/board
 ```
 
-Expected: `240 kinds in 112 tasks; 155 kinds learned; 61 tasks learned in 17 sets`.
+Expected: `240 kinds in 112 tasks; 165 kinds learned; 79 tasks learned in 14 sets`. `out=<file>` also writes the table to a file, and `ilm compare <board file> <board file>` prints what changed from one board to another.
+
+## Facts from a large text
+
+The board reads `data/explain/learned/capitals.txt` as it is in the repository. The facts step (`ilm facts`) wrote it from a plain-text copy of the English Wikipedia (from wikimedia/wikipedia on the Hugging Face hub, 20231101.en, in 10 files), with the lessons of lonli_world as the judge. The copy is not in the repository, and `ilm fetch` does not get it. Each fact of the file names the files and lines of the sentences that gave it, but the release does not hold the steps that made the 10 plain-text files from that copy, so these files and lines cannot be checked from the repository alone.

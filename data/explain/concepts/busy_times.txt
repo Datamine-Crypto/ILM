@@ -1,0 +1,9 @@
+Note: Busy and free times of a day in whole hours. A person seen doing something from one hour to another is busy then; a person is up from the hour of waking, and a place is open until the hour after which it is closed. A span of hours is free for a visit when the person is up and the place is open for all of it, and it meets no busy time of the person: the times that a story tells are taken as all the busy times there are.
+Builds on hours.
+If R is busy from T to U and T is the hour X and U is the hour Y then R is busy from hour X to hour Y.
+If R woke up at T and T is the hour X then R is up from hour X.
+If the B was closed after T and T is the hour X then the B is open until hour X.
+If the span T to U is asked for R at the B and T is the hour X and U is the hour Y and R is busy from hour V to hour W and V is less than Y and X is less than W then the span T to U meets a busy time of R.
+If the span T to U is asked for R at the B and T is the hour X and R is up from hour V and X is less than V then the span T to U is too early for R.
+If the span T to U is asked for R at the B and U is the hour Y and the B is open until hour W and W is less than Y then the span T to U is too late for the B.
+If the span T to U is asked for R at the B and not the span T to U meets a busy time of R and not the span T to U is too early for R and not the span T to U is too late for the B then the span T to U is free for R at the B.

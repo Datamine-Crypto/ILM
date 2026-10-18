@@ -1,0 +1,40 @@
+Note: Possession and transfer. Taking a thing makes the taker hold it; giving it to another person makes the other hold it.
+Note: Dropping, leaving, discarding or putting a thing down ends the holding. A person carries the things whose last holder the person is; two things are two different things, and "the football there" is the football.
+Note: In each giving one side gives and the other gets: a teacher teaches and a learner learns, a lender lends and a borrower borrows, a seller sells and a buyer buys, a speaker tells and a listener hears.
+If A got the B there then A got the B.
+If A got the B then the holder of the B is A.
+If A passed the B to C then A gave the B to C.
+If A handed the B to C then A gave the B to C.
+If A gave the B to C then the holder of the B is C.
+If A gave the B to C then the holder of the B there is C.
+If A dropped the B there then A dropped the B.
+If A discarded the B then A dropped the B.
+If A dropped the B then the holder of the B is nobody.
+If A dropped the B then the holder of the B there is nobody.
+If A got the B and latest the holder of the B is C then C has the B now.
+If C has the B now then B is the same thing as B.
+If C has the B there now then B there stands for B.
+If C has the B now and A got the B then C carries the B.
+If V has the W now and V has the Z now and not W is the same thing as Z then V has two things now.
+If A lent B to C then C borrowed B from A.
+If A threw B to C then C received B from A.
+If A spoke about B to C then C heard about B from A.
+What did A give to C? B if latest A gave the B to C.
+Reply to "What did A give to C?" with B: A gave the B to C.
+Who gave the B to C? A if latest A gave the B to C.
+Reply to "Who gave the B to C?" with A: A gave the B to C.
+Who did A give the B to? C if latest A gave the B to C.
+Reply to "Who did A give the B to?" with C: A gave the B to C.
+Who gave the B? A if latest A gave the B to C.
+Reply to "Who gave the B?" with A: A gave the B.
+Who received the B? C if latest A gave the B to C.
+Reply to "Who received the B?" with C: C received the B.
+How many objects is A carrying? three if A has three things now. two if A has two things now. one if A has the B now. none otherwise.
+Reply to "How many objects is A carrying?" with three: A is carrying three objects.
+Reply to "How many objects is A carrying?" with two: A is carrying two objects.
+Reply to "How many objects is A carrying?" with one: A is carrying one object.
+Reply to "How many objects is A carrying?" with none: A is carrying nothing.
+What is A carrying? E B if A has two things now and A carries the E and latest A carries the B and not E is the same thing as B and not E stands for D and not B stands for F. B if A has the B now and not B stands for D. nothing otherwise.
+Reply to "What is A carrying?" with nothing: A is carrying nothing.
+Reply to "What is A carrying?" with E B: A is carrying the E and the B.
+Reply to "What is A carrying?" with B: A is carrying the B.

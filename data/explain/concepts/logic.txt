@@ -1,0 +1,21 @@
+Note: All, some and none. If all things of a group have a property, some of them have it, and it is false that none have it. If none have it, it is false that some or all have it. What a named person did, someone did.
+Note: A thing has one colour: if all things of a group are one colour, none of them is another colour, and if some are one colour, it is false that all are another colour.
+Builds on colours, names.
+If all of the A are B then some of the A are B.
+If all of the A are B then it is false that none of the A are B.
+If none of the A are B then it is false that some of the A are B.
+If none of the A are B then it is false that all of the A are B.
+If some of the A are B then it is false that none of the A are B.
+If all of the A are C in colour and B is a colour and not all of the A are B in colour then none of the A are B in colour.
+If some of the A are C in colour and B is a colour and not some of the A are B in colour then it is false that all of the A are B in colour.
+If C is a name and A B C then A B someone.
+If A is a name and A B C then someone B C.
+Are all of the A B? yes if all of the A are B. no if it is false that all of the A are B.
+Reply to "Are all of the A B?" with yes: Yes, all of the A are B.
+Reply to "Are all of the A B?" with no: No, not all of the A are B.
+Are some of the A B? yes if some of the A are B. no if it is false that some of the A are B.
+Reply to "Are some of the A B?" with yes: Yes, some of the A are B.
+Reply to "Are some of the A B?" with no: No, none of the A are B.
+Are none of the A B? yes if none of the A are B. no if it is false that none of the A are B.
+Reply to "Are none of the A B?" with yes: Yes, none of the A are B.
+Reply to "Are none of the A B?" with no: No, some of the A are B.

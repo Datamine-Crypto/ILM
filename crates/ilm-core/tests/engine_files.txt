@@ -1,0 +1,14 @@
+src/base/digest.rs
+src/base/exact.rs
+src/base/lanes.rs
+src/cases.rs
+src/tools/explain/chain.rs
+src/tools/explain/clauses.rs
+src/tools/explain/costs.rs
+src/tools/explain/known_good.rs
+src/tools/explain/positions.rs
+src/tools/explain/story_disk.rs
+src/tools/explain/text.rs
+src/tools/explain/words.rs
+src/tools/explain/worlds.rs
+src/tools/explain/worlds_solve.rs

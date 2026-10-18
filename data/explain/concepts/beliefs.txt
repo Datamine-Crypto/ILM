@@ -1,0 +1,17 @@
+Note: Beliefs (what a person thinks, after what the person saw). A belief is written "D thinks the A to be in B", so that no rule of places reads it as a place. A thing told in a story is in the room where the story is, the room that a person entered last; a thing that a person moves is in the room of that person. A person in that room sees where the thing is put; a person out of the room does not. A person thinks that a thing is where the person last saw it, and looks for it there. A person who was in the room when another person saw a thing knows what the other saw.
+Builds on location.
+If A entered the B then the room of A is B.
+If A exited the B then the room of A is outside.
+If A entered the B then the scene is B.
+If the room of A is B then A is a person.
+If the A is in the B and at that time the scene is C then the A is in B in the room C.
+If D moved the A to the B and at that time the room of D is C then the A is in B in the room C.
+If D moved the A to the B and at that time the scene is C and not the room of D is E then the A is in B in the room C.
+If D is a person and the A is in B in the room C and at that time the room of D is C then D saw the A in the B in the room C.
+If D exited the C and before that time the A is in B in the room C and not D entered the C then D saw the A in the B in the room C.
+If D saw the A in the B in the room C then D thinks the A to be in B.
+If E is a person and D saw the A in the B in the room C and at that time the room of E is C then E thinks that D thinks the A to be in B.
+Where does D think the A is? B if latest D thinks the A to be in B.
+Reply to "Where does D think the A is?" with B: D thinks that the A is in the B.
+Where does E think that D thinks the A is? B if latest E thinks that D thinks the A to be in B.
+Reply to "Where does E think that D thinks the A is?" with B: E thinks that D thinks that the A is in the B.

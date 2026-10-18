@@ -1,0 +1,9 @@
+Note: Links. Two things joined by a link are connected both ways, and connection goes on through any number of links.
+If A is linked to B then B is linked to A.
+If A is linked to B and B is linked to C then A is linked to C.
+Is there a path between A and B? yes if A is linked to B. no otherwise.
+Reply to "Is there a path between A and B?" with yes: Yes, there is a path between A and B.
+Reply to "Is there a path between A and B?" with no: No, there is no path between A and B.
+Are A and B connected? yes if A is linked to B. no otherwise.
+Reply to "Are A and B connected?" with yes: Yes, A and B are connected.
+Reply to "Are A and B connected?" with no: No, A and B are not connected.

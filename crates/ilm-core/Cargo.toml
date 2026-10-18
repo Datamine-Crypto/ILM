@@ -1,6 +1,6 @@
 [package]
 name = "datamine-ilm-core"
-description = "The core of ILM, the Integer Language Model: words and numbers, the tools that learn by counting, the choice among them, the readers and the writer."
+description = "The core of ILM, the Integer Language Model: words and numbers, the explain tool with its engine, its learners and its proofs, the choice of its ways, the cut of the cases."
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -10,6 +10,8 @@ homepage.workspace = true
 
 [lib]
 name = "ilm_core"
+test = false
+doctest = false
 
 [dependencies]
 premise = "0.1.5"

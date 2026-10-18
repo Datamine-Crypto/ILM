@@ -1,0 +1,9 @@
+Note: The wording of the graph form of CLUTRR: a told fact "A daughter B" says that B is the daughter of A, and the question ('A', 'B') asks what B is to A.
+Note: Four rules here are conventions of the set and not true in general, so the concept family does not teach them: a spouse of a parent is a parent (in life it can be a stepparent), a spouse of a grandparent is a grandparent, a grandparent of a child is a parent of the parent that the story names, and so is an aunt or uncle a sibling of that parent (in life each can be on the side of the other parent).
+Builds on family.
+If A R B and R means a D E then A has B as R.
+If A is a spouse of B and B is a parent of C then A is a parent of C.
+If A is a grandparent of B and C is a spouse of A then C is a grandparent of B.
+If A is a parent of B and C is a grandparent of B then C is a parent of A.
+If A is a parent of B and C is a pibling of B then C is a sibling of A.
+To answer "('A', 'B')": C if A is a parent of B and B is D and C means a D child. C if B is a parent of A and B is D and C means a D parent. C if A is a spouse of B and B is D and C means a D spouse. C if A is a sibling of B and B is D and C means a D sibling. C if A is a grandparent of B and B is D and C means a D grandchild. C if B is a grandparent of A and B is D and C means a D grandparent. C if A is a pibling of B and B is D and C means a D nibling. C if B is a pibling of A and B is D and C means a D pibling. son-in-law if B is a child-in-law of A and B is male. daughter-in-law if B is a child-in-law of A and B is female. father-in-law if B is a parent-in-law of A and B is male. mother-in-law if B is a parent-in-law of A and B is female.

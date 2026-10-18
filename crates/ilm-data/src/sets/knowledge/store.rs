@@ -1,22 +1,30 @@
-use ilm_core::base::lanes::{hardware_lanes, on_lanes};
-use ilm_core::know::letters::letters;
-use ilm_core::know::store::{OTHERS_FILE, QUESTIONS_FILE, SUBJECTS_FILE};
-use ilm_core::know::titles::names;
+use ilm_core::base::lanes::{hardware_lanes, on_lanes, shards};
 use crate::sets::export::Described;
 use crate::sets::json::json_text;
 use crate::sets::knowledge::asked::asked_cases;
 use crate::sets::knowledge::facts::probe_facts;
+use crate::sets::knowledge::letters::letters;
+use crate::sets::knowledge::titles::names;
 use crate::sets::parquet::open;
 use crate::sets::parquet::records::Value;
 use crate::sets::readers::common::{lines_of, stripped};
 use patterns::{because, source};
-use std::collections::{BTreeSet, HashSet};
+use std::collections::HashSet;
 use std::io::{BufWriter, Write};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
 pub struct EncyclopediaStore;
 source!(EncyclopediaStore, "the text store of the reader of facts, made from a copy of an encyclopedia in parquet files with the title and the plain text of each article, read file by file in the order of their names: the articles that answer to the name of a subject of the probe (by the names of their title in small letters), other articles of the first files up to a number of signs, the articles that answer to the name of a subject of the questions and stand in neither of those two files, all titles in the order of their signs, and the known names (the letters of each name of a title, each once, in rising order); an article is one line, a JSON object with its title and its text");
+
+const SUBJECTS_FILE: &str = "subjects.jsonl";
+because!(SUBJECTS_FILE, EncyclopediaStore, "the file of the store with the articles that answer to the name of a subject of the probe");
+
+const QUESTIONS_FILE: &str = "questions.jsonl";
+because!(QUESTIONS_FILE, EncyclopediaStore, "the file of the store with the articles that answer to the name of a subject of the questions that people wrote");
+
+const OTHERS_FILE: &str = "others.jsonl";
+because!(OTHERS_FILE, EncyclopediaStore, "the file of the store with other articles, for a run at the full size of the text");
 
 const OTHER_SIGNS: usize = 1_000_000_000;
 because!(OTHER_SIGNS, EncyclopediaStore, "the signs of other articles that the store holds when a run names no number: text for a model at full size beside the articles of the subjects");
@@ -155,18 +163,27 @@ pub fn make_store(dump: &Path, store: &Path, probe: &Described, questions: &Desc
     let other = write_articles(&store.join(OTHERS_FILE), found.iter().flat_map(|file| file.others.iter()))?;
     let have: HashSet<&str> = found.iter().flat_map(|file| file.subjects.iter().chain(&file.others)).map(|(title, _)| title.as_str()).collect();
     let asked = write_articles(&store.join(QUESTIONS_FILE), found.iter().flat_map(|file| file.asked.iter()).filter(|(title, _)| !have.contains(title.as_str())))?;
-    let all: BTreeSet<&str> = found.iter().flat_map(|file| file.titles.iter().map(String::as_str)).collect();
+    let mut all: Vec<&str> = found.iter().flat_map(|file| file.titles.iter().map(String::as_str)).collect();
+    all.sort_unstable();
+    all.dedup();
     let mut titles = String::new();
     for title in all.iter().filter(|title| !title.contains(STORE_LINE)) {
         titles.push_str(title);
         titles.push(STORE_LINE);
     }
     std::fs::write(store.join(TITLES_FILE), &titles).map_err(|error| error.to_string())?;
-    let mut known: BTreeSet<String> = BTreeSet::new();
-    for line in lines_of(&titles) {
-        known.extend(names(stripped(&line)).iter().map(|name| letters(name)));
-    }
-    known.remove("");
+    let lines = lines_of(&titles);
+    let runs = shards(lines.len(), lanes);
+    let mut known: Vec<String> = on_lanes(runs.len(), lanes, &|run| {
+        let mut made: Vec<String> = lines[runs[run].clone()].iter().flat_map(|line| names(stripped(line)).into_iter().map(|name| letters(&name))).collect();
+        made.sort_unstable();
+        made.dedup();
+        made
+    })
+    .concat();
+    known.sort_unstable();
+    known.dedup();
+    known.retain(|name| !name.is_empty());
     std::fs::write(store.join(KNOWN_NAMES_FILE), known.iter().map(String::as_str).collect::<Vec<&str>>().join(NAMES_GAP)).map_err(|error| error.to_string())?;
     Ok(vec![
         format!("{} files of the copy; {} names of subjects of the probe, {} of the questions", files.len(), probe_names.len(), asked_names.len()),
@@ -174,7 +191,7 @@ pub fn make_store(dump: &Path, store: &Path, probe: &Described, questions: &Desc
         format!("{TITLES_FILE}: {} titles; {KNOWN_NAMES_FILE}: {} names", all.len(), known.len()),
     ])
 }
-because!(make_store, EncyclopediaStore, "the files of the text store from the files of the copy, each file of the copy read on a thread of its own and taken in the order of their names");
+because!(make_store, EncyclopediaStore, "the files of the text store from the files of the copy, each file of the copy read on a thread of its own and taken in the order of their names; the titles and the known names are sorted lists with each entry once, the order of their signs, and the known names of the titles are made in runs on all threads");
 
 pub fn store_command(rest: &[String]) -> ExitCode {
     let (named, plain): (Vec<&String>, Vec<&String>) = rest.iter().partition(|argument| argument.contains(STORE_OPTION_MARK));

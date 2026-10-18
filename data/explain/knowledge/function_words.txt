@@ -1,0 +1,67 @@
+Note: The words of English that build a sentence around its nouns and verbs: helping verbs stand before a verb, prepositions before a noun phrase.
+Am is a helping verb.
+Is is a helping verb.
+Are is a helping verb.
+Was is a helping verb.
+Were is a helping verb.
+Have is a helping verb.
+Has is a helping verb.
+Had is a helping verb.
+Do is a helping verb.
+Does is a helping verb.
+Did is a helping verb.
+Can is a helping verb.
+Could is a helping verb.
+Will is a helping verb.
+Would is a helping verb.
+Shall is a helping verb.
+Should is a helping verb.
+May is a helping verb.
+Might is a helping verb.
+Must is a helping verb.
+Isn't is a helping verb.
+Aren't is a helping verb.
+Wasn't is a helping verb.
+Weren't is a helping verb.
+Haven't is a helping verb.
+Hasn't is a helping verb.
+Hadn't is a helping verb.
+Don't is a helping verb.
+Doesn't is a helping verb.
+Didn't is a helping verb.
+Can't is a helping verb.
+Couldn't is a helping verb.
+Won't is a helping verb.
+Wouldn't is a helping verb.
+Shouldn't is a helping verb.
+Mustn't is a helping verb.
+With is a preposition.
+Upon is a preposition.
+Around is a preposition.
+By is a preposition.
+Behind is a preposition.
+Below is a preposition.
+Above is a preposition.
+Near is a preposition.
+Under is a preposition.
+Over is a preposition.
+Beside is a preposition.
+Between is a preposition.
+Among is a preposition.
+In is a preposition.
+On is a preposition.
+At is a preposition.
+From is a preposition.
+To is a preposition.
+Into is a preposition.
+Across is a preposition.
+Along is a preposition.
+Through is a preposition.
+Without is a preposition.
+Against is a preposition.
+Toward is a preposition.
+Inside is a preposition.
+Outside is a preposition.
+Who is a relative pronoun.
+That is a relative pronoun.
+Which is a relative pronoun.

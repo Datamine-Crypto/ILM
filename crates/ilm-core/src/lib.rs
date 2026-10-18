@@ -7,7 +7,5 @@ pub mod cases;
 pub mod choice;
 pub mod class_count;
 pub mod classes;
-pub mod know;
 pub mod split;
 pub mod tools;
-pub mod write;

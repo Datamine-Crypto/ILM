@@ -1,5 +1,5 @@
 use crate::cases::Case;
-use crate::tools::pattern::hash::CheapMap;
+use crate::base::cheap::CheapMap;
 use patterns::{because, source};
 
 pub struct HeldParts;

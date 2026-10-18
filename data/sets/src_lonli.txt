@@ -36,7 +36,7 @@ task	lonli_syntactic	lonli_syntactic
 task	lonli_taxonomic	lonli_taxonomic
 task	lonli_temporal	lonli_temporal
 task	lonli_world	lonli_world
-not_counted	lonli_temporal	its control of changed cases is followed in 590 of 634 trials where the told text decides (93.1%; the line is 95%)
+not_counted	lonli_presupposition	the statement alone decides every label: the pattern learner reads 98.6% of the read part from the question alone, and every case of the control of changed cases is a change of the statement (322 of 322), so no share shows a reading of the told text
 all	lonli_boolean
 all	lonli_causal
 all	lonli_comparative

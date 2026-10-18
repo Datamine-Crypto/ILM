@@ -1,0 +1,42 @@
+Note: A walker on flat ground: where the walker stands, as two numbers (east of the start, north of the start), and the way the walker faces. The walker starts at the start, facing north. A step forward goes the way the walker faces, a step backward the other way, and a step to the left or the right goes to that side without a turn. A turn to the right faces the next way round the compass (north, east, south, west), a turn to the left the way before, and a turn around the opposite way. A step with no way told goes forward. The walker is back at the start when both numbers are nought.
+The walker stands at 0 and 0 facing north.
+Forward from north is north.
+Forward from east is east.
+Forward from south is south.
+Forward from west is west.
+Backward from north is south.
+Backward from east is west.
+Backward from south is north.
+Backward from west is east.
+Left from north is west.
+Left from east is north.
+Left from south is east.
+Left from west is south.
+Right from north is east.
+Right from east is south.
+Right from south is west.
+Right from west is north.
+A right turn from north faces east.
+A right turn from east faces south.
+A right turn from south faces west.
+A right turn from west faces north.
+A left turn from north faces west.
+A left turn from east faces north.
+A left turn from south faces east.
+A left turn from west faces south.
+An around turn from north faces south.
+An around turn from east faces west.
+An around turn from south faces north.
+An around turn from west faces east.
+If the walker takes R steps then the walker takes R steps forward.
+If the walker takes R steps S and before that time the walker stands at X And Y facing T and S from T is north and Y plus R is Z then the walker stands at X and Z facing T.
+If the walker takes R steps S and before that time the walker stands at X And Y facing T and S from T is south and Y minus R is Z then the walker stands at X and Z facing T.
+If the walker takes R steps S and before that time the walker stands at X And Y facing T and S from T is east and X plus R is Z then the walker stands at Z and Y facing T.
+If the walker takes R steps S and before that time the walker stands at X And Y facing T and S from T is west and X minus R is Z then the walker stands at Z and Y facing T.
+If the walker turns S and before that time the walker stands at X And Y facing T and a S turn from T faces U then the walker stands at X and Y facing U.
+If the walker turns S and before that time the walker stands at X And Y facing T and an S turn from T faces U then the walker stands at X and Y facing U.
+If latest the walker stands at X And Y facing T and X is at least 0 and X is at most 0 and Y is at least 0 and Y is at most 0 then the walker is back at the start.
+If latest the walker stands at X And Y facing T and X is more than 0 then the walker is away from the start.
+If latest the walker stands at X And Y facing T and X is less than 0 then the walker is away from the start.
+If latest the walker stands at X And Y facing T and Y is more than 0 then the walker is away from the start.
+If latest the walker stands at X And Y facing T and Y is less than 0 then the walker is away from the start.

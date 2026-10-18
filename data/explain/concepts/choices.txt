@@ -1,0 +1,28 @@
+Note: The choices of a question written after the word choice and a colon, and what each choice is worth: its number, also with a unit after it or a mark before it ($, a quote, a name and an equals sign), and R divided by S for a fraction R / S or a ratio R : S. Square brackets that a set leaves among the choices are dropped.
+Builds on numbers.
+Write AAA [ BBB ] CCC as AAA BBB CCC.
+Write AAA [ BBB as AAA BBB.
+If the question is choice : BB choice : CC and not BB holds the word choice then BB is a choice.
+If the question is AA choice : BB choice : CC and not BB holds the word choice then BB is a choice.
+If the question is AA choice : BB and not BB holds the word choice then BB is a choice.
+If R is a choice and R plus 0 is M then the choice R is worth M.
+If R CC is a choice and R plus 0 is M and not CC holds the word / and not CC holds the word : then the choice R CC is worth M.
+If R / S is a choice and R divided by S is M then the choice R / S is worth M.
+If V R / S is a choice and R divided by S is M then the choice V R / S is worth M.
+If R : S is a choice and R divided by S is M then the choice R : S is worth M.
+If V R : S is a choice and R divided by S is M then the choice V R : S is worth M.
+If V R is a choice and R plus 0 is M and not V is the same as - then the choice V R is worth M.
+If V R CC is a choice and R plus 0 is M and not V is the same as - and not CC holds the word / and not CC holds the word : then the choice V R CC is worth M.
+If - R is a choice and 0 minus R is M then the choice - R is worth M.
+If $ R is a choice and R plus 0 is M then the choice $ R is worth M.
+If $ R CC is a choice and R plus 0 is M and not CC holds the word / and not CC holds the word : then the choice $ R CC is worth M.
+If $ R / S CC is a choice and R divided by S is M then the choice $ R / S CC is worth M.
+If $ R : S CC is a choice and R divided by S is M then the choice $ R : S CC is worth M.
+If ' R is a choice and R plus 0 is M then the choice ' R is worth M.
+If ' R CC is a choice and R plus 0 is M and not CC holds the word / and not CC holds the word : then the choice ' R CC is worth M.
+If ' R / S CC is a choice and R divided by S is M then the choice ' R / S CC is worth M.
+If ' R : S CC is a choice and R divided by S is M then the choice ' R : S CC is worth M.
+If V = R is a choice and R plus 0 is M then the choice V = R is worth M.
+If V = R CC is a choice and R plus 0 is M and not CC holds the word / and not CC holds the word : then the choice V = R CC is worth M.
+If V = R / S CC is a choice and R divided by S is M then the choice V = R / S CC is worth M.
+If V = R : S CC is a choice and R divided by S is M then the choice V = R : S CC is worth M.
