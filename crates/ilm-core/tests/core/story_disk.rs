@@ -122,7 +122,9 @@ fn the_sources_of_a_build_are_read_as_whole_paths() {
 ";
     let sources = build_sources(listed);
     assert_eq!(sources, vec![PathBuf::from(r"C:\a\crates\ilm-core\src\lib.rs"), PathBuf::from(r"C:\a\my folder\b.rs")]);
-    assert!(sources[0].ends_with("crates/ilm-core/src/lib.rs"));
+    let slashed = build_sources("/a/target/fast/ilm: /a/crates/ilm-core/src/lib.rs
+");
+    assert!(slashed[0].ends_with("crates/ilm-core/src/lib.rs"));
     assert!(build_sources("no list").is_empty());
 }
 
