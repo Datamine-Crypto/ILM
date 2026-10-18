@@ -15,4 +15,4 @@ doctest = false
 
 [dependencies]
 premise = "0.1.5"
-ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "2.0.0" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "2.0.1" }

@@ -14,6 +14,6 @@ path = "src/main.rs"
 test = false
 
 [dependencies]
-ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "2.0.0" }
-ilm-commands = { package = "datamine-ilm-commands", path = "../ilm-commands", version = "2.0.0" }
+ilm-core = { package = "datamine-ilm-core", path = "../ilm-core", version = "2.0.1" }
+ilm-commands = { package = "datamine-ilm-commands", path = "../ilm-commands", version = "2.0.1" }
 mimalloc = { version = "0.1.43", default-features = false }

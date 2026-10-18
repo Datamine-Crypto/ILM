@@ -14,7 +14,7 @@ dependencies = [
 
 [[package]]
 name = "datamine-ilm"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "datamine-ilm-commands",
  "datamine-ilm-core",
@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "datamine-ilm-commands"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "datamine-ilm-core",
  "datamine-ilm-data",
@@ -33,14 +33,14 @@ dependencies = [
 
 [[package]]
 name = "datamine-ilm-core"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "premise",
 ]
 
 [[package]]
 name = "datamine-ilm-data"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "datamine-ilm-core",
  "premise",
@@ -48,7 +48,7 @@ dependencies = [
 
 [[package]]
 name = "datamine-ilm-eval"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "datamine-ilm-core",
  "datamine-ilm-data",

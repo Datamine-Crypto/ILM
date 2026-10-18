@@ -144,7 +144,7 @@ because!(HELP_WORDS, LearnerCommand, "the words that ask for the forms of the co
 const VERSION_WORDS: &[&str] = &["version", "--version", "-V"];
 because!(VERSION_WORDS, LearnerCommand, "the words that ask for the version of the program: the plain word and the two forms that most programs take");
 
-pub const PROGRAM_VERSION: [u32; 3] = [2, 0, 0];
+pub const PROGRAM_VERSION: [u32; 3] = [2, 0, 1];
 because!(PROGRAM_VERSION, LearnerCommand, "the major, minor and patch numbers of this release; a test checks them against the version that the workspace gives");
 
 const VERSION_MARK: &str = ".";
